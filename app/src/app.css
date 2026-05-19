@@ -6694,3 +6694,19 @@ header.topbar .logo img {
 }
 
 .promo-title:empty, .banner-content h2:empty, .banner-content h3:empty, .banner-content p:empty { display: none !important; }
+
+/* --- FIX VIP CARDS ON MOBILE --- */
+@media (max-width: 768px) {
+  .vip-steps-container {
+    padding: 10px 16px 30px !important;
+    gap: 12px !important;
+  }
+  /* Remove the crazy staircase effect on mobile so they fit and can be scrolled */
+  .vip-step-item:nth-child(n) .vip-step-card {
+    width: 160px !important;
+    height: 240px !important;
+  }
+  .vip-hero-subtitle {
+    margin-bottom: 10px !important;
+  }
+}
