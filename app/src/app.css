@@ -354,6 +354,10 @@ header.topbar .logo img {
     /* Lățimea 1fr este ~31.25% din spațiul rămas după sidebar și padding-uri */
     right: calc(16px + ((100% - var(--sidebar-width) - 16px) * 0.3125));
   }
+  
+  .notification-bell-btn {
+    margin-left: 32px; /* Push the bell (and everything to its right) to the right to avoid search bar overlap */
+  }
 }
 
 .topbar-search {
