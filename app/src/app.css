@@ -336,15 +336,24 @@ header.topbar .logo img {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Renamed or replaced topbar-main logic */
-
 .topbar-search-wrapper {
-  position: absolute;
-  left: 220px; /* După logo-ul Cashpot */
-  right: calc(31.25% + 8px); /* Se aliniază exact cu marginea dreaptă a bannerului mare (2.2fr) */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: static;
   height: 48px;
   z-index: 5;
-  display: flex;
+}
+
+@media (min-width: 1025px) {
+  .topbar-search-wrapper {
+    position: absolute;
+    /* Aliniere la stânga: sidebar-width (topbar-ul are margin-left 16px, care compensează hero padding-left 16px) */
+    left: var(--sidebar-width);
+    /* Aliniere la dreapta: padding-right hero (16px) + distanța micilor bannere (1fr) */
+    /* Lățimea 1fr este ~31.25% din spațiul rămas după sidebar și padding-uri */
+    right: calc(16px + ((100% - var(--sidebar-width) - 16px) * 0.3125));
+  }
 }
 
 .topbar-search {
