@@ -172,10 +172,10 @@ export const defaultRtpConfig = {
   apiUrl: '/api/rtp',
   hotTitle: 'Jocuri Generoase',
   hotSubtitle: 'Din ultimele 24 de ore',
-  hotImage: 'https://cdn.midjourney.com/71e9a3b2-6014-41d6-b153-6bb30dc74823/0_0.webp',
+  hotImage: '🔥',
   coldTitle: 'Jocuri în Creștere',
   coldSubtitle: 'Din ultimele 24 de ore',
-  coldImage: 'https://cdn.midjourney.com/00e3eaee-9b0d-451e-b83c-11f4d96a7516/0_0.webp'
+  coldImage: '🧊'
 };
 
 export const defaultToolbarConfig = {

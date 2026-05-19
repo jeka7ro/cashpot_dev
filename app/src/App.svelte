@@ -4244,7 +4244,11 @@
                       style="font-size: 18px; font-weight: 800; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px;"
                     >
                       {#if rtpConfig.hotImage}
-                        <img src={rtpConfig.hotImage} alt="Hot" style="height: 28px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(239,68,68,0.5));" />
+                        {#if rtpConfig.hotImage.startsWith('http') || rtpConfig.hotImage.startsWith('/')}
+                          <img src={rtpConfig.hotImage} alt="Hot" style="height: 28px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(239,68,68,0.5));" />
+                        {:else}
+                          <span style="font-size: 24px; line-height: 1; filter: drop-shadow(0 4px 8px rgba(239,68,68,0.5));">{rtpConfig.hotImage}</span>
+                        {/if}
                       {/if}
                       {rtpConfig.hotTitle}
                       <svg
@@ -4343,7 +4347,11 @@
                       style="font-size: 18px; font-weight: 800; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px;"
                     >
                       {#if rtpConfig.coldImage}
-                        <img src={rtpConfig.coldImage} alt="Cold" style="height: 28px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(56,189,248,0.5));" />
+                        {#if rtpConfig.coldImage.startsWith('http') || rtpConfig.coldImage.startsWith('/')}
+                          <img src={rtpConfig.coldImage} alt="Cold" style="height: 28px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(56,189,248,0.5));" />
+                        {:else}
+                          <span style="font-size: 24px; line-height: 1; filter: drop-shadow(0 4px 8px rgba(56,189,248,0.5));">{rtpConfig.coldImage}</span>
+                        {/if}
                       {/if}
                       {rtpConfig.coldTitle}
                       <svg
