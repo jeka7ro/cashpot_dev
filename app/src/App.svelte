@@ -5172,15 +5172,17 @@
             class="nav-item-center"
             on:click={() => { isMobileMenuOpen = false; if (isLoggedIn) showMobileWallet = true; else showLoginModal = true; }}
           >
-            <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:0; overflow:hidden; border-radius:50%; border-color: {isLoggedIn ? (vipConfig.levels[userLevel - 1]?.color || 'var(--accent-gold)') : 'var(--accent-gold)'}; box-shadow: 0 0 15px {isLoggedIn ? (vipConfig.levels[userLevel - 1]?.color || 'transparent') : 'transparent'};">
-              {#if isLoggedIn}
-                <div class="vip-nav-avatar" style="width:100%; height:100%; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+            {#if isLoggedIn}
+              <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:3px; border:none; background:conic-gradient(from 180deg, #3b82f6 0%, #a855f7 40%, #f5c842 100%); box-shadow: -4px 0 15px rgba(59,130,246,0.4), 4px 0 15px rgba(245,200,66,0.3);">
+                <div class="vip-nav-avatar" style="width:100%; height:100%; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--bg-dark); border:2px solid var(--bg-dark);">
                   <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
                 </div>
-              {:else}
+              </div>
+            {:else}
+              <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="border-color: var(--accent-gold);">
                 <img src="/logoMobile.webp" alt="Home" />
-              {/if}
-            </div>
+              </div>
+            {/if}
           </div>
 
           <a href="#" class="nav-item">
