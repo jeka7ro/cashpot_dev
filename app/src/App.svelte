@@ -695,6 +695,7 @@
   $: currentLevelIcon = levelIcons[userLevel - 1] || levelIcons[0];
   $: totalProgressPercentage = (userLevel - 1) * 20 + xpPercentage / 5;
   let showUserPanel = false;
+  let showMobileWallet = false;
   let userPanelRect = { top: 70, right: 20 };
 
   function openUserPanel(e) {
@@ -5184,13 +5185,19 @@
             <span>LIVE</span>
           </a>
 
-          <!-- CENTRAL HOME BUTTON -->
+          <!-- CENTRAL VIP WALLET BUTTON -->
           <div
             class="nav-item-center"
-            on:click={() => { isMobileMenuOpen = false; setView('home'); }}
+            on:click={() => { isMobileMenuOpen = false; if (isLoggedIn) showMobileWallet = true; else showLoginModal = true; }}
           >
-            <div class="center-btn-inner {activeView === 'home' && !searchQuery ? 'active' : ''}">
-              <img src="/logoMobile.webp" alt="Home" />
+            <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:0; overflow:hidden; border-radius:50%;">
+              {#if isLoggedIn}
+                <div class="vip-nav-avatar" style="width:100%; height:100%; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                  <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
+                </div>
+              {:else}
+                <img src="/logoMobile.webp" alt="Home" />
+              {/if}
             </div>
           </div>
 
@@ -5234,6 +5241,96 @@
             <span>CONT</span>
           </a>
         </nav>
+      {/if}
+
+      <!-- ═══ MOBILE WALLET DRAWER ═══ -->
+      {#if showMobileWallet && isLoggedIn}
+        <!-- Backdrop -->
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div
+          style="position:fixed; inset:0; z-index:9998; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px);"
+          on:click={() => showMobileWallet = false}
+        ></div>
+
+        <!-- Drawer panel -->
+        <div style="position:fixed; bottom:0; left:0; right:0; z-index:9999; background:{isDarkTheme ? (headerConfigSource.bgColor || '#130f1c') : 'var(--bg-panel)'}; border-radius:24px 24px 0 0; padding:0 0 32px; box-shadow:0 -8px 40px rgba(0,0,0,0.5); max-height:90vh; overflow-y:auto;">
+          
+          <!-- Handle bar -->
+          <div style="display:flex; justify-content:center; padding:12px 0 4px;">
+            <div style="width:40px; height:4px; background:rgba(255,255,255,0.2); border-radius:99px;"></div>
+          </div>
+
+          <!-- Header with VIP avatar -->
+          <div style="display:flex; align-items:center; gap:14px; padding:16px 20px 20px;">
+            <div style="width:56px; height:56px; border-radius:50%; border:3px solid var(--accent-gold); overflow:hidden; flex-shrink:0; box-shadow:0 0 20px rgba(245,200,66,0.4);">
+              <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Portofelul meu</div>
+              <div style="font-size:22px; font-weight:900; color:var(--text-main); letter-spacing:-0.5px;">{userBalance.toLocaleString('ro-RO', {minimumFractionDigits: 2})} <span style="font-size:13px; color:var(--text-muted); font-weight:600;">RON</span></div>
+              <div style="font-size:11px; color:var(--accent-gold); font-weight:700; margin-top:2px;">⭐ 2.340 / 5.000 XP · Nivel {userLevel} {vipConfig.levels[userLevel - 1]?.name || ''}</div>
+            </div>
+            <button on:click={() => showMobileWallet = false} style="width:32px; height:32px; border-radius:50%; background:var(--bg-hover); border:1px solid var(--border-color); color:var(--text-muted); cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <!-- Balance boxes -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 20px 20px;">
+            <div style="background:var(--bg-hover); border:1px solid var(--border-color); border-radius:14px; padding:14px;">
+              <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; font-weight:600;">Balanță reală</div>
+              <div style="font-size:18px; font-weight:900; color:var(--text-main);">{userBalance.toLocaleString('ro-RO', {minimumFractionDigits:2})} <span style="font-size:10px; opacity:0.6;">RON</span></div>
+            </div>
+            <div style="background:var(--bg-hover); border:1px solid var(--border-color); border-radius:14px; padding:14px;">
+              <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; font-weight:600;">Bonus</div>
+              <div style="font-size:18px; font-weight:900; color:var(--accent-gold);">{userBonus.toLocaleString('ro-RO', {minimumFractionDigits:2})} <span style="font-size:10px; opacity:0.6;">RON</span></div>
+            </div>
+          </div>
+
+          <!-- Deposit + Withdraw buttons -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 20px 24px;">
+            <button style="padding:14px; border-radius:14px; background:linear-gradient(135deg,#f5c842,#e6a817); color:#1a1200; font-weight:900; font-size:15px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(245,200,66,0.35);">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+              DEPUNERE
+            </button>
+            <button style="padding:14px; border-radius:14px; background:var(--bg-hover); border:1px solid var(--border-color); color:var(--text-main); font-weight:800; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+              RETRAGERE
+            </button>
+          </div>
+
+          <!-- Cards section (Apple Pay style) -->
+          <div style="padding:0 20px;">
+            <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin-bottom:12px;">Cardurile mele</div>
+            <div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none;">
+              <!-- Card 1 -->
+              <div style="flex-shrink:0; width:200px; height:120px; border-radius:16px; background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460); padding:16px; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
+                <div style="position:absolute; top:-20px; right:-20px; width:100px; height:100px; background:rgba(255,255,255,0.03); border-radius:50%;"></div>
+                <div style="font-size:10px; color:rgba(255,255,255,0.5); margin-bottom:20px; font-weight:600; letter-spacing:1px;">VISA</div>
+                <div style="font-size:14px; font-weight:700; color:#fff; letter-spacing:2px;">•••• •••• •••• 4821</div>
+                <div style="display:flex; justify-content:space-between; margin-top:10px;">
+                  <div style="font-size:10px; color:rgba(255,255,255,0.5);">Expiră 09/27</div>
+                  <div style="font-size:10px; color:rgba(255,255,255,0.7); font-weight:700;">Eugen C.</div>
+                </div>
+              </div>
+              <!-- Card 2 -->
+              <div style="flex-shrink:0; width:200px; height:120px; border-radius:16px; background:linear-gradient(135deg,#1a0533,#2d1b69,#11998e); padding:16px; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
+                <div style="font-size:10px; color:rgba(255,255,255,0.5); margin-bottom:20px; font-weight:600; letter-spacing:1px;">MASTERCARD</div>
+                <div style="font-size:14px; font-weight:700; color:#fff; letter-spacing:2px;">•••• •••• •••• 7293</div>
+                <div style="display:flex; justify-content:space-between; margin-top:10px;">
+                  <div style="font-size:10px; color:rgba(255,255,255,0.5);">Expiră 03/26</div>
+                  <div style="font-size:10px; color:rgba(255,255,255,0.7); font-weight:700;">Eugen C.</div>
+                </div>
+              </div>
+              <!-- Add card -->
+              <div style="flex-shrink:0; width:120px; height:120px; border-radius:16px; background:var(--bg-hover); border:2px dashed var(--border-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; cursor:pointer;">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <div style="font-size:10px; color:var(--text-muted); font-weight:600;">Adaugă card</div>
+              </div>
+            </div>
+          </div>
+        </div>
       {/if}
 
       <!-- Floating Chat (Temporarily hidden per request) -->

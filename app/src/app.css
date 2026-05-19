@@ -999,18 +999,31 @@ header.topbar .logo img {
     display: none !important;
   }
 
-  /* Search bar: langa logo */
+  /* Search bar: langa logo - mai vizibila pe mobil */
   .topbar-search-wrapper {
     position: static !important;
     transform: none !important;
-    width: 36px !important;
+    width: 120px !important;
     height: 36px !important;
     flex-shrink: 0;
-    margin-left: 16px !important;
+    margin-left: 12px !important;
     margin-right: auto !important;
     transition: all 0.3s ease !important;
     z-index: 50;
   }
+
+  /* Extinde search bar cand e focusata */
+  .topbar-search-wrapper:focus-within {
+    width: 180px !important;
+    position: static !important;
+  }
+
+  /* Logo mai mare pe mobil */
+  .topbar-left .logo img {
+    height: 36px !important;
+    width: auto !important;
+  }
+
 
   /* Arata setari in panoul de profil pe mobil */
   .mobile-profile-settings {
