@@ -973,7 +973,7 @@
             </svg>
             <!-- Notification badge -->
             <span
-              style="position:absolute; top:-2px; right:-2px; width:16px; height:16px; border-radius:50px; background:#ef4444; font-size:9px; font-weight:900; color:#fff; display:flex; align-items:center; justify-content:center; border:2px solid {isDarkTheme ? 'var(--bg-dark)' : 'var(--bg-panel)'};"
+              style="position:absolute; top:-4px; right:-4px; width:20px; height:20px; border-radius:50px; background:var(--primary, #6d28d9); font-size:11px; font-weight:900; color:var(--accent-gold, #facc15); display:flex; align-items:center; justify-content:center; border:2px solid {isDarkTheme ? 'var(--bg-dark)' : 'var(--bg-panel)'};"
               >3</span
             >
           </button>

@@ -398,6 +398,10 @@ function getInitial(key, def) {
                parsed.missions = parsed.missions.map(mission => ({...mission, icon: iconMap[typeof mission.icon === 'string' ? mission.icon.trim() : mission.icon] || mission.icon}));
              }
            }
+           if (key === 'cashpot_cms_rtp_config') {
+             if (parsed.hotImage && typeof parsed.hotImage === 'string' && parsed.hotImage.includes('midjourney')) parsed.hotImage = '🔥';
+             if (parsed.coldImage && typeof parsed.coldImage === 'string' && parsed.coldImage.includes('midjourney')) parsed.coldImage = '🧊';
+           }
            return parsed;
         }
         return parsed;
@@ -492,7 +496,12 @@ function applyServerData(data) {
   }
   if (data.winnersConfig) { cmsWinnersConfig.set(data.winnersConfig); cmsDraftWinnersConfig.set(JSON.parse(JSON.stringify(data.winnersConfig))); }
   if (data.topGamesConfig) { cmsTopGamesConfig.set(data.topGamesConfig); cmsDraftTopGamesConfig.set(JSON.parse(JSON.stringify(data.topGamesConfig))); }
-  if (data.rtpConfig) { cmsRtpConfig.set(data.rtpConfig); cmsDraftRtpConfig.set(JSON.parse(JSON.stringify(data.rtpConfig))); }
+  if (data.rtpConfig) { 
+    if (data.rtpConfig.hotImage && typeof data.rtpConfig.hotImage === 'string' && data.rtpConfig.hotImage.includes('midjourney')) data.rtpConfig.hotImage = '🔥';
+    if (data.rtpConfig.coldImage && typeof data.rtpConfig.coldImage === 'string' && data.rtpConfig.coldImage.includes('midjourney')) data.rtpConfig.coldImage = '🧊';
+    cmsRtpConfig.set(data.rtpConfig); 
+    cmsDraftRtpConfig.set(JSON.parse(JSON.stringify(data.rtpConfig))); 
+  }
   if (data.toolbarConfig) { cmsToolbarConfig.set(data.toolbarConfig); cmsDraftToolbarConfig.set(JSON.parse(JSON.stringify(data.toolbarConfig))); }
   if (data.sidebarNavConfig) { cmsSidebarNavConfig.set(data.sidebarNavConfig); cmsDraftSidebarNavConfig.set(JSON.parse(JSON.stringify(data.sidebarNavConfig))); }
   if (data.sidebarWidgets) { cmsSidebarWidgets.set(data.sidebarWidgets); cmsDraftSidebarWidgets.set(JSON.parse(JSON.stringify(data.sidebarWidgets))); }
@@ -569,7 +578,13 @@ function _loadFromLocalStorage() {
     const sb = localStorage.getItem('cashpot_cms_sidebar_nav');
     if (sb) { const v = JSON.parse(sb); cmsSidebarNavConfig.set(v); cmsDraftSidebarNavConfig.set(JSON.parse(sb)); }
     const rtp = localStorage.getItem('cashpot_cms_rtp_config');
-    if (rtp) { const v = JSON.parse(rtp); cmsRtpConfig.set(v); cmsDraftRtpConfig.set(JSON.parse(rtp)); }
+    if (rtp) { 
+      const v = JSON.parse(rtp); 
+      if (v.hotImage && typeof v.hotImage === 'string' && v.hotImage.includes('midjourney')) v.hotImage = '🔥';
+      if (v.coldImage && typeof v.coldImage === 'string' && v.coldImage.includes('midjourney')) v.coldImage = '🧊';
+      cmsRtpConfig.set(v); 
+      cmsDraftRtpConfig.set(JSON.parse(JSON.stringify(v))); 
+    }
     const pa = localStorage.getItem('cashpot_cms_play_arena');
     if (pa) { const v = JSON.parse(pa); cmsPlayArenaConfig.set(v); cmsDraftPlayArenaConfig.set(JSON.parse(pa)); }
     const hw = localStorage.getItem('cashpot_cms_header_widgets');
