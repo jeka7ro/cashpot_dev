@@ -5185,14 +5185,11 @@
             class="nav-item-center"
             on:click={() => { isMobileMenuOpen = false; if (isLoggedIn) showMobileWallet = true; else showLoginModal = true; }}
           >
-            <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:0; overflow:hidden; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+            <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:0; overflow:hidden; border-radius:50%;">
               {#if isLoggedIn}
-                <!-- SVG portofel, fara imagine grea -->
-                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="1" y="4" width="22" height="16" rx="3" ry="3"/>
-                  <line x1="1" y1="10" x2="23" y2="10"/>
-                  <circle cx="17" cy="16" r="1" fill="currentColor" stroke="none"/>
-                </svg>
+                <div class="vip-nav-avatar" style="width:100%; height:100%; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                  <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
+                </div>
               {:else}
                 <img src="/logoMobile.webp" alt="Home" />
               {/if}
