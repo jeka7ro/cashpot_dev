@@ -6675,3 +6675,23 @@ header.topbar .logo img {
     line-height: 1.3;
   }
 }
+
+/* CMS WIDGET MOBILE FIXES */
+.cms-widget-wrapper {
+  width: var(--widget-w, 100%);
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .cms-widget-wrapper {
+    width: 100% !important;
+  }
+  .rtp-widget-section {
+    flex-direction: column !important;
+    padding: 0 16px !important;
+    gap: 16px !important;
+  }
+  .rtp-card {
+    width: 100% !important;
+  }
+}

@@ -3710,7 +3710,7 @@
           <div style="display:flex; flex-wrap:wrap; flex-direction:row;">
 
           <!-- ─── CATEGORY TABS BAR (after hero) ─── -->
-          <div style="order:{pco.indexOf('categoryTabs')>=0?pco.indexOf('categoryTabs'):0}; width: {(widgetsSource?.categoryTabs?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.categoryTabs?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
+          <div class="cms-widget-wrapper" style="order:{pco.indexOf('categoryTabs')>=0?pco.indexOf('categoryTabs'):0}; --widget-w: {(widgetsSource?.categoryTabs?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.categoryTabs?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
           {#if widgetsSource?.categoryTabs?.enabled !== false}
             {@const ctCfg = widgetsSource?.categoryTabs || {}}
             {@const ctShape = ctCfg.shape || 'round'}
@@ -3806,7 +3806,7 @@
 
           <!-- ─── TOURNAMENTS SECTION ─── -->
           </div>
-          <div style="order:{pco.indexOf('tournament')>=0?pco.indexOf('tournament'):2}; width: {(widgetsSource?.tournament?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.tournament?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
+          <div class="cms-widget-wrapper" style="order:{pco.indexOf('tournament')>=0?pco.indexOf('tournament'):2}; --widget-w: {(widgetsSource?.tournament?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.tournament?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
           {#if activeView === "home" && widgetsSource?.tournament?.enabled !== false}
             <div style="padding: 0 24px 16px; height: 100%; box-sizing: border-box;">
               <div
@@ -3882,7 +3882,7 @@
           {/if}
           <!-- ─── MISIUNI ACTIVE ─── -->
           </div>
-          <div style="order:{pco.indexOf('missions')>=0?pco.indexOf('missions'):3}; width: {(widgetsSource?.missions?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.missions?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
+          <div class="cms-widget-wrapper" style="order:{pco.indexOf('missions')>=0?pco.indexOf('missions'):3}; --widget-w: {(widgetsSource?.missions?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.missions?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
           {#if activeView === "home" && isLoggedIn && widgetsSource?.missions?.enabled !== false}
             <div style="padding: 0 24px 16px; height: 100%; box-sizing: border-box;">
               <div
@@ -4200,7 +4200,7 @@
 
           </div>
           <!-- Top Games Widget -->
-          <div style="order:{pco.indexOf('topGames')>=0?pco.indexOf('topGames'):1}; width: {(widgetsSource?.topGames?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.topGames?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
+          <div class="cms-widget-wrapper" style="order:{pco.indexOf('topGames')>=0?pco.indexOf('topGames'):1}; --widget-w: {(widgetsSource?.topGames?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.topGames?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
           {#if topGamesConfig.enabled}
             <section class="top-games-section">
               <h2
@@ -4226,7 +4226,7 @@
 
           </div>
           <!-- RTP Widget (Hot / Cold Games) -->
-          <div style="order:{pco.indexOf('rtpWidget')>=0?pco.indexOf('rtpWidget'):4}; width: {(widgetsSource?.rtpWidget?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.rtpWidget?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
+          <div class="cms-widget-wrapper" style="order:{pco.indexOf('rtpWidget')>=0?pco.indexOf('rtpWidget'):4}; --widget-w: {(widgetsSource?.rtpWidget?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.rtpWidget?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
           {#if rtpConfig?.enabled}
             <section
               class="rtp-widget-section"
@@ -4504,7 +4504,7 @@
           </div>
           
           <!-- ─── Top Winners ─── -->
-          <div style="order:{pco.indexOf('topWinners')>=0?pco.indexOf('topWinners'):4}; width: {(widgetsSource?.topWinners?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.topWinners?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
+          <div class="cms-widget-wrapper" style="order:{pco.indexOf('topWinners')>=0?pco.indexOf('topWinners'):4}; --widget-w: {(widgetsSource?.topWinners?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.topWinners?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
           <!-- ─── Standalone Top Winners Marquee (Glass Card Style) ─── -->
           {#if activeView === "home" && winnersSource?.enabled}
             <div style="padding: 0 20px; margin-bottom: 24px;">
@@ -4560,7 +4560,7 @@
 
           </div><!-- /topWinners -->
           <!-- ─── Game Categories ─── -->
-          <div style="order:{pco.indexOf('gameCategories')>=0?pco.indexOf('gameCategories'):5}; width: {(widgetsSource?.gameCategories?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.gameCategories?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
+          <div class="cms-widget-wrapper" style="order:{pco.indexOf('gameCategories')>=0?pco.indexOf('gameCategories'):5}; --widget-w: {(widgetsSource?.gameCategories?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.gameCategories?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
 
           {#each categoriesConfig as cat, i}
             {#if cat.filter !== "favorites" || favGamesList.length > 0}
@@ -4891,7 +4891,7 @@
 
           </div><!-- /gameCategories -->
           <!-- JACKPOT FEVER SECTION -->
-          <div style="order:{pco.indexOf('jackpotFever')>=0?pco.indexOf('jackpotFever'):6}; width: {(widgetsSource?.jackpotFever?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.jackpotFever?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
+          <div class="cms-widget-wrapper" style="order:{pco.indexOf('jackpotFever')>=0?pco.indexOf('jackpotFever'):6}; --widget-w: {(widgetsSource?.jackpotFever?.size || '').toLowerCase() === 's' ? '33.333%' : (widgetsSource?.jackpotFever?.size || '').toLowerCase() === 'm' ? '50%' : '100%'};">
           {#if jackpotFeverConfig?.enabled && jackpotConfig && jackpotConfig.some((jp) => jp.showInFever && (isLoggedIn || jp.showWhenLoggedOut))}
             <section
               class="jackpot-fever-section"
