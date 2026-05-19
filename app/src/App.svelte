@@ -71,7 +71,12 @@
           try {
             const savedView = localStorage.getItem("cashpot_activeView");
             const savedQuery = localStorage.getItem("cashpot_searchQuery");
-            if (savedView) activeView = savedView;
+            if (savedView && !savedView.startsWith("preview_")) {
+              activeView = savedView;
+            } else if (savedView && savedView.startsWith("preview_")) {
+              activeView = "home"; // fallback to home if stuck in preview
+              localStorage.setItem("cashpot_activeView", "home");
+            }
             if (savedQuery) searchQuery = savedQuery;
           } catch (e) {}
         }
@@ -92,7 +97,9 @@
       window.location.hash = activeView;
     }
     try {
-      localStorage.setItem("cashpot_activeView", activeView);
+      if (!activeView.startsWith("preview_")) {
+        localStorage.setItem("cashpot_activeView", activeView);
+      }
       localStorage.setItem("cashpot_searchQuery", searchQuery);
     } catch (e) {}
   }
@@ -5208,8 +5215,8 @@
             on:click={() => { isMobileMenuOpen = false; if (isLoggedIn) showMobileWallet = true; else showLoginModal = true; }}
           >
             {#if isLoggedIn}
-              <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:3px; border:none; background:conic-gradient(from 180deg, #3b82f6 0%, #a855f7 40%, #f5c842 100%); box-shadow: -4px 0 15px rgba(59,130,246,0.4), 4px 0 15px rgba(245,200,66,0.3);">
-                <div class="vip-nav-avatar" style="width:100%; height:100%; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--bg-dark); border:2px solid var(--bg-dark);">
+              <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:5px; border:none; background:conic-gradient(from 180deg, #3b82f6 0%, #a855f7 40%, #f5c842 100%); box-shadow: -4px 0 15px rgba(59,130,246,0.4), 4px 0 15px rgba(245,200,66,0.3);">
+                <div class="vip-nav-avatar" style="width:100%; height:100%; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; background:var(--bg-dark); border:3px solid var(--bg-dark);">
                   <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
                 </div>
               </div>
@@ -5286,7 +5293,7 @@
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
             
-            <div style="width:72px; height:72px; border-radius:50%; background:conic-gradient(from 180deg, #3b82f6 0%, #a855f7 40%, #f5c842 100%); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:-4px 0 15px rgba(59,130,246,0.4), 4px 0 15px rgba(245,200,66,0.3); padding:3px; margin-bottom:12px;">
+            <div style="width:72px; height:72px; border-radius:50%; background:conic-gradient(from 180deg, #3b82f6 0%, #a855f7 40%, #f5c842 100%); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:-4px 0 15px rgba(59,130,246,0.4), 4px 0 15px rgba(245,200,66,0.3); padding:5px; margin-bottom:12px;">
               <div style="width:100%; height:100%; border-radius:50%; overflow:hidden; background:var(--bg-dark); border:3px solid var(--bg-dark);">
                 <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
               </div>
