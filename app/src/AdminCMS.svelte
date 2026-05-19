@@ -4825,6 +4825,27 @@
                   </div>
                 {/each}
               </div>
+
+              <!-- JSON Editor for VIP Rewards Grid -->
+              <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <h3 class="cms-section-title">Niveluri și Recompense Detaliate (Prezentare Grid)</h3>
+                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Puteți edita datele pentru lista detaliată de bonusuri și cashback în format JSON. Această listă este afișată pe site sub forma de grid-uri de recompense pentru fiecare nivel.</p>
+                <textarea 
+                  class="cms-input"
+                  style="width: 100%; height: 400px; font-family: monospace; font-size: 12px; padding: 16px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px;"
+                  value={JSON.stringify(vipConfig.rewardsGrid || [], null, 2)}
+                  on:input={(e) => {
+                    try {
+                      vipConfig.rewardsGrid = JSON.parse(e.target.value);
+                      cmsDraftVipConfig.set(vipConfig);
+                      e.target.style.borderColor = 'var(--border-color)';
+                    } catch (err) {
+                      e.target.style.borderColor = 'red';
+                    }
+                  }}
+                ></textarea>
+                <p style="font-size: 10px; color: #facc15; margin-top: 8px;">Asigurați-vă că textul rămâne un JSON valid (aveți grijă la virgule și ghilimele). Căsuța se va înroși în caz de eroare sintactică.</p>
+              </div>
             </div>
           </div>
         {/if}

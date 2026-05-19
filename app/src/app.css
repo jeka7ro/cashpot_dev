@@ -6196,3 +6196,151 @@ header.topbar .logo img {
 
   --border-color: rgba(0,0,0,0.06);
 }
+
+/* VIP Rewards Grid */
+.vip-rewards-grid-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 80px 20px;
+}
+
+.vip-rewards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.vip-reward-card {
+  background: var(--bg-panel);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.vip-reward-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-gold);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.vrc-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.vrc-icon-box {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(245,200,66,0.2), rgba(245,200,66,0.05));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(245,200,66,0.1);
+}
+
+.vrc-icon-box img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.vrc-header-info h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 4px 0;
+  letter-spacing: 0.5px;
+}
+
+.vrc-header-info p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 600;
+}
+
+.vrc-cashback-row {
+  display: flex;
+  gap: 12px;
+}
+
+.vrc-cb-pill {
+  flex: 1;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.vrc-cb-pill strong {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.vrc-cb-pill.weekly {
+  justify-content: center;
+}
+
+.vrc-cb-pill.weekly strong {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.vrc-bonuses {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vrc-bonus-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.vrc-bonus-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  margin-top: 2px;
+}
+
+.vrc-bonus-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vrc-bd-amount {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent-gold);
+}
+
+.vrc-bd-game {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.vrc-bd-req {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+}

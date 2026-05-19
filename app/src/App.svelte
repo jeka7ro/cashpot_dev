@@ -3084,6 +3084,61 @@
                   </button>
                 </div>
               {/if}
+
+              <!-- VIP Rewards Grid -->
+              {#if vipConfig.rewardsGrid && vipConfig.rewardsGrid.length > 0}
+                <div class="vip-rewards-grid-container">
+                  <h2 style="font-size: 2.2rem; color: #fff; text-align: left; margin: 60px 0 30px 20px; font-weight: 700;">Niveluri</h2>
+                  <div class="vip-rewards-grid">
+                    {#each vipConfig.rewardsGrid as level, i}
+                      <div class="vip-reward-card">
+                         <!-- CARD HEADER -->
+                         <div class="vrc-header">
+                           <div class="vrc-icon-box">
+                             <img src="/icons/pa_icon_bonus.png" alt="Gift" />
+                           </div>
+                           <div class="vrc-header-info">
+                             <h3>{level.levelName}</h3>
+                             <p>{level.points}</p>
+                           </div>
+                         </div>
+                         
+                         <!-- CASHBACK BADGE -->
+                         {#if level.cashback}
+                           <div class="vrc-cashback-row">
+                             <div class="vrc-cb-pill">
+                               <span>Cashback</span>
+                               <strong>{level.cashback}</strong>
+                             </div>
+                             <div class="vrc-cb-pill weekly">
+                               <strong>CASHBACK SĂPTĂMÂNAL</strong>
+                             </div>
+                           </div>
+                         {/if}
+
+                         <!-- BONUSES -->
+                         {#if level.bonuses && level.bonuses.length > 0}
+                           <div class="vrc-bonuses">
+                             {#each level.bonuses as bonus}
+                               <div class="vrc-bonus-item">
+                                 <img src="/icons/pa_icon_bonus.png" class="vrc-bonus-icon" alt="Bonus" />
+                                 <div class="vrc-bonus-details">
+                                   <div class="vrc-bd-amount">{bonus.amount}</div>
+                                   <div class="vrc-bd-game">{bonus.game}</div>
+                                   <div class="vrc-bd-req">Depunere minimă: {bonus.minDeposit}</div>
+                                   {#if bonus.maxBonus}<div class="vrc-bd-req">Suma maximă a bonusului: {bonus.maxBonus}</div>{/if}
+                                   {#if bonus.bet}<div class="vrc-bd-req">Pariu: {bonus.bet}</div>{/if}
+                                 </div>
+                               </div>
+                             {/each}
+                           </div>
+                         {/if}
+                      </div>
+                    {/each}
+                  </div>
+                </div>
+              {/if}
+
             </div>
           </section>
         {:else if searchQuery.trim() !== ""}
