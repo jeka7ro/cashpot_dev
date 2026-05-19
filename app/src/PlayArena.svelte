@@ -36,19 +36,18 @@
     in_progress: "În curs"
   };
 
-  const iconResolver = {
-    '🏠': '/icons/pa_icon_home.png', '🎯': '/icons/pa_icon_missions.png',
-    '🏆': '/icons/pa_icon_tournaments.png', '🎁': '/icons/pa_icon_bonus.png',
-    '💰': '/icons/pa_icon_coin.png', '🐻': '/icons/pa_icon_bonus.png',
-    '📅': '/icons/pa_icon_missions.png', '✉️': '/icons/pa_icon_messages.png',
-    '🎡': '/icons/pa_icon_wheel.png'
-  };
-
   function getIcon(val) {
     if (!val) return val;
     if (typeof val === 'string') {
-      const t = val.trim();
-      if (iconResolver[t]) return iconResolver[t];
+      if (val.includes('🏠')) return '/icons/pa_icon_home.png';
+      if (val.includes('🎯')) return '/icons/pa_icon_missions.png';
+      if (val.includes('🏆')) return '/icons/pa_icon_tournaments.png';
+      if (val.includes('🎁')) return '/icons/pa_icon_bonus.png';
+      if (val.includes('💰')) return '/icons/pa_icon_coin.png';
+      if (val.includes('🐻')) return '/icons/pa_icon_bonus.png';
+      if (val.includes('📅')) return '/icons/pa_icon_missions.png';
+      if (val.includes('✉')) return '/icons/pa_icon_messages.png';
+      if (val.includes('🎡')) return '/icons/pa_icon_wheel.png';
     }
     return val;
   }
@@ -575,12 +574,13 @@
   }
 
   .pa-btn.primary {
-    background: linear-gradient(135deg, var(--accent-gold), #e6a817);
-    color: #1a1200;
+    background: linear-gradient(135deg, #7c3aed, #4c1d95);
+    color: var(--accent-gold);
+    box-shadow: 0 4px 15px rgba(109, 40, 217, 0.4);
   }
   .pa-btn.primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(245, 200, 66, 0.4);
+    box-shadow: 0 6px 20px rgba(109, 40, 217, 0.6);
   }
 
   .pa-btn.secondary {
@@ -601,8 +601,8 @@
     transition: all 0.2s;
   }
 
-  .pa-btn-sm.primary { background: var(--accent-gold); color: #1a1200; }
-  .pa-btn-sm.primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(245, 200, 66, 0.3); }
+  .pa-btn-sm.primary { background: linear-gradient(135deg, #7c3aed, #4c1d95); color: var(--accent-gold); box-shadow: 0 2px 10px rgba(109, 40, 217, 0.4); }
+  .pa-btn-sm.primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(109, 40, 217, 0.6); }
   
   .pa-btn-sm.secondary { background: rgba(255, 255, 255, 0.1); color: #fff; }
   .pa-btn-sm.secondary:hover { background: rgba(255, 255, 255, 0.15); }
@@ -625,15 +625,25 @@
 
   .bonus-visual {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
+    cursor: pointer;
   }
 
   .gift-box {
-    font-size: 70px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     position: relative;
     z-index: 2;
-    animation: bounce 2s infinite;
+    animation: floating 4s infinite ease-in-out;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+  }
+  
+  .bonus-visual:hover .gift-box {
+    transform: scale(1.1) rotate(3deg);
+    animation: none;
   }
 
   .glow-effect {
@@ -641,13 +651,23 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 120px;
-    height: 120px;
-    background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
-    opacity: 0.3;
-    animation: pulse 2s infinite;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.6) 0%, rgba(245, 200, 66, 0.3) 40%, transparent 70%);
+    border-radius: 50%;
+    animation: pulseGlow 3s infinite alternate;
+    z-index: 1;
+  }
+  
+  @keyframes floating {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
   }
 
+  @keyframes pulseGlow {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+  }
   .pa-missions-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));

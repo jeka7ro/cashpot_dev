@@ -302,7 +302,7 @@
       "id": "promo_1",
       "enabled": true,
       "title": "Jocul favorit",
-      "size": "XL",
+      "size": "S",
       "gameImage": "https://prod-cdn-gaming.freetls.fastly.net/cdn/images/icore_1003601_ro/f6f5490e-f2ee-4ac3-abd4-88a99e9906df.gif",
       "backgroundImage": "/abstract_casino_bg_2.png",
       "buttonText": "JOACĂ",
@@ -419,7 +419,7 @@
       "details": "S-a creat categoria \"Categorie Nouă\"."
     }
   ],
-  "updatedAt": "2026-05-19T07:52:28.764Z",
+  "updatedAt": "2026-05-19T08:05:16.337Z",
   "winnersConfig": {
     "enabled": true,
     "showImage": true,
