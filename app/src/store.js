@@ -300,13 +300,12 @@ const defaultVipConfig = {
   subtitleColor: "#cbd5e1",
   subtitleSize: "20",
     levels: [
-      { id: 1, name: "Peștișor Koi", rank: "Nivel 1", img: "/koi_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 2%", "Suport 24/7", "Bonus aniversar: 50 RON"] },
-      { id: 2, name: "Stea de Mare", rank: "Nivel 2", img: "/starfish_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 5%", "Suport Prioritar", "Bonus de trecere: 100 RON"] },
-      { id: 3, name: "Delfin de Argint", rank: "Nivel 3", img: "/dolphin_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 8%", "Retrageri rapide", "Bonus aniversar: 200 RON", "Puncte XP x1.2"] },
-      { id: 4, name: "Crab de Aur", rank: "Nivel 4", img: "/crab_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 10%", "Retrageri instant", "Manager de cont dedicat", "Bonus de trecere: 500 RON"] },
-      { id: 5, name: "Caracatiță Elegantă", rank: "Nivel 5", img: "/octopus_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 12%", "Manager VIP", "Cadouri fizice", "Puncte XP x1.5", "Invitații la evenimente"] },
-      { id: 6, name: "Balenă", rank: "Nivel 6", img: "/whale_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 15%", "Limite de pariere extinse", "Bonusuri personalizate", "Retrageri nelimitate"] },
-      { id: 7, name: "RECHINUL SUPREM", rank: "Nivel 7 • Mascota ta oficială", img: "/shark_vip_v2.png", bgColor: "linear-gradient(135deg, #2e1065, #1e1b4b)", benefits: ["Cashback: 20%", "Recompensă secretă", "Puncte XP x2", "Vacante VIP", "Asistent personal 24/7"] }
+      { id: 1, name: "Peștișor Koi",       rank: "Nivel 1", img: "/koi_vip_v.png",     bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 2%",  "Suport 24/7",                   "Bonus aniversar: 50 RON"] },
+      { id: 2, name: "Stea de Mare",        rank: "Nivel 2", img: "/starfish_vip_v.png",bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 5%",  "Suport Prioritar",               "Bonus de trecere: 100 RON"] },
+      { id: 3, name: "Crab de Aur",         rank: "Nivel 3", img: "/crab_vip_v.png",    bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 10%", "Retrageri instant",              "Manager de cont dedicat", "Bonus de trecere: 500 RON"] },
+      { id: 4, name: "Caracatiță Elegantă", rank: "Nivel 4", img: "/octopus_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 12%", "Manager VIP",                   "Cadouri fizice", "Puncte XP x1.5", "Invitații la evenimente"] },
+      { id: 5, name: "Balenă",              rank: "Nivel 5", img: "/whale_vip_v.png",   bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 15%", "Limite de pariere extinse",      "Bonusuri personalizate", "Retrageri nelimitate"] },
+      { id: 6, name: "RECHINUL SUPREM",     rank: "Nivel 6 • Mascota ta oficială", img: "/shark_vip_v2.png", bgColor: "linear-gradient(135deg, #2e1065, #1e1b4b)", benefits: ["Cashback: 20%", "Recompensă secretă", "Puncte XP x2", "Vacante VIP", "Asistent personal 24/7"] }
     ],
     rewardsGrid: [
       {
@@ -314,7 +313,7 @@ const defaultVipConfig = {
         points: "0 — 2",
         bonuses: [
           { amount: "400 FS", game: "Noble Hot Crown", minDeposit: "0 RON", bet: "0,1 RON" },
-          { amount: "75 FS", game: "Shining Crown", minDeposit: "0 RON", bet: "0,2 RON" }
+          { amount: "75 FS",  game: "Shining Crown",   minDeposit: "0 RON", bet: "0,2 RON" }
         ],
         cashback: null
       },
@@ -322,29 +321,21 @@ const defaultVipConfig = {
         levelName: "NIVEL 2",
         points: "3 — 40",
         bonuses: [
-          { amount: "50%", game: "Activați bonusul înainte de a depune", minDeposit: "70 RON", maxBonus: "450 RON" },
-          { amount: "50 FS", game: "Noble Hot Crown", minDeposit: "0 RON", bet: "0,5 RON" }
+          { amount: "50%",   game: "Activați bonusul înainte de a depune", minDeposit: "70 RON", maxBonus: "450 RON" },
+          { amount: "50 FS", game: "Noble Hot Crown",                       minDeposit: "0 RON",  bet: "0,5 RON" }
         ],
         cashback: null
       },
       {
         levelName: "NIVEL 3",
-        points: "41 — 86",
-        bonuses: [
-          { amount: "50 FS", game: "Moon Fortune", minDeposit: "70 RON", bet: "1 RON" }
-        ],
-        cashback: "3%"
-      },
-      {
-        levelName: "NIVEL 4",
-        points: "87 — 214",
+        points: "41 — 214",
         bonuses: [
           { amount: "75 FS", game: "Candy Blast", minDeposit: "70 RON", bet: "0,8 RON" }
         ],
         cashback: "5%"
       },
       {
-        levelName: "NIVEL 5",
+        levelName: "NIVEL 4",
         points: "215 — 584",
         bonuses: [
           { amount: "100 FS", game: "Gold of Ra", minDeposit: "100 RON", bet: "1 RON" }
@@ -352,17 +343,17 @@ const defaultVipConfig = {
         cashback: "7%"
       },
       {
-        levelName: "NIVEL 6",
+        levelName: "NIVEL 5",
         points: "585 — 1.572",
         bonuses: [
-          { amount: "100%", game: "Activați bonusul înainte de a depune", minDeposit: "70 RON", maxBonus: "900 RON" },
-          { amount: "100 FS", game: "Gold of Ra", minDeposit: "100 RON", bet: "1 RON" }
+          { amount: "100%",   game: "Activați bonusul înainte de a depune", minDeposit: "70 RON", maxBonus: "900 RON" },
+          { amount: "100 FS", game: "Gold of Ra",                            minDeposit: "100 RON", bet: "1 RON" }
         ],
         cashback: "8%"
       },
       {
-        levelName: "NIVEL 7",
-        points: "1.573 — 4.462",
+        levelName: "NIVEL 6",
+        points: "1.573 — ∞",
         bonuses: [
           { amount: "150 FS", game: "Moon Fortune", minDeposit: "300 RON", bet: "2 RON" }
         ],

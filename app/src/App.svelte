@@ -4262,13 +4262,16 @@
                 >
                   <div>
                     <h3
-                      style="font-size: 20px; font-weight: 800; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px;"
+                      style="font-size: 18px; font-weight: 800; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px;"
                     >
+                      {#if rtpConfig.hotImage}
+                        <img src={rtpConfig.hotImage} alt="Hot" style="height: 28px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(239,68,68,0.5));" />
+                      {/if}
                       {rtpConfig.hotTitle}
                       <svg
                         viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
+                        width="14"
+                        height="14"
                         fill="none"
                         stroke="currentColor"
                         stroke-width="2"
@@ -4285,7 +4288,7 @@
                   </div>
                   <a
                     href="#"
-                    style="color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; display: flex; align-items: center;"
+                    style="color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; display: flex; align-items: center; white-space: nowrap;"
                     >Tot <svg
                       viewBox="0 0 24 24"
                       width="14"
@@ -4297,13 +4300,7 @@
                     ></a
                   >
                 </div>
-                {#if rtpConfig.hotImage}
-                  <img
-                    src={rtpConfig.hotImage}
-                    alt="Hot"
-                    style="position: absolute; right: 20px; top: 10px; height: 70px; z-index: 1; pointer-events: none; filter: drop-shadow(0 10px 15px rgba(239, 68, 68, 0.4)); object-fit: contain; opacity: {isDarkTheme ? '0.8' : '0.4'};"
-                  />
-                {/if}
+
 
                 <div
                   class="rtp-list"
@@ -4364,13 +4361,16 @@
                 >
                   <div>
                     <h3
-                      style="font-size: 20px; font-weight: 800; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px;"
+                      style="font-size: 18px; font-weight: 800; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px;"
                     >
+                      {#if rtpConfig.coldImage}
+                        <img src={rtpConfig.coldImage} alt="Cold" style="height: 28px; width: auto; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(56,189,248,0.5));" />
+                      {/if}
                       {rtpConfig.coldTitle}
                       <svg
                         viewBox="0 0 24 24"
-                        width="16"
-                        height="16"
+                        width="14"
+                        height="14"
                         fill="none"
                         stroke="currentColor"
                         stroke-width="2"
@@ -4387,7 +4387,7 @@
                   </div>
                   <a
                     href="#"
-                    style="color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; display: flex; align-items: center;"
+                    style="color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; display: flex; align-items: center; white-space: nowrap;"
                     >Tot <svg
                       viewBox="0 0 24 24"
                       width="14"
@@ -4399,13 +4399,7 @@
                     ></a
                   >
                 </div>
-                {#if rtpConfig.coldImage}
-                  <img
-                    src={rtpConfig.coldImage}
-                    alt="Cold"
-                    style="position: absolute; right: 20px; top: -10px; height: 110px; z-index: 1; pointer-events: none; filter: drop-shadow(0 10px 15px rgba(56, 189, 248, 0.4)); object-fit: contain;"
-                  />
-                {/if}
+
 
                 <div
                   class="rtp-list"
