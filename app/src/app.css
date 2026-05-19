@@ -716,13 +716,14 @@ header.topbar .logo img {
     background: transparent !important;
     border: none !important;
     color: transparent !important;
-    /* Ascundem textul/cursorul cand e inchisa */
-    padding: 0 36px 0 32px !important;
-    /* Spatiu pentru X in dreapta */
+    padding: 0 !important;
     cursor: pointer;
     font-size: 16px !important;
-    /* CRITICAL: Must be >= 16px to prevent iOS Safari auto-zoom bug */
     transition: all 0.2s !important;
+  }
+  
+  .topbar-search input::placeholder {
+    color: transparent !important;
   }
 
   /* Buton X inchidere */
@@ -765,7 +766,12 @@ header.topbar .logo img {
 
   .topbar-search-container:focus-within input {
     color: var(--text-main) !important;
+    padding: 0 36px 0 32px !important;
     cursor: text;
+  }
+
+  .topbar-search-container:focus-within input::placeholder {
+    color: var(--text-muted) !important;
   }
 
   .topbar-search-container:focus-within svg:not(.search-close-btn svg) {
@@ -4747,13 +4753,14 @@ header.topbar .logo img {
     background: transparent !important;
     border: none !important;
     color: transparent !important;
-    /* Ascundem textul/cursorul cand e inchisa */
-    padding: 0 36px 0 32px !important;
-    /* Spatiu pentru X in dreapta */
+    padding: 0 !important;
     cursor: pointer;
     font-size: 16px !important;
-    /* CRITICAL: Must be >= 16px to prevent iOS Safari auto-zoom bug */
     transition: all 0.2s !important;
+  }
+  
+  .topbar-search input::placeholder {
+    color: transparent !important;
   }
 
   /* Buton X inchidere */
@@ -4796,7 +4803,12 @@ header.topbar .logo img {
 
   .topbar-search-container:focus-within input {
     color: var(--text-main) !important;
+    padding: 0 36px 0 32px !important;
     cursor: text;
+  }
+
+  .topbar-search-container:focus-within input::placeholder {
+    color: var(--text-muted) !important;
   }
 
   .topbar-search-container:focus-within svg:not(.search-close-btn svg) {
