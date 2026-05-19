@@ -5,8 +5,10 @@
 
   export let activeView = "home";
   export let config = null;
+  export let userAvatar = null;
   
   $: currentConfig = config || $cmsPlayArenaConfig;
+  $: currentAvatar = userAvatar || currentConfig?.userAvatar;
   
   let activeTab = "home";
   
@@ -42,7 +44,7 @@
     <div class="pa-hero-content">
       <div class="pa-user-info">
         <div class="pa-avatar-wrapper">
-          <img src={currentConfig.userAvatar} alt="Avatar" class="pa-avatar" />
+          <img src={currentAvatar} alt="Avatar" class="pa-avatar" />
           <div class="pa-level-badge">{currentConfig.coins}</div>
         </div>
         <div class="pa-user-text">

@@ -2912,6 +2912,7 @@
           <PlayArena
             {activeView}
             config={playArenaConfig}
+            userAvatar={vipConfig?.levels?.find(l => l.id === userLevel)?.img}
             on:navigate={(e) => setView(e.detail.view)}
           />
         {:else if activeView === "vip"}
