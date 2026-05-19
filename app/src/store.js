@@ -521,7 +521,10 @@ function applyServerData(data) {
 /** Load all CMS data from server. Called on app mount. */
 export async function loadFromServer() {
   try {
-    const res = await fetch(API, { signal: AbortSignal.timeout(3000) });
+    const res = await fetch(`${API}?t=${new Date().getTime()}`, { 
+      signal: AbortSignal.timeout(3000),
+      cache: 'no-store'
+    });
     if (!res.ok) throw new Error('Server error');
     const { data } = await res.json();
     applyServerData(data);

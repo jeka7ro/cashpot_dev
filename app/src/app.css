@@ -339,15 +339,15 @@ header.topbar .logo img {
 /* Renamed or replaced topbar-main logic */
 
 .topbar-search-wrapper {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 650px; /* Cât un banner */
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: static;
+  transform: none;
+  max-width: none;
+  margin: 0 32px;
   height: 48px;
   z-index: 5;
-  display: flex;
 }
 
 .topbar-search {

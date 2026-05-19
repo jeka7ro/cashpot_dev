@@ -5164,7 +5164,7 @@
             class="nav-item-center"
             on:click={() => { isMobileMenuOpen = false; if (isLoggedIn) showMobileWallet = true; else showLoginModal = true; }}
           >
-            <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:0; overflow:hidden; border-radius:50%;">
+            <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:0; overflow:hidden; border-radius:50%; border-color: {isLoggedIn ? (vipConfig.levels[userLevel - 1]?.color || 'var(--accent-gold)') : 'var(--accent-gold)'}; box-shadow: 0 0 15px {isLoggedIn ? (vipConfig.levels[userLevel - 1]?.color || 'transparent') : 'transparent'};">
               {#if isLoggedIn}
                 <div class="vip-nav-avatar" style="width:100%; height:100%; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center;">
                   <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
@@ -5237,7 +5237,7 @@
 
           <!-- Header with VIP avatar -->
           <div style="display:flex; align-items:center; gap:14px; padding:16px 20px 20px;">
-            <div style="width:56px; height:56px; border-radius:50%; border:3px solid var(--accent-gold); overflow:hidden; flex-shrink:0; box-shadow:0 0 20px rgba(245,200,66,0.4);">
+            <div style="width:56px; height:56px; border-radius:50%; border:3px solid {vipConfig.levels[userLevel - 1]?.color || 'var(--accent-gold)'}; overflow:hidden; flex-shrink:0; box-shadow:0 0 20px {vipConfig.levels[userLevel - 1]?.color || 'rgba(245,200,66,0.4)'};">
               <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
             </div>
             <div style="flex:1;">
