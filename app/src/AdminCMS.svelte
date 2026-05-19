@@ -3115,14 +3115,6 @@
                   <div class="cms-field" style="grid-column: 1/-1;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                       <label style="margin: 0;">Imagine Fundal Banner</label>
-                      <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 11px; color: var(--text-muted);">Mod Afișare:</span>
-                        <select bind:value={promo.backgroundFit} style="padding: 4px 8px; border-radius: 4px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--border-color); outline: none; font-size: 11px;">
-                          <option value="cover">Taie marginile (Cover)</option>
-                          <option value="contain">Încadrează toată poza (Contain)</option>
-                          <option value="fill">Întinde complet (Fill)</option>
-                        </select>
-                      </div>
                     </div>
                     <div
                       style="display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; margin-bottom: 12px;"
@@ -3143,16 +3135,26 @@
                       {/each}
                     </div>
 
-                    <div style="display: flex; gap: 8px; margin-bottom: 12px; width: 100%;">
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px; width: 100%; align-items: center;">
                       <input
                         type="text"
                         bind:value={promo.backgroundImage}
                         placeholder="URL Imagine sau încarcă un fișier..."
                         style="flex: 1; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-hover); color: var(--text-main); outline: none;"
                       />
+                      
+                      <div style="display: flex; align-items: center; gap: 6px; background: rgba(0,0,0,0.3); padding: 4px; border-radius: 6px; border: 1px solid var(--border-color);">
+                        <span style="font-size: 10px; color: var(--text-muted); padding-left: 6px; white-space: nowrap;">Afișare:</span>
+                        <select bind:value={promo.backgroundFit} style="padding: 6px; border-radius: 4px; background: rgba(255,255,255,0.1); color: #fff; border: none; outline: none; font-size: 11px; cursor: pointer;">
+                          <option value="cover">Cover (Taie)</option>
+                          <option value="contain">Contain (Toată)</option>
+                          <option value="fill">Fill (Întinde)</option>
+                        </select>
+                      </div>
+
                       <label
                         class="cms-btn-primary"
-                        style="cursor: pointer; margin: 0; white-space: nowrap;"
+                        style="cursor: pointer; margin: 0; white-space: nowrap; padding: 10px 16px;"
                       >
                         📁 Încarcă
                         <input

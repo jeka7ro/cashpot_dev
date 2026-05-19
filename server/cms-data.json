@@ -331,7 +331,8 @@
       "gameImageSize": "M",
       "buttonBorderWidth": 0,
       "showButton": false,
-      "clickableBanner": true
+      "clickableBanner": true,
+      "backgroundFit": "fill"
     }
   ],
   "gameEffects": {
@@ -437,7 +438,7 @@
       "details": "S-a creat categoria \"Categorie Nouă\"."
     }
   ],
-  "updatedAt": "2026-05-19T08:31:58.432Z",
+  "updatedAt": "2026-05-19T08:41:23.482Z",
   "winnersConfig": {
     "enabled": true,
     "showImage": true,
