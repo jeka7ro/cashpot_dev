@@ -5128,13 +5128,13 @@
             <span>LIVE</span>
           </a>
 
-          <!-- CENTRAL MENU BUTTON -->
+          <!-- CENTRAL HOME BUTTON -->
           <div
             class="nav-item-center"
-            on:click={() => (isMobileMenuOpen = !isMobileMenuOpen)}
+            on:click={() => { isMobileMenuOpen = false; setView('home'); }}
           >
-            <div class="center-btn-inner {isMobileMenuOpen ? 'active' : ''}">
-              <img src="/logoMobile.webp" alt="Menu" />
+            <div class="center-btn-inner {activeView === 'home' && !searchQuery ? 'active' : ''}">
+              <img src="/logoMobile.webp" alt="Home" />
             </div>
           </div>
 
