@@ -213,6 +213,9 @@
   function setView(view, query = "", subView = "") {
     if (view === "home" && !query) {
       clearAllState();
+      if (typeof window !== "undefined" && window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
       return;
     }
     activeView = view;
@@ -222,7 +225,12 @@
       playArenaConfig.activeSubView = subView;
       cmsPlayArenaConfig.set({ ...playArenaConfig });
     }
+    
     if (typeof window !== "undefined") {
+      const newHash = query ? `#${view}/${query}` : `#${view}`;
+      if (window.location.hash !== newHash) {
+        window.history.pushState(null, '', newHash);
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }
@@ -473,9 +481,35 @@
       console.log("CMS Preview Mode Active: Draft Data");
     }
 
-    if (viewParam) {
-      activeView = viewParam;
-      console.log("CMS Preview Navigation: ", viewParam);
+    // Handle hash routing
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        const parts = hash.split('/').filter(Boolean);
+        const view = parts[0] || 'home';
+        const query = parts[1] || '';
+        
+        if (activeView !== view || searchQuery !== query) {
+          activeView = view;
+          searchQuery = query;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else {
+        if (activeView !== 'home') {
+          activeView = 'home';
+          searchQuery = '';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Initial route load
+    if (window.location.hash) {
+       handleHashChange();
+    } else if (viewParam) {
+       activeView = viewParam;
     }
 
     // Handle hash anchors on load (e.g. #categories)

@@ -51,7 +51,7 @@
   const getTabTitle = (tab) => {
     const titles = {
       categories: "Categorii & Layout",
-      banners: "Bannere Promo",
+      banners: "Acasă",
       jackpot: "Jackpot Cards",
       promo: "Promo Banner",
       calendar: "Calendar & Timere",
@@ -938,7 +938,7 @@
               y2="9"
             /><line x1="9" y1="21" x2="9" y2="9" /></svg
           >
-          Bannere Promo
+          Acasă
         </button>
         <button
           class="cms-nav-item {activeTab === 'categories' ? 'active' : ''}"
