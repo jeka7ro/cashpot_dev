@@ -2971,7 +2971,7 @@
                     </select>
                   </div>
                   <div class="cms-field">
-                    <label>Mărime Banner (S, M, L, XL)</label>
+                    <label>Înălțime Banner (S, M, L, XL) - Se va afișa pe tot rândul</label>
                     <select
                       bind:value={promo.size}
                       style="width: 100%; padding: 12px; border-radius: 8px; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); outline: none;"

@@ -36,6 +36,58 @@
     in_progress: "În curs"
   };
 
+  const iconResolver = {
+    '🏠': '/icons/pa_icon_home.png', '🎯': '/icons/pa_icon_missions.png',
+    '🏆': '/icons/pa_icon_tournaments.png', '🎁': '/icons/pa_icon_bonus.png',
+    '💰': '/icons/pa_icon_coin.png', '🐻': '/icons/pa_icon_bonus.png',
+    '📅': '/icons/pa_icon_missions.png', '✉️': '/icons/pa_icon_messages.png',
+    '🎡': '/icons/pa_icon_wheel.png'
+  };
+
+  function getIcon(val) {
+    if (!val) return val;
+    if (typeof val === 'string') {
+      const t = val.trim();
+      if (iconResolver[t]) return iconResolver[t];
+    }
+    return val;
+  }
+
+  // Wheel State
+  let wheelRotation = 0;
+  let wheelSpinning = false;
+  let wheelPrize = "";
+  let showWheelPrize = false;
+  
+  const wheelSegments = [
+    { label: "3 Rotiri", color: "#16a34a" },
+    { label: "50 Rotiri", color: "#2563eb" },
+    { label: "10 Rotiri", color: "#0d9488" },
+    { label: "50% Bonus", color: "#db2777" },
+    { label: "7 Rotiri", color: "#16a34a" },
+    { label: "20% Bonus", color: "#dc2626" },
+    { label: "5 Rotiri", color: "#7c3aed" },
+    { label: "77 Rotiri", color: "#dc2626" },
+  ];
+
+  function spinWheel() {
+    if (wheelSpinning) return;
+    wheelSpinning = true;
+    showWheelPrize = false;
+    const segCount = wheelSegments.length;
+    const winIdx = Math.floor(Math.random() * segCount);
+    const degPerSeg = 360 / segCount;
+    const extraSpins = (5 + Math.floor(Math.random() * 3)) * 360;
+    const targetDeg = extraSpins + (360 - (winIdx * degPerSeg + degPerSeg / 2));
+    wheelRotation = wheelRotation + targetDeg;
+    setTimeout(() => {
+      wheelSpinning = false;
+      wheelPrize = wheelSegments[winIdx].label;
+      showWheelPrize = true;
+      setTimeout(() => { showWheelPrize = false; }, 4000);
+    }, 3600);
+  }
+
 </script>
 
 <div class="play-arena-wrapper" in:fade={{ duration: 400 }}>
@@ -92,8 +144,8 @@
               on:click={() => setSubView(item.id.replace('pa_', ''))}
             >
               <span class="item-icon">
-                {#if item.icon && item.icon.startsWith('/')}
-                  <img src={item.icon} alt={item.label} style="height: 20px; object-fit: contain;" />
+                {#if getIcon(item.icon) && getIcon(item.icon).startsWith('/')}
+                  <img src={getIcon(item.icon)} alt={item.label} style="height: 20px; object-fit: contain;" />
                 {:else}
                   {item.icon}
                 {/if}
@@ -120,8 +172,8 @@
             {#each currentConfig.missions.slice(0, 3) as mission}
               <div class="pa-mission-card">
                 <div class="mission-icon-box">
-                  {#if mission.icon && mission.icon.startsWith('/')}
-                    <img src={mission.icon} alt="icon" style="height: 36px; object-fit: contain;" />
+                  {#if getIcon(mission.icon) && getIcon(mission.icon).startsWith('/')}
+                    <img src={getIcon(mission.icon)} alt="icon" style="height: 36px; object-fit: contain;" />
                   {:else}
                     {mission.icon}
                   {/if}
@@ -130,7 +182,7 @@
                   <h3>{mission.title}</h3>
                   <p>{mission.reward}</p>
                   {#if mission.timeRemaining}
-                    <div class="mission-timer">⏳ Expira in: {mission.timeRemaining}</div>
+                    <div class="mission-timer">Expiră în: {mission.timeRemaining}</div>
                   {/if}
                 </div>
                 <div class="mission-action">
@@ -173,8 +225,8 @@
                 </div>
                 <div class="card-main">
                   <div class="large-icon">
-                    {#if mission.icon && mission.icon.startsWith('/')}
-                      <img src={mission.icon} alt="icon" style="height: 60px; object-fit: contain;" />
+                    {#if getIcon(mission.icon) && getIcon(mission.icon).startsWith('/')}
+                      <img src={getIcon(mission.icon)} alt="icon" style="height: 60px; object-fit: contain;" />
                     {:else}
                       {mission.icon}
                     {/if}
@@ -193,6 +245,25 @@
                 </div>
              </div>
           {/each}
+        </div>
+      </div>
+    {:else if activeTab === "wheel"}
+      <div class="pa-full-view pa-wheel-view" in:fly={{ y: 20, duration: 400 }}>
+        <h2 class="view-title">Roata Norocului</h2>
+        <div class="pa-wheel-container">
+          <div class="pa-wheel-wrapper">
+             <div class="pa-wheel-indicator">▼</div>
+             <img src="/wheel.png" alt="Wheel" class="pa-wheel-img" style="transform: rotate({wheelRotation}deg); transition: transform {wheelSpinning ? '3.5s' : '0s'} cubic-bezier(0.17, 0.67, 0.12, 0.99);" />
+          </div>
+          
+          <div class="pa-wheel-controls">
+            {#if showWheelPrize}
+               <div class="pa-wheel-prize" in:fade>🎉 Ai câștigat: {wheelPrize}!</div>
+            {/if}
+            <button class="pa-btn primary pa-spin-btn" disabled={wheelSpinning} on:click={spinWheel}>
+              {wheelSpinning ? "Se rotește..." : "Învârte Acum"}
+            </button>
+          </div>
         </div>
       </div>
     {:else}
@@ -652,5 +723,70 @@
     .pa-hero-content { flex-direction: column; align-items: flex-start; }
     .pa-stats-grid { width: 100%; }
     .pa-stat-card { flex: 1; }
+  }
+  
+  /* Wheel Styles */
+  .pa-wheel-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: radial-gradient(circle at center, rgba(245,200,66,0.1), transparent 70%);
+  }
+  .pa-wheel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    margin-top: 20px;
+  }
+  .pa-wheel-wrapper {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(245,200,66,0.2), inset 0 0 20px rgba(0,0,0,0.5);
+    background: #0f172a;
+    padding: 8px;
+    border: 4px solid var(--accent-gold);
+  }
+  .pa-wheel-indicator {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    color: var(--accent-gold);
+    z-index: 10;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+  }
+  .pa-wheel-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    will-change: transform;
+    display: block;
+  }
+  .pa-wheel-controls {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  .pa-wheel-prize {
+    background: linear-gradient(135deg, var(--accent-gold), #d97706);
+    color: #1a1200;
+    font-weight: 900;
+    font-size: 16px;
+    padding: 8px 24px;
+    border-radius: 99px;
+    box-shadow: 0 4px 15px rgba(245,200,66,0.4);
+  }
+  .pa-spin-btn {
+    font-size: 18px;
+    padding: 16px 40px;
+    box-shadow: 0 4px 20px rgba(109,40,217,0.4);
   }
 </style>

@@ -277,10 +277,10 @@ const defaultPlayArenaConfig = {
   activeSubView: "home",
   items: [
     { id: 'pa_home', label: 'Play Arena', icon: '/icons/pa_icon_home.png', enabled: true },
-    { id: 'pa_wheel', label: 'Roata Norocului', icon: '', enabled: true },
+    { id: 'pa_wheel', label: 'Roata Norocului', icon: '/icons/pa_icon_wheel.png', enabled: true },
     { id: 'pa_missions', label: 'Misiuni', icon: '/icons/pa_icon_missions.png', enabled: true },
     { id: 'pa_bonus', label: 'Bonus Factory', icon: '/icons/pa_icon_bonus.png', enabled: true },
-    { id: 'pa_messages', label: 'Mesaje Primite', icon: '✉️', enabled: true },
+    { id: 'pa_messages', label: 'Mesaje Primite', icon: '/icons/pa_icon_messages.png', enabled: true },
     { id: 'pa_tournaments', label: 'Turnee', icon: '/icons/pa_icon_tournaments.png', enabled: true }
   ],
   missions: [
@@ -330,7 +330,8 @@ function getInitial(key, def) {
                '🏠': '/icons/pa_icon_home.png', '🎯': '/icons/pa_icon_missions.png',
                '🏆': '/icons/pa_icon_tournaments.png', '🎁': '/icons/pa_icon_bonus.png',
                '💰': '/icons/pa_icon_coin.png', '🐻': '/icons/pa_icon_bonus.png',
-               '📅': '/icons/pa_icon_missions.png'
+               '📅': '/icons/pa_icon_missions.png', '✉️': '/icons/pa_icon_messages.png',
+               '🎡': '/icons/pa_icon_wheel.png'
              };
              if (parsed.items) {
                parsed.items = parsed.items.map(item => ({...item, icon: iconMap[typeof item.icon === 'string' ? item.icon.trim() : item.icon] || item.icon}));
