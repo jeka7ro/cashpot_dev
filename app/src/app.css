@@ -6687,3 +6687,5 @@ header.topbar .logo img {
     width: 100% !important;
   }
 }
+
+.promo-title:empty, .banner-content h2:empty, .banner-content h3:empty, .banner-content p:empty { display: none !important; }

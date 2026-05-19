@@ -1082,10 +1082,11 @@
             ? '0'
             : userPanelRect.right + 'px')}; width:{userPanelRect.isMobile
         ? '100vw'
-        : '320px'}; max-height:calc(100vh - 40px); overflow-y:auto; background:var(--bg-panel); backdrop-filter:blur(16px); border:1px solid var(--border-color); border-radius:{userPanelRect.isMobile
+        : '640px'}; max-height:calc(100vh - 40px); overflow-y:auto; background:var(--bg-panel); backdrop-filter:blur(16px); border:1px solid var(--border-color); border-radius:{userPanelRect.isMobile
         ? '16px 16px 0 0'
-        : '16px'}; box-shadow: var(--shadow-glass); z-index:9999;"
+        : '16px'}; box-shadow: var(--shadow-glass); z-index:9999; display:flex; flex-direction:{userPanelRect.isMobile ? 'column' : 'row'};"
     >
+      <div style="width:{userPanelRect.isMobile ? '100%' : '320px'}; display:flex; flex-direction:column; border-right:{userPanelRect.isMobile ? 'none' : '1px solid var(--border-color)'};">
       <!-- Header -->
       <div
         style="padding: 24px 24px 20px 24px; border-bottom: 1px solid var(--border-color);"
@@ -1356,6 +1357,36 @@
           <span>Deconectare</span>
         </button>
       </div>
+      </div> <!-- End Left Column -->
+
+      <!-- Right Column: Recent Games (Desktop only) -->
+      {#if !userPanelRect.isMobile}
+      <div style="width:320px; padding:24px; display:flex; flex-direction:column;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h3 style="font-size:16px; font-weight:800; color:var(--text-main); margin:0;">Ultimele Jocuri</h3>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+          {#each (topGamesConfig?.games || []).slice(0, 4) as game}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <div
+              style="aspect-ratio:3/4; border-radius:12px; overflow:hidden; position:relative; cursor:pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition:transform 0.2s;"
+              on:click={() => { showUserPanel = false; selectGame(game); }}
+              on:mouseover={(e) => e.currentTarget.style.transform='scale(1.03)'}
+              on:mouseout={(e) => e.currentTarget.style.transform='scale(1)'}
+            >
+              <img src={game.img} alt={game.n} style="width:100%; height:100%; object-fit:cover;" />
+              <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.8), transparent); display:flex; align-items:flex-end; padding:10px;">
+                <span style="color:#fff; font-size:10px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{game.n}</span>
+              </div>
+            </div>
+          {/each}
+        </div>
+        <button style="margin-top:auto; width:100%; padding:12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); border-radius:12px; color:var(--text-main); font-weight:700; cursor:pointer; transition:all 0.2s;" on:mouseover={(e) => e.currentTarget.style.background='rgba(255,255,255,0.1)'} on:mouseout={(e) => e.currentTarget.style.background='rgba(255,255,255,0.05)'}>
+          Toate Jocurile Jucate
+        </button>
+      </div>
+      {/if}
     </div>
   {/if}
 
@@ -4478,12 +4509,14 @@
                 <div class="promo-overlay"></div>
               {/if}
               <div class="promo-content">
+                {#if promo.title && promo.title.trim() !== ""}
                 <h2
                   class="promo-title"
                   style="color: {promo.textColor || '#ffffff'};"
                 >
                   {promo.title}
                 </h2>
+                {/if}
                 {#if promo.gameImage}
                   <img
                     src={promo.gameImage}
@@ -4859,12 +4892,14 @@
                         <div class="promo-overlay"></div>
                       {/if}
                       <div class="promo-content">
+                        {#if promo.title && promo.title.trim() !== ""}
                         <h2
                           class="promo-title"
                           style="color: {promo.textColor || '#ffffff'};"
                         >
                           {promo.title}
                         </h2>
+                        {/if}
                         {#if promo.gameImage}
                           <img
                             src={promo.gameImage}
