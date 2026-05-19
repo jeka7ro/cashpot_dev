@@ -643,7 +643,7 @@ header.topbar .logo img {
   /* Mobile Header Adjustments - Single Row Forced */
   .topbar {
     height: 48px !important;
-    margin: 12px 24px 0 24px !important;
+    margin: calc(env(safe-area-inset-top, 0px) + 12px) 24px 0 24px !important;
     /* Made even narrower */
     padding: 0 4px 0 12px !important;
     /* Pushed icons far right, gave logo a bit more space */
@@ -4674,7 +4674,7 @@ header.topbar .logo img {
   /* Mobile Header Adjustments - Single Row Forced */
   .topbar {
     height: 48px !important;
-    margin: 12px 24px 0 24px !important;
+    margin: calc(env(safe-area-inset-top, 0px) + 12px) 24px 0 24px !important;
     /* Made even narrower */
     padding: 0 4px 0 12px !important;
     /* Pushed icons far right, gave logo a bit more space */
