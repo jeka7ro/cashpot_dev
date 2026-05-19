@@ -51,7 +51,7 @@
   const getTabTitle = (tab) => {
     const titles = {
       categories: "Categorii & Layout",
-      banners: "Acasă",
+      banners: "Bannere",
       jackpot: "Jackpot Cards",
       promo: "Promo Banner",
       calendar: "Calendar & Timere",
@@ -258,7 +258,7 @@
   $: if (jackpotConfig) cmsDraftJackpot.set(jackpotConfig);
   $: if (jackpotFeverConfig) cmsDraftJackpotFever.set(jackpotFeverConfig);
   $: if (jackpotFever2Config) cmsDraftJackpotFever2.set(jackpotFever2Config);
-  $: if (bannersConfig) cmsDraftBanners.set(bannersConfig);
+  $: if (bannersConfig) { cmsDraftBanners.set(bannersConfig); cmsBanners.set(bannersConfig); }
   $: if (promoConfig) cmsDraftPromoBanner.set(promoConfig);
   $: if (gameEffects) cmsDraftGameEffects.set(gameEffects);
   $: if (themeColors) cmsDraftThemeColors.set(themeColors);
