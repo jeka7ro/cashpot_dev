@@ -6710,3 +6710,45 @@ header.topbar .logo img {
     margin-bottom: 10px !important;
   }
 }
+
+/* FIX SEARCH BUBBLE OVERLAP */
+@media (max-width: 1024px) {
+  .search-bubble {
+    right: 32px !important;
+    top: 50% !important;
+    transform: translateY(-50%) scale(0.8) !important;
+    z-index: 10 !important;
+  }
+  .search-close-btn {
+    right: 8px !important;
+    z-index: 11 !important;
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0 !important;
+  }
+  .topbar-search input {
+    padding-right: 65px !important; /* Make room for both bubble and X button */
+  }
+}
+
+/* ULTIMATE MOBILE SEARCH EXPANSION FIX */
+@media (max-width: 1024px) {
+  /* When focused, overlay the entire header */
+  .topbar-search-wrapper:focus-within {
+    position: absolute !important;
+    left: 8px !important;
+    right: 8px !important;
+    top: 6px !important;
+    height: 36px !important;
+    max-width: none !important;
+    width: auto !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+  }
+  .topbar-search-wrapper:focus-within .topbar-search {
+    background: var(--bg-main) !important;
+  }
+  .topbar-search-wrapper:focus-within input {
+    color: var(--text-main) !important; /* Force visible text color */
+  }
+}

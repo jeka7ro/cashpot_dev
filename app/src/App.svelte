@@ -3485,15 +3485,15 @@
                               class="banner-tag"
                               >{bannersConfig.items[idx].tag}</span
                             >{/if}
-                          <h3
+                          {#if bannersConfig.items[idx].title}<h3
                             style="color: {bannersConfig.items[idx]
                               .textColor}; {bannersConfig.items[idx].titleSize
                               ? `font-size: ${bannersConfig.items[idx].titleSize};`
                               : ''}"
                           >
                             {bannersConfig.items[idx].title}
-                          </h3>
-                          <p
+                          </h3>{/if}
+                          {#if bannersConfig.items[idx].subtitle}<p
                             style="color: {bannersConfig.items[idx]
                               .textColor}; opacity: 0.9; {bannersConfig.items[
                               idx
@@ -3502,7 +3502,7 @@
                               : ''}"
                           >
                             {bannersConfig.items[idx].subtitle}
-                          </p>
+                          </p>{/if}
                           {#if bannersConfig.items[idx].showButton}<button
                               class="btn-gold"
                               style="padding: 6px 12px; font-size: 12px; margin-top: 8px; background: {bannersConfig
@@ -3562,7 +3562,7 @@
                               style="font-size: 9px;"
                               >{bannersConfig.items[idx].tag}</span
                             >{/if}
-                          <h3
+                          {#if bannersConfig.items[idx].title}<h3
                             style="line-height: 1.2; color: {bannersConfig
                               .items[idx].textColor}; {bannersConfig.items[idx]
                               .titleSize
@@ -3570,8 +3570,8 @@
                               : 'font-size: 1rem;'}"
                           >
                             {bannersConfig.items[idx].title}
-                          </h3>
-                          <p
+                          </h3>{/if}
+                          {#if bannersConfig.items[idx].subtitle}<p
                             style="margin-bottom: 12px; line-height: 1.3; color: {bannersConfig
                               .items[idx]
                               .textColor}; opacity: 0.9; {bannersConfig.items[
@@ -3581,7 +3581,7 @@
                               : 'font-size: 11px;'}"
                           >
                             {bannersConfig.items[idx].subtitle}
-                          </p>
+                          </p>{/if}
                           {#if bannersConfig.items[idx].showButton}<button
                               class="btn-gold"
                               style="padding: 6px 12px; font-size: 11px; margin-top: auto; width: fit-content; background: {bannersConfig
@@ -3639,15 +3639,15 @@
                               class="banner-tag"
                               >{bannersConfig.items[idx].tag}</span
                             >{/if}
-                          <h3
+                          {#if bannersConfig.items[idx].title}<h3
                             style="color: {bannersConfig.items[idx]
                               .textColor}; {bannersConfig.items[idx].titleSize
                               ? `font-size: ${bannersConfig.items[idx].titleSize};`
                               : ''}"
                           >
                             {bannersConfig.items[idx].title}
-                          </h3>
-                          <p
+                          </h3>{/if}
+                          {#if bannersConfig.items[idx].subtitle}<p
                             style="color: {bannersConfig.items[idx]
                               .textColor}; opacity: 0.9; {bannersConfig.items[
                               idx
@@ -3656,7 +3656,7 @@
                               : ''}"
                           >
                             {bannersConfig.items[idx].subtitle}
-                          </p>
+                          </p>{/if}
                           {#if bannersConfig.items[idx].showButton}<button
                               class="btn-gold"
                               style="padding: 6px 12px; font-size: 12px; margin-top: 8px; background: {bannersConfig
@@ -3713,15 +3713,15 @@
                               class="banner-tag"
                               >{bannersConfig.items[idx].tag}</span
                             >{/if}
-                          <h3
+                          {#if bannersConfig.items[idx].title}<h3
                             style="color: {bannersConfig.items[idx]
                               .textColor}; {bannersConfig.items[idx].titleSize
                               ? `font-size: ${bannersConfig.items[idx].titleSize};`
                               : 'font-size: 1.8rem;'}"
                           >
                             {bannersConfig.items[idx].title}
-                          </h3>
-                          <p
+                          </h3>{/if}
+                          {#if bannersConfig.items[idx].subtitle}<p
                             style="margin-bottom: 16px; color: {bannersConfig
                               .items[idx]
                               .textColor}; opacity: 0.9; {bannersConfig.items[
@@ -3731,7 +3731,7 @@
                               : 'font-size: 14px;'}"
                           >
                             {bannersConfig.items[idx].subtitle}
-                          </p>
+                          </p>{/if}
                           {#if bannersConfig.items[idx].showButton}<button
                               class="btn-gold"
                               style="background: {bannersConfig.items[idx]
