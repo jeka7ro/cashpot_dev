@@ -6357,6 +6357,40 @@ header.topbar .logo img {
   font-weight: 600;
 }
 
+@media (max-width: 768px) {
+  .cat-tabs-mobile-wrap {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    padding-bottom: 8px !important;
+    scrollbar-width: none;
+  }
+  .cat-tabs-mobile-wrap::-webkit-scrollbar {
+    display: none;
+  }
+  .cat-tab-btn-circle {
+    min-width: 48px !important;
+  }
+  .cat-tab-btn-circle > div {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .cat-tab-btn-circle span {
+    font-size: 9px !important;
+    margin-top: 2px !important;
+  }
+  .cat-tab-btn-pill {
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+    gap: 4px !important;
+  }
+  .cat-tab-btn-pill img {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
 /* VIP Hero Box */
 .vip-hero-box-container {
   display: flex;

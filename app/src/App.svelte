@@ -1355,7 +1355,7 @@
               {widgetsSource}
               isVisualEditor={isVisualCMSActive}
               on:navigate={(e) => setView(e.detail.view, e.detail.query || "")}
-              on:wheel={() => setView("playarena", "", "wheel")}
+              on:wheel={() => setView("home", "")}
               on:random={triggerRandomGame}
               on:play={(e) => playGame(e.detail.game)}
               on:deposit={handleDeposit}
@@ -3664,11 +3664,12 @@
               {@const cFont = ctSize === 's' ? '18px' : ctSize === 'l' ? '28px' : '22px'}
               {@const cLabel = ctSize === 's' ? '9px' : ctSize === 'l' ? '12px' : '10px'}
               <div style="width:100%; padding: 16px 24px 4px; box-sizing:border-box;">
-                <div style="display:flex; gap:24px; flex-wrap:wrap; justify-content:center; align-items:flex-start;">
+                <div class="cat-tabs-mobile-wrap" style="display:flex; gap:24px; flex-wrap:wrap; justify-content:center; align-items:flex-start;">
                   {#each ctTabs as tab}
                     {@const isActive = activeView === tab.id}
                     {@const tabImg = tab.image || tabDefaultImages[tab.id]}
                     <button
+                      class="cat-tab-btn-circle"
                       on:click={() => setView(tab.id, '')}
                       style="display:flex; flex-direction:column; align-items:center; gap:5px; background:none; border:none; cursor:pointer; padding:0; min-width:{cSize}px;"
                     >
@@ -3698,10 +3699,11 @@
               {@const ctFontSize = ctSize === 's' ? '11px' : ctSize === 'l' ? '15px' : '13px'}
               {@const ctRadius = ctShape === 'round' ? '99px' : '10px'}
               <div style="width:100%; padding: 16px 24px 4px; box-sizing:border-box;">
-                <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+                <div class="cat-tabs-mobile-wrap" style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
                   {#each ctTabs as tab}
                     {@const isActive = activeView === tab.id}
                     <button
+                      class="cat-tab-btn-pill"
                       on:click={() => setView(tab.id, '')}
                       style="
                         display:flex; align-items:center; gap:6px;
