@@ -3481,11 +3481,11 @@
                           class="banner-content"
                           style="color: {bannersConfig.items[idx].textColor};"
                         >
-                          {#if bannersConfig.items[idx].tag}<span
+                          {#if bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== ""}<span
                               class="banner-tag"
                               >{bannersConfig.items[idx].tag}</span
                             >{/if}
-                          {#if bannersConfig.items[idx].title}<h3
+                          {#if bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== ""}<h3
                             style="color: {bannersConfig.items[idx]
                               .textColor}; {bannersConfig.items[idx].titleSize
                               ? `font-size: ${bannersConfig.items[idx].titleSize};`
@@ -3493,7 +3493,7 @@
                           >
                             {bannersConfig.items[idx].title}
                           </h3>{/if}
-                          {#if bannersConfig.items[idx].subtitle}<p
+                          {#if bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== ""}<p
                             style="color: {bannersConfig.items[idx]
                               .textColor}; opacity: 0.9; {bannersConfig.items[
                               idx
@@ -3503,7 +3503,7 @@
                           >
                             {bannersConfig.items[idx].subtitle}
                           </p>{/if}
-                          {#if bannersConfig.items[idx].showButton}<button
+                          {#if bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== ""}<button
                               class="btn-gold"
                               style="padding: 6px 12px; font-size: 12px; margin-top: 8px; background: {bannersConfig
                                 .items[idx].buttonColor}; color: {bannersConfig
@@ -3557,12 +3557,12 @@
                           style="height: 100%; color: {bannersConfig.items[idx]
                             .textColor};"
                         >
-                          {#if bannersConfig.items[idx].tag}<span
+                          {#if bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== ""}<span
                               class="banner-tag"
                               style="font-size: 9px;"
                               >{bannersConfig.items[idx].tag}</span
                             >{/if}
-                          {#if bannersConfig.items[idx].title}<h3
+                          {#if bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== ""}<h3
                             style="line-height: 1.2; color: {bannersConfig
                               .items[idx].textColor}; {bannersConfig.items[idx]
                               .titleSize
@@ -3571,7 +3571,7 @@
                           >
                             {bannersConfig.items[idx].title}
                           </h3>{/if}
-                          {#if bannersConfig.items[idx].subtitle}<p
+                          {#if bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== ""}<p
                             style="margin-bottom: 12px; line-height: 1.3; color: {bannersConfig
                               .items[idx]
                               .textColor}; opacity: 0.9; {bannersConfig.items[
@@ -3582,7 +3582,7 @@
                           >
                             {bannersConfig.items[idx].subtitle}
                           </p>{/if}
-                          {#if bannersConfig.items[idx].showButton}<button
+                          {#if bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== ""}<button
                               class="btn-gold"
                               style="padding: 6px 12px; font-size: 11px; margin-top: auto; width: fit-content; background: {bannersConfig
                                 .items[idx].buttonColor}; color: {bannersConfig
@@ -3635,11 +3635,11 @@
                           class="banner-content"
                           style="color: {bannersConfig.items[idx].textColor};"
                         >
-                          {#if bannersConfig.items[idx].tag}<span
+                          {#if bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== ""}<span
                               class="banner-tag"
                               >{bannersConfig.items[idx].tag}</span
                             >{/if}
-                          {#if bannersConfig.items[idx].title}<h3
+                          {#if bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== ""}<h3
                             style="color: {bannersConfig.items[idx]
                               .textColor}; {bannersConfig.items[idx].titleSize
                               ? `font-size: ${bannersConfig.items[idx].titleSize};`
@@ -3647,7 +3647,7 @@
                           >
                             {bannersConfig.items[idx].title}
                           </h3>{/if}
-                          {#if bannersConfig.items[idx].subtitle}<p
+                          {#if bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== ""}<p
                             style="color: {bannersConfig.items[idx]
                               .textColor}; opacity: 0.9; {bannersConfig.items[
                               idx
@@ -3657,7 +3657,7 @@
                           >
                             {bannersConfig.items[idx].subtitle}
                           </p>{/if}
-                          {#if bannersConfig.items[idx].showButton}<button
+                          {#if bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== ""}<button
                               class="btn-gold"
                               style="padding: 6px 12px; font-size: 12px; margin-top: 8px; background: {bannersConfig
                                 .items[idx].buttonColor}; color: {bannersConfig
@@ -3709,11 +3709,11 @@
                           class="banner-content"
                           style="color: {bannersConfig.items[idx].textColor};"
                         >
-                          {#if bannersConfig.items[idx].tag}<span
+                          {#if bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== ""}<span
                               class="banner-tag"
                               >{bannersConfig.items[idx].tag}</span
                             >{/if}
-                          {#if bannersConfig.items[idx].title}<h3
+                          {#if bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== ""}<h3
                             style="color: {bannersConfig.items[idx]
                               .textColor}; {bannersConfig.items[idx].titleSize
                               ? `font-size: ${bannersConfig.items[idx].titleSize};`
@@ -3721,7 +3721,7 @@
                           >
                             {bannersConfig.items[idx].title}
                           </h3>{/if}
-                          {#if bannersConfig.items[idx].subtitle}<p
+                          {#if bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== ""}<p
                             style="margin-bottom: 16px; color: {bannersConfig
                               .items[idx]
                               .textColor}; opacity: 0.9; {bannersConfig.items[
@@ -3732,7 +3732,7 @@
                           >
                             {bannersConfig.items[idx].subtitle}
                           </p>{/if}
-                          {#if bannersConfig.items[idx].showButton}<button
+                          {#if bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== ""}<button
                               class="btn-gold"
                               style="background: {bannersConfig.items[idx]
                                 .buttonColor}; color: {bannersConfig.items[idx]
