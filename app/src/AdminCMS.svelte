@@ -1192,9 +1192,9 @@
           Ieșire
         </button>
         <a
-          href="#"
+          href="#{currentPreviewMeta.view === 'home' || currentPreviewMeta.view.startsWith('preview_') ? '' : currentPreviewMeta.view}"
           on:click|preventDefault={() => {
-            window.location.hash = "";
+            window.location.hash = currentPreviewMeta.view === 'home' || currentPreviewMeta.view.startsWith('preview_') ? '' : currentPreviewMeta.view;
           }}
           class="cms-btn-ghost"
         >

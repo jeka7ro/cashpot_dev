@@ -276,17 +276,17 @@ const defaultPlayArenaConfig = {
   widgetPosition: "sidebar", // "sidebar", "toolbar", "header"
   activeSubView: "home",
   items: [
-    { id: 'pa_home', label: 'Play Arena', icon: '🏠', enabled: true },
+    { id: 'pa_home', label: 'Play Arena', icon: '/icons/pa_icon_home.png', enabled: true },
     { id: 'pa_wheel', label: 'Roata Norocului', icon: '', enabled: true },
-    { id: 'pa_missions', label: 'Misiuni', icon: '🎯', enabled: true },
-    { id: 'pa_bonus', label: 'Bonus Factory', icon: '🎁', enabled: true },
+    { id: 'pa_missions', label: 'Misiuni', icon: '/icons/pa_icon_missions.png', enabled: true },
+    { id: 'pa_bonus', label: 'Bonus Factory', icon: '/icons/pa_icon_bonus.png', enabled: true },
     { id: 'pa_messages', label: 'Mesaje Primite', icon: '✉️', enabled: true },
-    { id: 'pa_tournaments', label: 'Turnee', icon: '🏆', enabled: true }
+    { id: 'pa_tournaments', label: 'Turnee', icon: '/icons/pa_icon_tournaments.png', enabled: true }
   ],
   missions: [
-    { id: 'm1', title: 'Depune și câștigă', reward: '10 Cashpot Coins', icon: '💰', status: 'available' },
+    { id: 'm1', title: 'Depune și câștigă', reward: '10 Cashpot Coins', icon: '/icons/pa_icon_coin.png', status: 'available' },
     { id: 'm2', title: 'Login & Win', reward: '1 Cashpot Coin', icon: '📅', status: 'available', timeRemaining: '14:23:49' },
-    { id: 'm3', title: 'Câștiguri Dulci', reward: '30 Runde Gratuite', icon: '🐻', status: 'available', needsEnroll: true }
+    { id: 'm3', title: 'Câștiguri Dulci', reward: '30 Runde Gratuite', icon: '/icons/pa_icon_bonus.png', status: 'available', needsEnroll: true }
   ]
 };
 
@@ -314,9 +314,27 @@ function getInitial(key, def) {
     try {
       const saved = localStorage.getItem(key);
       if (saved) {
-        const parsed = JSON.parse(saved);
+        let parsed = JSON.parse(saved);
         if (typeof parsed === "object" && !Array.isArray(parsed) && parsed !== null) {
-           return { ...JSON.parse(JSON.stringify(def)), ...parsed, jackpotWidget: parsed.jackpotWidget || def.jackpotWidget };
+           parsed = { ...JSON.parse(JSON.stringify(def)), ...parsed, jackpotWidget: parsed.jackpotWidget || def.jackpotWidget };
+           
+           if (key === 'cashpot_cms_vip' && parsed.levels) {
+             parsed.levels = parsed.levels.map((lvl, i) => ({...def.levels[i], ...lvl, benefits: lvl.benefits || def.levels[i].benefits}));
+           }
+           if (key === 'cashpot_cms_play_arena') {
+             const iconMap = {
+               '🏠': '/icons/pa_icon_home.png', '🎯': '/icons/pa_icon_missions.png',
+               '🏆': '/icons/pa_icon_tournaments.png', '🎁': '/icons/pa_icon_bonus.png',
+               '💰': '/icons/pa_icon_coin.png', '🐻': '/icons/pa_icon_bonus.png'
+             };
+             if (parsed.items) {
+               parsed.items = parsed.items.map(item => ({...item, icon: iconMap[item.icon] || item.icon}));
+             }
+             if (parsed.missions) {
+               parsed.missions = parsed.missions.map(mission => ({...mission, icon: iconMap[mission.icon] || mission.icon}));
+             }
+           }
+           return parsed;
         }
         return parsed;
       }

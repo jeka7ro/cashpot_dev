@@ -68,14 +68,14 @@
         <div class="pa-stat-card glass">
           <span class="pa-stat-label">Balanță Coins</span>
           <div class="pa-stat-value">
-            <span class="coin-icon">💰</span>
+            <img src="/icons/pa_icon_coin.png" alt="Coins" style="width: 28px; height: 28px;" />
             {currentConfig.coins}
           </div>
         </div>
         <div class="pa-stat-card glass">
           <span class="pa-stat-label">Misiuni Active</span>
           <div class="pa-stat-value">
-            <span class="mission-icon">🎯</span>
+            <img src="/icons/pa_icon_missions.png" alt="Missions" style="width: 28px; height: 28px;" />
             {currentConfig.missionsCount}
           </div>
         </div>
@@ -91,7 +91,13 @@
               class="pa-nav-item {activeTab === item.id.replace('pa_', '') ? 'active' : ''}"
               on:click={() => setSubView(item.id.replace('pa_', ''))}
             >
-              <span class="item-icon">{item.icon}</span>
+              <span class="item-icon">
+                {#if item.icon && item.icon.startsWith('/')}
+                  <img src={item.icon} alt={item.label} style="height: 20px; object-fit: contain;" />
+                {:else}
+                  {item.icon}
+                {/if}
+              </span>
               <span class="item-label">{item.label}</span>
             </button>
           {/if}
@@ -107,13 +113,19 @@
         <!-- Quick Missions -->
         <section class="pa-section glass-panel">
           <div class="pa-section-header">
-            <h2>🎯 Misiuni Recomandate</h2>
+            <h2><img src="/icons/pa_icon_missions.png" alt="icon" style="height:24px; vertical-align:middle; margin-right:8px;" />Misiuni Recomandate</h2>
             <button class="btn-text" on:click={() => setSubView('missions')}>Vezi toate →</button>
           </div>
           <div class="pa-missions-list">
             {#each currentConfig.missions.slice(0, 3) as mission}
               <div class="pa-mission-card">
-                <div class="mission-icon-box">{mission.icon}</div>
+                <div class="mission-icon-box">
+                  {#if mission.icon && mission.icon.startsWith('/')}
+                    <img src={mission.icon} alt="icon" style="height: 36px; object-fit: contain;" />
+                  {:else}
+                    {mission.icon}
+                  {/if}
+                </div>
                 <div class="mission-info">
                   <h3>{mission.title}</h3>
                   <p>{mission.reward}</p>
@@ -136,11 +148,11 @@
         <!-- Bonus Factory Preview -->
         <section class="pa-section glass-panel promo-card">
           <div class="pa-section-header">
-            <h2>🎁 Bonus Factory</h2>
+            <h2><img src="/icons/pa_icon_bonus.png" alt="icon" style="height:24px; vertical-align:middle; margin-right:8px;" />Bonus Factory</h2>
           </div>
           <div class="bonus-preview-content">
             <div class="bonus-visual">
-              <div class="gift-box">📦</div>
+              <img src="/icons/pa_icon_bonus.png" alt="Bonus" class="gift-box" style="width: 100%; height: 100%; object-fit: contain;" />
               <div class="glow-effect"></div>
             </div>
             <div class="bonus-text">
@@ -160,7 +172,13 @@
                   {statusLabels[mission.status] || 'Inactiv'}
                 </div>
                 <div class="card-main">
-                  <div class="large-icon">{mission.icon}</div>
+                  <div class="large-icon">
+                    {#if mission.icon && mission.icon.startsWith('/')}
+                      <img src={mission.icon} alt="icon" style="height: 60px; object-fit: contain;" />
+                    {:else}
+                      {mission.icon}
+                    {/if}
+                  </div>
                   <div class="large-info">
                     <h3>{mission.title}</h3>
                     <p class="reward-text">Recompensă: <strong>{mission.reward}</strong></p>
@@ -179,7 +197,7 @@
       </div>
     {:else}
       <div class="pa-empty-state glass-panel" in:fade>
-        <div class="empty-icon">🏗️</div>
+        <img src="/icons/pa_icon_tournaments.png" alt="Empty" style="height: 80px; margin-bottom: 20px; opacity: 0.8;" />
         <h2>Sectiunea {activeTab} este în construcție</h2>
         <p>Revenim curând cu funcționalități noi pentru tine!</p>
         <button class="pa-btn secondary" on:click={() => setSubView('home')}>Înapoi la Acasă</button>
