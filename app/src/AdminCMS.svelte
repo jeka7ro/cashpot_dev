@@ -3152,6 +3152,14 @@
                         </select>
                       </div>
 
+                      <div style="display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.3); padding: 4px 12px; border-radius: 6px; border: 1px solid var(--border-color);">
+                        <label class="cms-switch" style="transform: scale(0.7); margin: 0;">
+                          <input type="checkbox" bind:checked={promo.showOverlay} />
+                          <span class="cms-slider"></span>
+                        </label>
+                        <span style="font-size: 11px; color: var(--text-muted); white-space: nowrap;">Filtru Întunecat</span>
+                      </div>
+
                       <label
                         class="cms-btn-primary"
                         style="cursor: pointer; margin: 0; white-space: nowrap; padding: 10px 16px;"

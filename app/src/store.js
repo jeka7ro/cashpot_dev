@@ -99,7 +99,7 @@ const defaultBanners = {
 };
 
 const defaultPromoBanner = [
-  { id: 'promo_1', enabled: true, title: "Game of the Week", size: "L", gameImage: "", backgroundImage: "/abstract_casino_bg_1.png", backgroundFit: "cover", buttonText: "JOACĂ", showButton: true, clickableBanner: false, textColor: "#ffffff", buttonColor: "#22c55e", buttonTextColor: "#ffffff", buttonBorderColor: "transparent", buttonBorderWidth: 0, gameImageSize: "M", positionIndex: 1 }
+  { id: 'promo_1', enabled: true, title: "Game of the Week", size: "L", gameImage: "", backgroundImage: "/abstract_casino_bg_1.png", backgroundFit: "cover", buttonText: "JOACĂ", showButton: true, showOverlay: true, clickableBanner: false, textColor: "#ffffff", buttonColor: "#22c55e", buttonTextColor: "#ffffff", buttonBorderColor: "transparent", buttonBorderWidth: 0, gameImageSize: "M", positionIndex: 1 }
 ];
 
 export const defaultGameEffects = {

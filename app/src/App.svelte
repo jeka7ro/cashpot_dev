@@ -4340,7 +4340,9 @@
                   />
                 {/if}
               {/if}
-              <div class="promo-overlay"></div>
+              {#if promo.showOverlay !== false}
+                <div class="promo-overlay"></div>
+              {/if}
               <div class="promo-content">
                 <h2
                   class="promo-title"
@@ -4713,7 +4715,9 @@
                           />
                         {/if}
                       {/if}
-                      <div class="promo-overlay"></div>
+                      {#if promo.showOverlay !== false}
+                        <div class="promo-overlay"></div>
+                      {/if}
                       <div class="promo-content">
                         <h2
                           class="promo-title"
