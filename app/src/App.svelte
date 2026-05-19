@@ -5338,33 +5338,50 @@
             </div>
           </div>
 
-          <!-- Cards section (Apple Pay style) -->
+          <!-- Cards & Recent Games split section -->
           <div style="padding:0 20px;">
-            <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin-bottom:12px;">Cardurile mele</div>
-            <div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none;">
-              <!-- Card 1 -->
-              <div style="flex-shrink:0; width:200px; height:120px; border-radius:16px; background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460); padding:16px; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
-                <div style="position:absolute; top:-20px; right:-20px; width:100px; height:100px; background:rgba(255,255,255,0.03); border-radius:50%;"></div>
-                <div style="font-size:10px; color:rgba(255,255,255,0.5); margin-bottom:20px; font-weight:600; letter-spacing:1px;">VISA</div>
-                <div style="font-size:14px; font-weight:700; color:#fff; letter-spacing:2px;">•••• •••• •••• 4821</div>
-                <div style="display:flex; justify-content:space-between; margin-top:10px;">
-                  <div style="font-size:10px; color:rgba(255,255,255,0.5);">Expiră 09/27</div>
-                  <div style="font-size:10px; color:rgba(255,255,255,0.7); font-weight:700;">Eugen C.</div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+              <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:700;">Cardurile mele</div>
+              <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:700;">Ultimele Jocuri</div>
+            </div>
+            
+            <div style="display:flex; gap:16px;">
+              <!-- Left Column: Cascade Cards -->
+              <div style="flex: 1; position: relative; height: 170px;">
+                <!-- Card 1 -->
+                <div style="position:absolute; top:0; left:0; right:0; height:100px; border-radius:12px; background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460); padding:12px; z-index:3; box-shadow:0 4px 10px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1);">
+                  <div style="position:absolute; top:-10px; right:-10px; width:60px; height:60px; background:rgba(255,255,255,0.03); border-radius:50%;"></div>
+                  <div style="font-size:8px; color:rgba(255,255,255,0.5); margin-bottom:16px; font-weight:600; letter-spacing:1px;">VISA</div>
+                  <div style="font-size:12px; font-weight:800; color:#fff; letter-spacing:1px;">•••• •••• 4821</div>
+                  <div style="display:flex; justify-content:space-between; margin-top:12px;">
+                    <div style="font-size:8px; color:rgba(255,255,255,0.5);">09/27</div>
+                    <div style="font-size:8px; color:rgba(255,255,255,0.7); font-weight:700;">Eugen C.</div>
+                  </div>
+                </div>
+                <!-- Card 2 -->
+                <div style="position:absolute; top:35px; left:0; right:0; height:100px; border-radius:12px; background:linear-gradient(135deg,#1a0533,#2d1b69,#11998e); padding:12px; z-index:2; box-shadow:0 4px 10px rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1); transform:scale(0.95); transform-origin:top center;">
+                  <div style="font-size:8px; color:rgba(255,255,255,0.5); margin-bottom:16px; font-weight:600; letter-spacing:1px;">MASTERCARD</div>
+                  <div style="font-size:12px; font-weight:800; color:#fff; letter-spacing:1px;">•••• •••• 7293</div>
+                </div>
+                <!-- Add card -->
+                <div style="position:absolute; top:70px; left:0; right:0; height:100px; border-radius:12px; background:var(--bg-hover); border:2px dashed var(--border-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; z-index:1; transform:scale(0.9); transform-origin:top center; cursor:pointer;">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  <div style="font-size:8px; color:var(--text-muted); font-weight:600;">Adaugă card</div>
                 </div>
               </div>
-              <!-- Card 2 -->
-              <div style="flex-shrink:0; width:200px; height:120px; border-radius:16px; background:linear-gradient(135deg,#1a0533,#2d1b69,#11998e); padding:16px; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
-                <div style="font-size:10px; color:rgba(255,255,255,0.5); margin-bottom:20px; font-weight:600; letter-spacing:1px;">MASTERCARD</div>
-                <div style="font-size:14px; font-weight:700; color:#fff; letter-spacing:2px;">•••• •••• •••• 7293</div>
-                <div style="display:flex; justify-content:space-between; margin-top:10px;">
-                  <div style="font-size:10px; color:rgba(255,255,255,0.5);">Expiră 03/26</div>
-                  <div style="font-size:10px; color:rgba(255,255,255,0.7); font-weight:700;">Eugen C.</div>
-                </div>
-              </div>
-              <!-- Add card -->
-              <div style="flex-shrink:0; width:120px; height:120px; border-radius:16px; background:var(--bg-hover); border:2px dashed var(--border-color); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; cursor:pointer;">
-                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                <div style="font-size:10px; color:var(--text-muted); font-weight:600;">Adaugă card</div>
+
+              <!-- Right Column: Recent Games Grid -->
+              <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-content: start;">
+                {#each (topGamesConfig?.games || []).slice(0, 4) as game}
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y-no-static-element-interactions -->
+                  <div style="aspect-ratio:3/4; border-radius:8px; overflow:hidden; position:relative; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.3);" on:click={() => { showMobileWallet = false; selectGame(game); }}>
+                    <img src={game.img} alt={game.n} style="width:100%; height:100%; object-fit:cover;" />
+                    <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%); display:flex; align-items:flex-end; padding:6px;">
+                      <span style="color:#fff; font-size:9px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{game.n}</span>
+                    </div>
+                  </div>
+                {/each}
               </div>
             </div>
           </div>
