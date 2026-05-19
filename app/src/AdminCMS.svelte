@@ -3108,9 +3108,18 @@
                     {/if}
                   </div>
                   <div class="cms-field" style="grid-column: 1/-1;">
-                    <label
-                      >Selecție Joc pentru Banner (Căutare & Filtrare)</label
-                    >
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                      <label style="margin: 0;">Selecție Joc pentru Banner (Opțional - Poți lăsa fără joc)</label>
+                      {#if promo.gameImage}
+                        <button 
+                          class="cms-btn-ghost" 
+                          style="color: #ef4444; border-color: rgba(239, 68, 68, 0.3);" 
+                          on:click={() => { promo.gameImage = ""; promo.gameName = ""; }}
+                        >
+                          ✕ Șterge Joc (Afișează doar fundalul)
+                        </button>
+                      {/if}
+                    </div>
 
                     <div style="display: flex; gap: 12px; margin-bottom: 16px; width: 100%;">
                       <div style="flex: 1; position: relative;">
