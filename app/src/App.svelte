@@ -3537,7 +3537,7 @@
               {@const cFont = ctSize === 's' ? '18px' : ctSize === 'l' ? '28px' : '22px'}
               {@const cLabel = ctSize === 's' ? '9px' : ctSize === 'l' ? '12px' : '10px'}
               <div style="width:100%; padding: 16px 24px 4px; box-sizing:border-box;">
-                <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; align-items:flex-start;">
+                <div style="display:flex; gap:24px; flex-wrap:wrap; justify-content:center; align-items:flex-start;">
                   {#each ctTabs as tab}
                     {@const isActive = activeView === tab.id}
                     {@const tabImg = tab.image || tabDefaultImages[tab.id]}
@@ -3571,7 +3571,7 @@
               {@const ctFontSize = ctSize === 's' ? '11px' : ctSize === 'l' ? '15px' : '13px'}
               {@const ctRadius = ctShape === 'round' ? '99px' : '10px'}
               <div style="width:100%; padding: 16px 24px 4px; box-sizing:border-box;">
-                <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center;">
+                <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
                   {#each ctTabs as tab}
                     {@const isActive = activeView === tab.id}
                     <button
