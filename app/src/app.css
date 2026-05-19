@@ -338,10 +338,14 @@ header.topbar .logo img {
 
 /* Renamed or replaced topbar-main logic */
 
-.topbar-search-container {
-  display: flex;
-  align-items: center;
+.topbar-search-wrapper {
+  position: absolute;
+  left: calc(var(--sidebar-width, 260px) + 16px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 320px;
   height: 40px;
+  z-index: 5;
 }
 
 .topbar-search {
@@ -4699,8 +4703,7 @@ header.topbar .logo img {
   }
 
   .topbar-left .logo img {
-    height: 16px !important;
-    /* Make logo very small */
+    height: 28px !important;
     width: auto !important;
   }
 
@@ -6398,8 +6401,8 @@ header.topbar .logo img {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 50px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .vip-hero-box {
@@ -6407,7 +6410,7 @@ header.topbar .logo img {
   background: rgba(15,23,42,0.6);
   backdrop-filter: blur(12px);
   border-radius: 24px;
-  padding: 30px 60px;
+  padding: 20px 40px;
   border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 10px 40px rgba(0,0,0,0.3);
 }

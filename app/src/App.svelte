@@ -3123,7 +3123,7 @@
               <!-- VIP Rewards Grid -->
               {#if vipConfig.rewardsGrid && vipConfig.rewardsGrid.length > 0}
                 <div class="vip-rewards-grid-container">
-                  <h2 style="font-size: 2.2rem; color: #fff; text-align: left; margin: 60px 0 30px 20px; font-weight: 700;">Niveluri</h2>
+                  <h2 style="font-size: 2.2rem; color: #fff; text-align: left; margin: 30px 0 20px 20px; font-weight: 700;">Niveluri</h2>
                   <div class="vip-rewards-grid">
                     {#each vipConfig.rewardsGrid as level, i}
                       <div class="vip-reward-card">

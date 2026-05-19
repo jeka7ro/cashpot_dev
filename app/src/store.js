@@ -430,7 +430,7 @@ export const cmsToolbarConfig = writable(getInitial('cashpot_cms_toolbar', defau
 export const cmsSidebarNavConfig = writable(getInitial('cashpot_cms_sidebar_nav', defaultSidebarNavConfig));
 export const cmsSidebarWidgets = writable(getInitial('cashpot_cms_sidebar_widgets', defaultSidebarWidgets));
 export const cmsPlayArenaConfig = writable(getInitial('cashpot_cms_play_arena', defaultPlayArenaConfig));
-export const cmsVipConfig = writable(getInitial('cashpot_cms_vip_v9', defaultVipConfig));
+export const cmsVipConfig = writable(getInitial('cashpot_cms_vip_v10', defaultVipConfig));
 export const cmsHeaderConfig = writable(getInitial('cashpot_cms_header_config', defaultHeaderConfig));
 export const cmsDraftHeaderConfig = writable(JSON.parse(JSON.stringify(defaultHeaderConfig)));
 
@@ -563,7 +563,7 @@ function _loadFromLocalStorage() {
     if (hw) { const v = JSON.parse(hw); cmsHeaderWidgets.set(v); cmsDraftHeaderWidgets.set(JSON.parse(hw)); }
     const hc = localStorage.getItem('cashpot_cms_header_config');
     if (hc) { const v = JSON.parse(hc); cmsHeaderConfig.set(v); cmsDraftHeaderConfig.set(JSON.parse(hc)); }
-    const vip = localStorage.getItem('cashpot_cms_vip_v9');
+    const vip = localStorage.getItem('cashpot_cms_vip_v10');
     if (vip) { const v = JSON.parse(vip); cmsVipConfig.set(v); cmsDraftVipConfig.set(JSON.parse(vip)); }
     const sw = localStorage.getItem('cashpot_cms_sidebar_widgets');
     if (sw) { 

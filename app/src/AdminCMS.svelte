@@ -4826,25 +4826,49 @@
                 {/each}
               </div>
 
-              <!-- JSON Editor for VIP Rewards Grid -->
+              <!-- Visual Editor for VIP Rewards Grid -->
               <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1);">
-                <h3 class="cms-section-title">Niveluri și Recompense Detaliate (Prezentare Grid)</h3>
-                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Puteți edita datele pentru lista detaliată de bonusuri și cashback în format JSON. Această listă este afișată pe site sub forma de grid-uri de recompense pentru fiecare nivel.</p>
-                <textarea 
-                  class="cms-input"
-                  style="width: 100%; height: 400px; font-family: monospace; font-size: 12px; padding: 16px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 8px;"
-                  value={JSON.stringify(vipConfig.rewardsGrid || [], null, 2)}
-                  on:input={(e) => {
-                    try {
-                      vipConfig.rewardsGrid = JSON.parse(e.target.value);
-                      cmsDraftVipConfig.set(vipConfig);
-                      e.target.style.borderColor = 'var(--border-color)';
-                    } catch (err) {
-                      e.target.style.borderColor = 'red';
-                    }
-                  }}
-                ></textarea>
-                <p style="font-size: 10px; color: #facc15; margin-top: 8px;">Asigurați-vă că textul rămâne un JSON valid (aveți grijă la virgule și ghilimele). Căsuța se va înroși în caz de eroare sintactică.</p>
+                <h3 class="cms-section-title">Niveluri și Recompense Detaliate (Carduri sub Progress)</h3>
+                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 24px;">Editați descrierile și cardurile afișate pentru fiecare nivel VIP.</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                  {#each vipConfig.rewardsGrid || [] as rGrid, rIndex}
+                    <div class="cms-glass-card" style="padding: 16px; background: rgba(0,0,0,0.2);">
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h4 style="font-size: 14px; font-weight: 700; color: #f5c842;">Card {rGrid.levelName}</h4>
+                      </div>
+                      
+                      <div class="cms-fields-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                        <div class="cms-field">
+                          <label style="font-size: 11px;">Nume Nivel (ex: NIVEL 1)</label>
+                          <input type="text" class="cms-input" bind:value={rGrid.levelName} on:input={() => cmsDraftVipConfig.set(vipConfig)} />
+                        </div>
+                        <div class="cms-field">
+                          <label style="font-size: 11px;">Puncte (ex: 0 — 2)</label>
+                          <input type="text" class="cms-input" bind:value={rGrid.points} on:input={() => cmsDraftVipConfig.set(vipConfig)} />
+                        </div>
+                        <div class="cms-field">
+                          <label style="font-size: 11px;">Cashback Săptămânal (ex: 3% sau gol)</label>
+                          <input type="text" class="cms-input" bind:value={rGrid.cashback} on:input={() => cmsDraftVipConfig.set(vipConfig)} />
+                        </div>
+                      </div>
+
+                      <div style="margin-top: 16px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 8px;">
+                        <h5 style="font-size: 12px; margin-bottom: 12px; color: #cbd5e1;">Bonusuri incluse pe card:</h5>
+                        {#each rGrid.bonuses || [] as bonus, bIndex}
+                          <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                            <input type="text" class="cms-input" style="flex: 1;" placeholder="Suma (ex: 50 FS)" bind:value={bonus.amount} on:input={() => cmsDraftVipConfig.set(vipConfig)} />
+                            <input type="text" class="cms-input" style="flex: 2;" placeholder="Joc (ex: Shining Crown)" bind:value={bonus.game} on:input={() => cmsDraftVipConfig.set(vipConfig)} />
+                            <input type="text" class="cms-input" style="flex: 1;" placeholder="Depunere min. (ex: 70 RON)" bind:value={bonus.minDeposit} on:input={() => cmsDraftVipConfig.set(vipConfig)} />
+                            <input type="text" class="cms-input" style="flex: 1;" placeholder="Pariu (ex: 0,2 RON)" bind:value={bonus.bet} on:input={() => cmsDraftVipConfig.set(vipConfig)} />
+                            <button class="cms-btn-danger" style="padding: 0 8px; border-radius: 6px;" on:click={() => { rGrid.bonuses.splice(bIndex, 1); rGrid.bonuses = rGrid.bonuses; vipConfig.rewardsGrid = vipConfig.rewardsGrid; cmsDraftVipConfig.set(vipConfig); }}>✕</button>
+                          </div>
+                        {/each}
+                        <button class="cms-btn-secondary" style="font-size: 11px; margin-top: 8px;" on:click={() => { if(!rGrid.bonuses) rGrid.bonuses = []; rGrid.bonuses.push({amount: '10 FS', game: 'Joc', minDeposit: '0 RON', bet: ''}); rGrid.bonuses = rGrid.bonuses; vipConfig.rewardsGrid = vipConfig.rewardsGrid; cmsDraftVipConfig.set(vipConfig); }}>+ Adaugă Bonus</button>
+                      </div>
+                    </div>
+                  {/each}
+                </div>
               </div>
             </div>
           </div>
