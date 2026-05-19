@@ -3211,16 +3211,15 @@
                          <!-- BONUSES -->
                          {#if level.bonuses && level.bonuses.length > 0}
                            <div class="vrc-bonuses">
-                              {#each level.bonuses as bonus}
-                                {@const bonusGame = (GAMES || []).find(g => g.n === bonus.game)}
-                                <div class="vrc-bonus-item">
-                                  <img src={bonusGame?.img || vipConfig.levels[i]?.img || '/koi_vip.png'} class="vrc-bonus-icon" alt={bonus.game} />
+                             {#each level.bonuses as bonus}
+                               {@const bonusGame = (GAMES || []).find(g => g.n === bonus.game)}
                                <div class="vrc-bonus-item">
+                                 <img src={bonusGame?.img || vipConfig.levels[i]?.img || '/koi_vip.png'} class="vrc-bonus-icon" alt={bonus.game} />
                                  <div class="vrc-bonus-details">
                                    <div class="vrc-bd-amount">{bonus.amount}</div>
                                    <div class="vrc-bd-game">{bonus.game}</div>
-                                   <div class="vrc-bd-req">Depunere minimă: {bonus.minDeposit}</div>
-                                   {#if bonus.maxBonus}<div class="vrc-bd-req">Suma maximă a bonusului: {bonus.maxBonus}</div>{/if}
+                                   <div class="vrc-bd-req">Depunere minima: {bonus.minDeposit}</div>
+                                   {#if bonus.maxBonus}<div class="vrc-bd-req">Suma maxima a bonusului: {bonus.maxBonus}</div>{/if}
                                    {#if bonus.bet}<div class="vrc-bd-req">Pariu: {bonus.bet}</div>{/if}
                                  </div>
                                </div>
