@@ -1276,6 +1276,62 @@
           style="height:1px; background:var(--border-color); margin:8px;"
         ></div>
 
+        <!-- Mobile-only: Setări afișate în profil -->
+        <div class="mobile-profile-settings" style="display:none;">
+          <!-- Theme toggle -->
+          {#if (themeColorsSource?.showThemeToggle ?? headerConfigSource.showThemeToggle)}
+            <button
+              style="width:100%; display:flex; align-items:center; gap:12px; padding:12px 16px; background:transparent; border:none; color:var(--text-main); font-size:14px; cursor:pointer; text-align:left; border-radius: 8px; transition: all 0.2s; justify-content:space-between;"
+              on:click={() => siteTheme.update((t) => (t === "dark" ? "light" : "dark"))}
+              on:mouseover={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
+              on:mouseout={(e) => (e.currentTarget.style.background = "transparent")}
+            >
+              <div style="display:flex; align-items:center; gap:12px;">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.8;">
+                  {#if $siteTheme === "dark"}
+                    <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                  {:else}
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                  {/if}
+                </svg>
+                <span style="font-weight:600;">Temă {$siteTheme === "dark" ? "Luminoasă" : "Întunecată"}</span>
+              </div>
+              <span style="font-size:11px; color:var(--text-muted); font-weight:600;">{$siteTheme === "dark" ? "🌙" : "☀️"}</span>
+            </button>
+          {/if}
+
+          <!-- Lang toggle -->
+          {#if (themeColorsSource?.showLangToggle ?? headerConfigSource.showLangToggle)}
+            <button
+              style="width:100%; display:flex; align-items:center; gap:12px; padding:12px 16px; background:transparent; border:none; color:var(--text-main); font-size:14px; cursor:pointer; text-align:left; border-radius: 8px; transition: all 0.2s; justify-content:space-between;"
+              on:click={toggleLang}
+              on:mouseover={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
+              on:mouseout={(e) => (e.currentTarget.style.background = "transparent")}
+            >
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-size:18px; opacity:0.8;">{currentLang === "RO" ? "🇷🇴" : "🇬🇧"}</span>
+                <span style="font-weight:600;">Limbă</span>
+              </div>
+              <span style="font-size:11px; color:var(--text-muted); font-weight:700;">{currentLang}</span>
+            </button>
+          {/if}
+
+          <!-- Notifications -->
+          <button
+            style="width:100%; display:flex; align-items:center; gap:12px; padding:12px 16px; background:transparent; border:none; color:var(--text-main); font-size:14px; cursor:pointer; text-align:left; border-radius: 8px; transition: all 0.2s; justify-content:space-between;"
+            on:mouseover={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
+            on:mouseout={(e) => (e.currentTarget.style.background = "transparent")}
+          >
+            <div style="display:flex; align-items:center; gap:12px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="opacity:0.8;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span style="font-weight:600;">Notificări</span>
+            </div>
+            <span style="background:#ef4444; color:#fff; border-radius:12px; padding:2px 8px; font-size:11px; font-weight:800;">3</span>
+          </button>
+
+          <div style="height:1px; background:var(--border-color); margin:8px;"></div>
+        </div>
+
         <button
           on:click={handleLogout}
           style="width:100%; display:flex; align-items:center; gap:12px; padding:12px 16px; background:transparent; border:none; color:#ef4444; font-size:14px; cursor:pointer; font-weight:600; border-radius: 8px; transition: all 0.2s;"

@@ -4703,6 +4703,18 @@ header.topbar .logo img {
     display: none !important;
   }
 
+  /* Hide theme, lang and notification icons from topbar on mobile */
+  .btn-theme-toggle,
+  .btn-lang-toggle,
+  .mobile-hide-topbar {
+    display: none !important;
+  }
+
+  /* Show settings inside user profile panel on mobile */
+  .mobile-profile-settings {
+    display: block !important;
+  }
+
   .topbar-left {
     display: flex !important;
     width: auto !important;
