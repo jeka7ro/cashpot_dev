@@ -989,8 +989,14 @@ header.topbar .logo img {
     display: none !important;
   }
 
-  /* Ascunde XP text din wallet pe mobil */
+  /* Arata punctele XP pe mobil */
   .header-wallet-xp {
+    display: block !important;
+    font-size: 10px !important;
+  }
+
+  /* Ascunde avatarul VIP (cercul cu poza) din header pe mobil */
+  .header-wallet-ring {
     display: none !important;
   }
 
@@ -1020,7 +1026,7 @@ header.topbar .logo img {
 
   /* Logo mai mare pe mobil */
   .topbar-left .logo img {
-    height: 36px !important;
+    height: 44px !important;
     width: auto !important;
   }
 
