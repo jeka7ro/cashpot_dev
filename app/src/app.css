@@ -1076,7 +1076,40 @@ header.topbar .logo img {
   .sidebar {
     display: none !important;
   }
+
+  /* Logo CASHPOT mare pe mobil */
+  .topbar-left .logo img,
+  .logo img {
+    height: 28px !important;
+    width: auto !important;
+    max-width: 110px !important;
+  }
+
+  /* VIP page pe mobil: elimina spatiul gol mare de sus */
+  .vip-page-wrapper {
+    padding: 16px 12px 100px !important;
+    min-height: auto !important;
+  }
+
+  /* VIP rewards grid pe mobil: 1 coloana */
+  .vip-rewards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Safari: fix safe area top pentru header */
+  .topbar {
+    padding-top: env(safe-area-inset-top, 0px) !important;
+    height: calc(48px + env(safe-area-inset-top, 0px)) !important;
+  }
+
+  /* Fix app-wrapper pentru Safari notch */
+  .app-wrapper,
+  #app {
+    padding-top: 0 !important;
+  }
 }
+
 
 
 /* JACKPOT CARDS SECTION */

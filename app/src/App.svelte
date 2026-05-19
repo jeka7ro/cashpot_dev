@@ -5186,16 +5186,19 @@
             <span>LIVE</span>
           </a>
 
-          <!-- CENTRAL VIP WALLET BUTTON -->
+          <!-- CENTRAL WALLET BUTTON -->
           <div
             class="nav-item-center"
             on:click={() => { isMobileMenuOpen = false; if (isLoggedIn) showMobileWallet = true; else showLoginModal = true; }}
           >
-            <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:0; overflow:hidden; border-radius:50%;">
+            <div class="center-btn-inner {showMobileWallet ? 'active' : ''}" style="padding:0; overflow:hidden; border-radius:50%; display:flex; align-items:center; justify-content:center;">
               {#if isLoggedIn}
-                <div class="vip-nav-avatar" style="width:100%; height:100%; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center;">
-                  <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
-                </div>
+                <!-- SVG portofel, fara imagine grea -->
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="4" width="22" height="16" rx="3" ry="3"/>
+                  <line x1="1" y1="10" x2="23" y2="10"/>
+                  <circle cx="17" cy="16" r="1" fill="currentColor" stroke="none"/>
+                </svg>
               {:else}
                 <img src="/logoMobile.webp" alt="Home" />
               {/if}
@@ -5289,16 +5292,28 @@
             </div>
           </div>
 
-          <!-- Deposit + Withdraw buttons -->
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 20px 24px;">
-            <button style="padding:14px; border-radius:14px; background:linear-gradient(135deg,#f5c842,#e6a817); color:#1a1200; font-weight:900; font-size:15px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 15px rgba(245,200,66,0.35);">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
-              DEPUNERE
+          <!-- Deposit button full width -->
+          <div style="margin:0 20px 16px;">
+            <button style="width:100%; padding:16px; border-radius:16px; background:linear-gradient(135deg,#f5c842,#e6a817); color:#1a1200; font-weight:900; font-size:17px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 20px rgba(245,200,66,0.4); letter-spacing:0.5px;">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+              DEPUNE ACUM
             </button>
-            <button style="padding:14px; border-radius:14px; background:var(--bg-hover); border:1px solid var(--border-color); color:var(--text-main); font-weight:800; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-              RETRAGERE
-            </button>
+          </div>
+
+          <!-- Depunere rapida - Apple Pay style -->
+          <div style="padding:0 20px 24px;">
+            <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin-bottom:10px;">Depunere rapidă</div>
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;">
+              {#each [100, 200, 500, 1000] as amount}
+                <button style="padding:12px 0; border-radius:12px; background:var(--bg-hover); border:1px solid var(--border-color); color:var(--text-main); font-weight:800; font-size:13px; cursor:pointer; transition:all 0.2s; display:flex; flex-direction:column; align-items:center; gap:2px;"
+                  on:mouseover={(e) => { e.currentTarget.style.borderColor='var(--accent-gold)'; e.currentTarget.style.color='var(--accent-gold)'; }}
+                  on:mouseout={(e) => { e.currentTarget.style.borderColor='var(--border-color)'; e.currentTarget.style.color='var(--text-main)'; }}
+                >
+                  <span style="font-size:15px; font-weight:900;">{amount}</span>
+                  <span style="font-size:9px; opacity:0.5; font-weight:600;">LEI</span>
+                </button>
+              {/each}
+            </div>
           </div>
 
           <!-- Cards section (Apple Pay style) -->
