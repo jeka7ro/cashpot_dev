@@ -504,7 +504,22 @@ function applyServerData(data) {
   if (data.playArenaConfig) { cmsPlayArenaConfig.set(data.playArenaConfig); cmsDraftPlayArenaConfig.set(JSON.parse(JSON.stringify(data.playArenaConfig))); }
   if (data.headerWidgets) { cmsHeaderWidgets.set(data.headerWidgets); cmsDraftHeaderWidgets.set(JSON.parse(JSON.stringify(data.headerWidgets))); }
   if (data.headerConfig) { cmsHeaderConfig.set(data.headerConfig); cmsDraftHeaderConfig.set(JSON.parse(JSON.stringify(data.headerConfig))); }
-  if (data.vipConfig) { cmsVipConfig.set(data.vipConfig); cmsDraftVipConfig.set(JSON.parse(JSON.stringify(data.vipConfig))); }
+  if (data.vipConfig) { 
+    const mergedVip = { 
+        ...defaultVipConfig, 
+        ...data.vipConfig,
+        rewardsGrid: (!data.vipConfig.rewardsGrid || data.vipConfig.rewardsGrid.length === 0) ? defaultVipConfig.rewardsGrid : data.vipConfig.rewardsGrid
+    };
+    if (mergedVip.levels) {
+        mergedVip.levels = mergedVip.levels.map((lvl, i) => ({
+            ...defaultVipConfig.levels[i],
+            ...lvl,
+            benefits: (!lvl.benefits || lvl.benefits.length === 0) ? defaultVipConfig.levels[i].benefits : lvl.benefits
+        }));
+    }
+    cmsVipConfig.set(mergedVip); 
+    cmsDraftVipConfig.set(JSON.parse(JSON.stringify(mergedVip))); 
+  }
   if (data.auditLog?.length) { cmsAuditLog.set(data.auditLog); }
 }
 
