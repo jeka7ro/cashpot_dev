@@ -5674,7 +5674,7 @@
                   tournament:       { label: '🏆 Turneu Activ',      color: 'rgba(251,191,36,0.05)', border: 'rgba(251,191,36,0.15)' },
                   missions:         { label: '🎯 Misiuni Active',    color: 'rgba(59,130,246,0.05)', border: 'rgba(59,130,246,0.15)' },
                 }}
-                {@const allWidgetKeys = ['luckyWheel','cashbackProgress','jackpotWidget','walletWidget','tournament','missions']}
+                {@const allWidgetKeys = ['luckyWheel','cashbackProgress','jackpotWidget','walletWidget','tournament','missions','playArena']}
                 {@const orderedKeys = [
                   ...(sidebarWidgetsConfig.widgetOrder || ['luckyWheel','cashbackProgress','jackpotWidget','walletWidget']),
                   ...allWidgetKeys.filter(k => !(sidebarWidgetsConfig.widgetOrder||[]).includes(k))

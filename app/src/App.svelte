@@ -2247,7 +2247,7 @@
                 <!-- PLAY ARENA WIDGET -->
                 {#if isLoggedIn && playArenaConfig.enabled && playArenaConfig.widgetPosition === "sidebar"}
                   <div
-                    style="flex: {playArenaConfig.size === 's' ||
+                    style="order: {(widgetsSource.widgetOrder||[]).indexOf('playArena')>=0?(widgetsSource.widgetOrder||[]).indexOf('playArena'):99}; flex: {playArenaConfig.size === 's' ||
                     !playArenaConfig.size
                       ? '0 1 calc(50% - 4px)'
                       : '1 1 100%'}; max-width: {playArenaConfig.size === 's' ||
@@ -2301,14 +2301,19 @@
                           🎮 Play Arena
                         </div>
                         <div
-                          style="font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 4px;"
+                          style="font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 12px;"
                         >
                           Nivel 5
                         </div>
-                        <div
-                          style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;"
-                        >
-                          Ai {playArenaConfig.coins} Coins adunate!
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
+                          <button style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px 4px; cursor: pointer; transition: all 0.2s;" on:click={() => setView('playarena', '', 'missions')} on:mouseover={(e) => e.currentTarget.style.background='rgba(255,255,255,0.1)'} on:mouseout={(e) => e.currentTarget.style.background='rgba(0,0,0,0.4)'}>
+                            <div style="font-size: 16px; margin-bottom: 4px;">⚡</div>
+                            <div style="font-size: 9px; font-weight: 800; color: #fff; text-transform: uppercase;">{playArenaConfig.missionsCount || 2} Misiuni Active</div>
+                          </button>
+                          <button style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px 4px; cursor: pointer; transition: all 0.2s;" on:click={() => setView('playarena', '', 'tournaments')} on:mouseover={(e) => e.currentTarget.style.background='rgba(255,255,255,0.1)'} on:mouseout={(e) => e.currentTarget.style.background='rgba(0,0,0,0.4)'}>
+                            <div style="font-size: 16px; margin-bottom: 4px;">🏆</div>
+                            <div style="font-size: 9px; font-weight: 800; color: #fff; text-transform: uppercase;">Turneu Săptămânal</div>
+                          </button>
                         </div>
                         <button
                           on:click={() => setView("playarena")}

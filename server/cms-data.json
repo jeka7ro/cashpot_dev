@@ -412,7 +412,7 @@
       "details": "S-a creat categoria \"Categorie Nouă\"."
     }
   ],
-  "updatedAt": "2026-05-19T07:16:11.409Z",
+  "updatedAt": "2026-05-19T07:25:16.203Z",
   "winnersConfig": {
     "enabled": true,
     "showImage": true,
@@ -790,7 +790,7 @@
     "globalBorderWidth": 2
   },
   "playArenaConfig": {
-    "enabled": false,
+    "enabled": true,
     "coins": 348,
     "missionsCount": 10,
     "userName": "EUGENIU",
@@ -861,7 +861,7 @@
         "needsEnroll": true
       }
     ],
-    "size": "m"
+    "size": "l"
   },
   "headerWidgets": {
     "enabled": false,
