@@ -2681,7 +2681,40 @@
         on:scroll={handleContentScroll}
         bind:this={contentArea}
       >
-        {#if activeView.startsWith("preview_")}
+        {#if searchQuery.trim() !== ""}
+          <section class="category-row" style="padding-top: 24px; min-height: 100vh;">
+            <div class="category-header">
+              <h3>Rezultate Căutare pentru "{searchQuery}"</h3>
+            </div>
+            <div class="games-slider search-grid size-s">
+              {#each filteredGames as game}
+                {@const gEffect = getGameEffect(game.n, gameEffectsSource)}
+                <div class="game-card {gEffect ? 'effect-' + gEffect.effect : ''}" style={gEffect ? `--effect-interval: ${gEffect.effectInterval || 5}s;` : ""} on:click={() => playGame(game)}>
+                  <div class="img-wrapper">
+                    <img src={game.img} alt={game.n} loading="lazy" />
+                    <div class="game-hover-overlay">
+                      <div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg></div>
+                      <div class="hover-details">
+                        <span class="hover-prov">{game.p}</span>
+                        {#if game.c && game.c.length > 0}<span class="hover-tag">{game.c[0]}</span>{/if}
+                      </div>
+                    </div>
+                    <button class="btn-fav {favoriteGames.has(game.n) ? 'active' : ''}" on:click|stopPropagation={() => toggleFavorite(game.n)}>
+                      <img src="/logoMobile.webp" alt="Fav" />
+                    </button>
+                  </div>
+                  <div class="game-info">
+                    <div class="g-name">{game.n}</div>
+                    <div class="g-prov">{game.p}</div>
+                  </div>
+                </div>
+              {/each}
+            </div>
+            {#if filteredGames.length === 0}
+              <div style="padding: 40px 24px; text-align: center; color: var(--text-muted); font-size: 16px;">Niciun rezultat găsit.</div>
+            {/if}
+          </section>
+        {:else if activeView.startsWith("preview_")}
           <div
             class="cms-isolated-preview"
             style="padding: 24px; min-height: 100vh; background: var(--bg-dark); display: flex; flex-direction: column; align-items: center; gap: 40px; width: 100%;"
@@ -3233,60 +3266,6 @@
               {/if}
 
             </div>
-          </section>
-        {:else if searchQuery.trim() !== ""}
-          <section class="category-row" style="padding-top: 24px;">
-            <div class="category-header">
-              <h3>Rezultate Căutare pentru "{searchQuery}"</h3>
-            </div>
-            <div class="games-slider search-grid size-s">
-              {#each filteredGames as game}
-                {@const gEffect = getGameEffect(game.n, gameEffectsSource)}
-                <div
-                  class="game-card {gEffect ? 'effect-' + gEffect.effect : ''}"
-                  style={gEffect
-                    ? `--effect-interval: ${gEffect.effectInterval || 5}s;`
-                    : ""}
-                  on:click={() => playGame(game)}
-                >
-                  <div class="img-wrapper">
-                    <img src={game.img} alt={game.n} loading="lazy" />
-                    <div class="game-hover-overlay">
-                      <div class="play-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor"
-                          ><path d="M8 5v14l11-7z" /></svg
-                        >
-                      </div>
-                      <div class="hover-details">
-                        <span class="hover-prov">{game.p}</span>
-                        {#if game.c && game.c.length > 0}
-                          <span class="hover-tag">{game.c[0]}</span>
-                        {/if}
-                      </div>
-                    </div>
-                    <button
-                      class="btn-fav {favoriteGames.has(game.n)
-                        ? 'active'
-                        : ''}"
-                      on:click={() => toggleFavorite(game.n)}
-                    >
-                      <img src="/logoMobile.webp" alt="Fav" />
-                    </button>
-                  </div>
-                  <div class="game-info">
-                    <div class="g-name">{game.n}</div>
-                    <div class="g-prov">{game.p}</div>
-                  </div>
-                </div>
-              {/each}
-            </div>
-            {#if filteredGames.length === 0}
-              <div
-                style="padding: 40px 24px; text-align: center; color: var(--text-muted); font-size: 16px;"
-              >
-                Niciun rezultat găsit.
-              </div>
-            {/if}
           </section>
         {:else}
           <!-- Hero Banners -->
@@ -6400,44 +6379,6 @@
     transform: scale(1.05);
   }
 
-  /* TOPBAR SEARCH */
-  .topbar-search {
-    display: flex;
-    align-items: center;
-    background: var(--search-bg, rgba(255, 255, 255, 0.05));
-    border: 1px solid var(--search-border, rgba(255, 255, 255, 0.1));
-    border-radius: var(--radius-pill);
-    padding: 10px 20px;
-    gap: 12px;
-    transition: all 0.2s;
-    width: 100%;
-  }
-
-  .topbar-search:focus-within {
-    border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 0 3px rgba(76, 29, 149, 0.2);
-  }
-
-  .topbar-search svg {
-    width: 18px;
-    height: 18px;
-    fill: #9ca3af;
-  }
-
-  .topbar-search input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text-main);
-    font-size: 14px;
-    font-family: var(--font-main);
-  }
-
-  .topbar-search input::placeholder {
-    color: #9ca3af;
-  }
 
   /* BUTTONS & MAC OS TAHOE FEEL */
   .btn-theme-toggle {
