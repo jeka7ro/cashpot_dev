@@ -8,7 +8,7 @@ const { WebSocketServer } = require('ws');
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const DB_FILE = path.join(__dirname, 'cms-data.json');
 const GAME_FILE = path.join(__dirname, 'gamification-data.json');
 
