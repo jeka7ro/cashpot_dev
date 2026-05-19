@@ -310,7 +310,7 @@ const defaultVipConfig = {
     ],
     rewardsGrid: [
       {
-        levelName: "LEVEL 1",
+        levelName: "NIVEL 1",
         points: "0 — 2",
         bonuses: [
           { amount: "400 FS", game: "Noble Hot Crown", minDeposit: "0 RON", bet: "0,1 RON" },
@@ -319,7 +319,7 @@ const defaultVipConfig = {
         cashback: null
       },
       {
-        levelName: "LEVEL 2",
+        levelName: "NIVEL 2",
         points: "3 — 40",
         bonuses: [
           { amount: "50%", game: "Activați bonusul înainte de a depune", minDeposit: "70 RON", maxBonus: "450 RON" },
@@ -328,7 +328,7 @@ const defaultVipConfig = {
         cashback: null
       },
       {
-        levelName: "LEVEL 3",
+        levelName: "NIVEL 3",
         points: "41 — 86",
         bonuses: [
           { amount: "50 FS", game: "Moon Fortune", minDeposit: "70 RON", bet: "1 RON" }
@@ -336,7 +336,7 @@ const defaultVipConfig = {
         cashback: "3%"
       },
       {
-        levelName: "LEVEL 4",
+        levelName: "NIVEL 4",
         points: "87 — 214",
         bonuses: [
           { amount: "75 FS", game: "Candy Blast", minDeposit: "70 RON", bet: "0,8 RON" }
@@ -344,7 +344,7 @@ const defaultVipConfig = {
         cashback: "5%"
       },
       {
-        levelName: "LEVEL 5",
+        levelName: "NIVEL 5",
         points: "215 — 584",
         bonuses: [
           { amount: "100 FS", game: "Gold of Ra", minDeposit: "100 RON", bet: "1 RON" }
@@ -352,7 +352,7 @@ const defaultVipConfig = {
         cashback: "7%"
       },
       {
-        levelName: "LEVEL 6",
+        levelName: "NIVEL 6",
         points: "585 — 1.572",
         bonuses: [
           { amount: "100%", game: "Activați bonusul înainte de a depune", minDeposit: "70 RON", maxBonus: "900 RON" },
@@ -361,7 +361,7 @@ const defaultVipConfig = {
         cashback: "8%"
       },
       {
-        levelName: "LEVEL 7",
+        levelName: "NIVEL 7",
         points: "1.573 — 4.462",
         bonuses: [
           { amount: "150 FS", game: "Moon Fortune", minDeposit: "300 RON", bet: "2 RON" }

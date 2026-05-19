@@ -455,7 +455,7 @@
     // Force refresh VIP config if on old version
     if (typeof localStorage !== "undefined") {
       const v = localStorage.getItem("cashpot_cms_vip_version");
-      if (v !== "8") {
+      if (v !== "9") {
         localStorage.removeItem("cashpot_cms_vip");
         localStorage.removeItem("cashpot_cms_vip_v2");
         localStorage.removeItem("cashpot_cms_vip_v3");
@@ -464,7 +464,7 @@
         localStorage.removeItem("cashpot_cms_vip_v6");
         localStorage.removeItem("cashpot_cms_vip_v7");
         localStorage.removeItem("cashpot_cms_vip_v8");
-        localStorage.setItem("cashpot_cms_vip_version", "8");
+        localStorage.setItem("cashpot_cms_vip_version", "9");
         window.location.reload();
       }
     }
@@ -3081,7 +3081,7 @@
 
                       <!-- Level Markers -->
                       <div class="level-markers">
-                        {#each Array(5) as _, idx}
+                        {#each vipConfig.levels as lvl, idx}
                           <div
                             class="marker {userLevel > idx
                               ? 'completed'
@@ -3090,7 +3090,7 @@
                                 : ''}"
                           >
                             <div class="marker-dot"></div>
-                            <span>Lvl {idx + 1}</span>
+                            <span>Nivel {idx + 1}</span>
                           </div>
                         {/each}
                       </div>
