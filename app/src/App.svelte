@@ -2984,6 +2984,16 @@
                         <span class="vsi-name">{level.name}</span>
                         <span class="vsi-lvl">Nivel {i + 1}</span>
                       </div>
+                      {#if level.benefits && level.benefits.length > 0}
+                        <div class="vsi-benefits">
+                          {#each level.benefits as benefit}
+                            <div class="benefit-item">
+                              <span class="benefit-icon">✓</span>
+                              <span class="benefit-text">{benefit}</span>
+                            </div>
+                          {/each}
+                        </div>
+                      {/if}
                     </div>
                   </div>
                 {/each}

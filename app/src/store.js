@@ -298,13 +298,13 @@ const defaultVipConfig = {
   subtitleColor: "#cbd5e1",
   subtitleSize: "20",
     levels: [
-      { id: 1, name: "Peștișor Koi", rank: "Nivel 1", img: "/koi_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)" },
-      { id: 2, name: "Stea de Mare", rank: "Nivel 2", img: "/starfish_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)" },
-      { id: 3, name: "Delfin de Argint", rank: "Nivel 3", img: "/dolphin_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)" },
-      { id: 4, name: "Crab de Aur", rank: "Nivel 4", img: "/crab_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)" },
-      { id: 5, name: "Caracatiță Elegantă", rank: "Nivel 5", img: "/octopus_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)" },
-      { id: 6, name: "Balenă", rank: "Nivel 6", img: "/whale_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)" },
-      { id: 7, name: "RECHINUL SUPREM", rank: "Nivel 7 • Mascota ta oficială", img: "/shark_vip_v2.png", bgColor: "linear-gradient(135deg, #2e1065, #1e1b4b)" }
+      { id: 1, name: "Peștișor Koi", rank: "Nivel 1", img: "/koi_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 2%", "Suport 24/7", "Bonus aniversar: 50 RON"] },
+      { id: 2, name: "Stea de Mare", rank: "Nivel 2", img: "/starfish_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 5%", "Suport Prioritar", "Bonus de trecere: 100 RON"] },
+      { id: 3, name: "Delfin de Argint", rank: "Nivel 3", img: "/dolphin_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 8%", "Retrageri rapide", "Bonus aniversar: 200 RON", "Puncte XP x1.2"] },
+      { id: 4, name: "Crab de Aur", rank: "Nivel 4", img: "/crab_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 10%", "Retrageri instant", "Manager de cont dedicat", "Bonus de trecere: 500 RON"] },
+      { id: 5, name: "Caracatiță Elegantă", rank: "Nivel 5", img: "/octopus_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 12%", "Manager VIP", "Cadouri fizice", "Puncte XP x1.5", "Invitații la evenimente"] },
+      { id: 6, name: "Balenă", rank: "Nivel 6", img: "/whale_vip_v.png", bgColor: "rgba(255, 255, 255, 0.05)", benefits: ["Cashback: 15%", "Limite de pariere extinse", "Bonusuri personalizate", "Retrageri nelimitate"] },
+      { id: 7, name: "RECHINUL SUPREM", rank: "Nivel 7 • Mascota ta oficială", img: "/shark_vip_v2.png", bgColor: "linear-gradient(135deg, #2e1065, #1e1b4b)", benefits: ["Cashback: 20%", "Recompensă secretă", "Puncte XP x2", "Vacante VIP", "Asistent personal 24/7"] }
     ]
 };
 

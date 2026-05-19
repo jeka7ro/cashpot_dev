@@ -5303,6 +5303,40 @@ header.topbar .logo img {
   letter-spacing: 0.5px;
 }
 
+.vsi-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.benefit-icon {
+  color: var(--accent-gold);
+  font-weight: 900;
+  font-size: 10px;
+}
+
+.benefit-text {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .vip-global-progress-wrapper {
   margin-top: -20px;
   padding: 20px;

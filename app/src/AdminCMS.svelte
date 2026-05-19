@@ -4670,39 +4670,45 @@
                   <div class="cms-field" style="background: rgba(255,255,255,0.03); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color);">
                     <div style="display: flex; align-items: center; gap: 16px;">
                       <div style="width: 40px; height: 40px; background: var(--accent-gold); color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900;">{i+1}</div>
-                      <div style="flex: 1; display: grid; grid-template-columns: 1.5fr 1fr 2fr; gap: 16px;">
-                        <div>
-                          <label class="cms-label" style="font-size: 11px;">Nume Nivel</label>
-                          <input type="text" class="cms-input" bind:value={level.name} on:input={() => cmsDraftVipConfig.set(vipConfig)} style="padding: 6px 12px;" />
-                        </div>
-                        <div>
-                          <label class="cms-label" style="font-size: 11px;">Rank / Text</label>
-                          <input type="text" class="cms-input" bind:value={level.rank} on:input={() => cmsDraftVipConfig.set(vipConfig)} style="padding: 6px 12px;" />
-                        </div>
-                        <div>
-                          <label class="cms-label" style="font-size: 11px;">Imagine (Upload sau Emoji)</label>
-                          <div style="display: flex; flex-direction: column; gap: 8px;">
-                             <div style="display: flex; gap: 8px; align-items: center;">
-                               <input type="text" class="cms-input" bind:value={level.img} on:input={() => cmsDraftVipConfig.set(vipConfig)} style="padding: 6px 12px; flex: 1; font-size: 12px;" placeholder="URL sau Emoji..." />
-                               {#if level.img && (level.img.startsWith('/') || level.img.startsWith('data:'))}
-                                 <img src={level.img} alt="Preview" style="width: 38px; height: 38px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color); background: #000;" />
-                               {:else if level.img}
-                                 <div style="font-size: 24px; min-width: 38px; text-align: center;">{level.img}</div>
-                               {/if}
-                             </div>
-                             <div style="position: relative;">
-                               <input 
-                                 type="file" 
-                                 accept="image/*" 
-                                 on:change={(e) => handleVipImageUpload(e, i)} 
-                                 id="vip-img-{i}"
-                                 style="display: none;" 
-                               />
-                               <label for="vip-img-{i}" class="cms-btn-primary" style="display: block; text-align: center; padding: 6px; font-size: 11px; cursor: pointer; background: rgba(255,255,255,0.05); border: 1px dashed var(--border-color); color: var(--text-muted);">
-                                 📁 Încarcă Poză Nivel {i+1}
-                               </label>
-                             </div>
+                      <div style="flex: 1; display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: grid; grid-template-columns: 1.5fr 1fr 2fr; gap: 16px;">
+                          <div>
+                            <label class="cms-label" style="font-size: 11px;">Nume Nivel</label>
+                            <input type="text" class="cms-input" bind:value={level.name} on:input={() => cmsDraftVipConfig.set(vipConfig)} style="padding: 6px 12px; width: 100%;" />
                           </div>
+                          <div>
+                            <label class="cms-label" style="font-size: 11px;">Rank / Text</label>
+                            <input type="text" class="cms-input" bind:value={level.rank} on:input={() => cmsDraftVipConfig.set(vipConfig)} style="padding: 6px 12px; width: 100%;" />
+                          </div>
+                          <div>
+                            <label class="cms-label" style="font-size: 11px;">Imagine</label>
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                               <div style="display: flex; gap: 8px; align-items: center;">
+                                 <input type="text" class="cms-input" bind:value={level.img} on:input={() => cmsDraftVipConfig.set(vipConfig)} style="padding: 6px 12px; flex: 1; font-size: 12px;" placeholder="URL sau Emoji..." />
+                                 {#if level.img && (level.img.startsWith('/') || level.img.startsWith('data:'))}
+                                   <img src={level.img} alt="Preview" style="width: 38px; height: 38px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-color); background: #000;" />
+                                 {:else if level.img}
+                                   <div style="font-size: 24px; min-width: 38px; text-align: center;">{level.img}</div>
+                                 {/if}
+                               </div>
+                               <div style="position: relative;">
+                                 <input 
+                                   type="file" 
+                                   accept="image/*" 
+                                   on:change={(e) => handleVipImageUpload(e, i)} 
+                                   id="vip-img-{i}"
+                                   style="display: none;" 
+                                 />
+                                 <label for="vip-img-{i}" class="cms-btn-primary" style="display: block; text-align: center; padding: 6px; font-size: 11px; cursor: pointer; background: rgba(255,255,255,0.05); border: 1px dashed var(--border-color); color: var(--text-muted);">
+                                   📁 Încarcă Poză Nivel {i+1}
+                                 </label>
+                               </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <label class="cms-label" style="font-size: 11px;">Beneficii Nivel (separate prin virgulă)</label>
+                          <input type="text" class="cms-input" value={(level.benefits || []).join(', ')} on:input={(e) => { level.benefits = e.target.value.split(',').map(s=>s.trim()).filter(s=>s); cmsDraftVipConfig.set(vipConfig); }} style="padding: 6px 12px; width: 100%;" placeholder="Cashback: 5%, Retrageri rapide..." />
                         </div>
                       </div>
                     </div>
