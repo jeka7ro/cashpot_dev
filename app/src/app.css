@@ -339,15 +339,12 @@ header.topbar .logo img {
 /* Renamed or replaced topbar-main logic */
 
 .topbar-search-wrapper {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  position: static;
-  transform: none;
-  max-width: none;
-  margin: 0 32px;
+  position: absolute;
+  left: 220px; /* După logo-ul Cashpot */
+  right: calc(31.25% + 8px); /* Se aliniază exact cu marginea dreaptă a bannerului mare (2.2fr) */
   height: 48px;
   z-index: 5;
+  display: flex;
 }
 
 .topbar-search {
