@@ -3609,7 +3609,7 @@
           {#if activeView === "home" && widgetsSource?.tournament?.enabled !== false}
             <div style="padding: 0 24px 16px; height: 100%; box-sizing: border-box;">
               <div
-                style="background: {isDarkTheme ? 'linear-gradient(135deg, rgba(30,20,80,0.85), rgba(20,10,60,0.95))' : 'var(--bg-panel)'}; border: 1px solid {isDarkTheme ? 'rgba(109,40,217,0.3)' : 'var(--border-color)'}; border-radius: 20px; padding: 24px; position: relative; overflow: hidden; box-shadow: {isDarkTheme ? 'none' : '0 4px 15px rgba(0,0,0,0.05)'}; height: 100%; box-sizing: border-box; display: flex; flex-direction: column;"
+                style="background: {isDarkTheme ? 'rgba(15,23,42,0.7)' : 'var(--bg-panel)'}; border: 1px solid {isDarkTheme ? 'rgba(255,255,255,0.07)' : 'var(--border-color)'}; border-radius: 20px; padding: 24px; backdrop-filter: blur(12px); box-shadow: {isDarkTheme ? 'none' : '0 8px 30px rgba(0,0,0,0.04)'}; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; position: relative; overflow: hidden;"
               >
                 <div
                   style="position:absolute; top:-40px; right:-40px; width:200px; height:200px; background:radial-gradient(circle, rgba(109,40,217,0.3) 0%, transparent 70%); pointer-events:none;"

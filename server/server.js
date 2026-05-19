@@ -16,6 +16,10 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
+// Serve static frontend files from app/dist
+const distPath = path.join(__dirname, '../app/dist');
+app.use(express.static(distPath));
+
 // ─── Proxy Route for Cashpot API ─────────────────────────
 app.get('/api/proxy/cashpot', async (req, res) => {
   const targetUrl = req.query.url;
@@ -434,6 +438,15 @@ app.get('/api/rtp', (req, res) => {
       { name: "Lucky Lady", rtp: 92.5, trend: "down", change: "-1.1%" }
     ]
   });
+});
+
+// ─── SPA Fallback Route ────────────────────────────────────
+app.use((req, res, next) => {
+  if (req.method !== 'GET') return next();
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'API route not found' });
+  }
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 server.listen(PORT, () => {

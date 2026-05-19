@@ -412,7 +412,7 @@
       "details": "S-a creat categoria \"Categorie Nouă\"."
     }
   ],
-  "updatedAt": "2026-05-19T07:02:04.426Z",
+  "updatedAt": "2026-05-19T07:08:49.601Z",
   "winnersConfig": {
     "enabled": true,
     "showImage": true,
@@ -660,14 +660,14 @@
       "ctaLabel": "Participa la Turneu →",
       "borderColor": "#000000",
       "shape": "gamecard",
-      "size": "s"
+      "size": "m"
     },
     "missions": {
       "enabled": true,
       "title": "Misiuni Active",
       "borderColor": "#000000",
       "shape": "gamecard",
-      "size": "s"
+      "size": "m"
     },
     "categoryTabs": {
       "enabled": true,
