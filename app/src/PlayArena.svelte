@@ -38,12 +38,23 @@
 
 </script>
 
-<div class="play-arena-container" in:fade={{ duration: 400 }}>
-  <!-- Hero Header -->
-  <div class="pa-hero">
-    <div class="pa-hero-content">
-      <div class="pa-user-info">
-        <div class="pa-avatar-wrapper">
+<div class="play-arena-wrapper" in:fade={{ duration: 400 }}>
+  <!-- Bubbles Background -->
+  <div class="bubbles-bg">
+    {#each Array(20) as _, i}
+      <div
+        class="bubble-item"
+        style="left: {Math.random() * 100}%; animation-delay: {Math.random() * 5}s; width: {Math.random() * 15 + 5}px; height: {Math.random() * 15 + 5}px;"
+      ></div>
+    {/each}
+  </div>
+
+  <div class="play-arena-container">
+    <!-- Hero Header -->
+    <div class="pa-hero glass-panel">
+      <div class="pa-hero-content">
+        <div class="pa-user-info">
+          <div class="pa-avatar-wrapper">
           <img src={currentAvatar} alt="Avatar" class="pa-avatar" />
           <div class="pa-level-badge">{currentConfig.coins}</div>
         </div>
@@ -73,7 +84,7 @@
     
     <!-- Sub-navigation -->
     <div class="pa-nav-wrapper">
-      <nav class="pa-nav glass">
+      <nav class="pa-nav">
         {#each currentConfig.items as item}
           {#if item.enabled}
             <button 
@@ -94,14 +105,14 @@
     {#if activeTab === "home"}
       <div class="pa-grid" in:fly={{ y: 20, duration: 400 }}>
         <!-- Quick Missions -->
-        <section class="pa-section glass">
+        <section class="pa-section glass-panel">
           <div class="pa-section-header">
             <h2>🎯 Misiuni Recomandate</h2>
             <button class="btn-text" on:click={() => setSubView('missions')}>Vezi toate →</button>
           </div>
           <div class="pa-missions-list">
             {#each currentConfig.missions.slice(0, 3) as mission}
-              <div class="pa-mission-card glass-light">
+              <div class="pa-mission-card">
                 <div class="mission-icon-box">{mission.icon}</div>
                 <div class="mission-info">
                   <h3>{mission.title}</h3>
@@ -123,7 +134,7 @@
         </section>
 
         <!-- Bonus Factory Preview -->
-        <section class="pa-section glass promo-card">
+        <section class="pa-section glass-panel promo-card">
           <div class="pa-section-header">
             <h2>🎁 Bonus Factory</h2>
           </div>
@@ -144,7 +155,7 @@
         <h2 class="view-title">Misiunile Tale</h2>
         <div class="pa-missions-grid">
           {#each currentConfig.missions as mission}
-             <div class="pa-mission-card-large glass">
+             <div class="pa-mission-card-large">
                 <div class="card-status" style="background: {statusColors[mission.status] || '#9ca3af'}">
                   {statusLabels[mission.status] || 'Inactiv'}
                 </div>
@@ -167,27 +178,48 @@
         </div>
       </div>
     {:else}
-      <div class="pa-empty-state glass" in:fade>
+      <div class="pa-empty-state glass-panel" in:fade>
         <div class="empty-icon">🏗️</div>
         <h2>Sectiunea {activeTab} este în construcție</h2>
         <p>Revenim curând cu funcționalități noi pentru tine!</p>
         <button class="pa-btn secondary" on:click={() => setSubView('home')}>Înapoi la Acasă</button>
       </div>
     {/if}
+    </div>
   </div>
 </div>
 
 <style>
+  .play-arena-wrapper {
+    background: radial-gradient(circle at top right, rgba(245, 200, 66, 0.15), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(76, 29, 149, 0.2), transparent 40%),
+                var(--bg-dark);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 20px;
+    width: 100%;
+  }
+
+  [data-theme="light"] .play-arena-wrapper {
+    background: radial-gradient(circle at top right, rgba(245, 200, 66, 0.2), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(76, 29, 149, 0.1), transparent 40%),
+                #f8fafc;
+  }
+
   .play-arena-container {
-    padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
     color: var(--text-main);
     font-family: var(--font-main);
+    position: relative;
+    z-index: 2;
   }
 
   .pa-hero {
     margin-bottom: 30px;
+    padding: 30px;
+    border-radius: 30px;
   }
 
   .pa-hero-content {
@@ -207,8 +239,8 @@
 
   .pa-avatar-wrapper {
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
   }
 
   .pa-avatar {
@@ -228,17 +260,17 @@
     color: #1a1200;
     font-weight: 900;
     font-size: 14px;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--bg-dark);
+    border: 3px solid var(--bg-dark);
   }
 
   .pa-user-text h1 {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 900;
     margin: 0 0 4px 0;
     background: linear-gradient(to right, #fff, var(--accent-gold));
@@ -249,7 +281,8 @@
   .pa-user-text p {
     color: var(--text-muted);
     margin: 0;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
   }
 
   .pa-stats-grid {
@@ -263,7 +296,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 20px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .pa-stat-label {
@@ -272,10 +307,11 @@
     color: var(--text-muted);
     letter-spacing: 1px;
     margin-bottom: 8px;
+    font-weight: 700;
   }
 
   .pa-stat-value {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 900;
     display: flex;
     align-items: center;
@@ -285,16 +321,15 @@
   .coin-icon { color: var(--accent-gold); }
 
   .pa-nav-wrapper {
-    position: sticky;
-    top: 10px;
+    position: relative;
     z-index: 100;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 20px;
   }
 
   .pa-nav {
     display: flex;
-    gap: 8px;
-    padding: 8px;
-    border-radius: 40px;
+    gap: 10px;
     overflow-x: auto;
     scrollbar-width: none;
   }
@@ -302,33 +337,35 @@
   .pa-nav::-webkit-scrollbar { display: none; }
 
   .pa-nav-item {
-    padding: 10px 20px;
-    border-radius: 30px;
-    border: none;
-    background: transparent;
+    padding: 12px 24px;
+    border-radius: 99px;
+    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.02);
     color: var(--text-muted);
     font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     white-space: nowrap;
-    transition: all 0.2s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .pa-nav-item.active {
     background: var(--accent-gold);
     color: #1a1200;
-    box-shadow: 0 4px 15px rgba(245, 200, 66, 0.4);
+    border-color: var(--accent-gold);
+    box-shadow: 0 4px 15px rgba(245, 200, 66, 0.3);
   }
 
   .pa-nav-item:hover:not(.active) {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.08);
     color: #fff;
+    transform: translateY(-2px);
   }
 
   .pa-content {
-    margin-top: 24px;
+    margin-top: 0;
   }
 
   .pa-grid {
@@ -338,19 +375,22 @@
   }
 
   .pa-section {
-    padding: 24px;
-    border-radius: 24px;
+    padding: 30px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
   }
 
   .pa-section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
 
   .pa-section-header h2 {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 800;
     margin: 0;
   }
@@ -361,37 +401,42 @@
     color: var(--accent-gold);
     font-weight: 700;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 14px;
+    transition: opacity 0.2s;
   }
+  .btn-text:hover { opacity: 0.8; }
 
   .pa-missions-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
   }
 
   .pa-mission-card {
     display: flex;
     align-items: center;
-    gap: 16px;
-    padding: 12px 16px;
-    border-radius: 16px;
-    transition: transform 0.2s;
+    gap: 20px;
+    padding: 16px 20px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: transform 0.2s, background 0.2s;
   }
 
   .pa-mission-card:hover {
     transform: translateX(5px);
+    background: rgba(255,255,255,0.03);
   }
 
   .mission-icon-box {
-    width: 44px;
-    height: 44px;
+    width: 50px;
+    height: 50px;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 24px;
   }
 
   .mission-info {
@@ -399,22 +444,23 @@
   }
 
   .mission-info h3 {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
-    margin: 0 0 2px 0;
+    margin: 0 0 4px 0;
   }
 
   .mission-info p {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--accent-gold);
     margin: 0;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .mission-timer {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-muted);
-    margin-top: 4px;
+    margin-top: 6px;
+    font-weight: 600;
   }
 
   .glass {
@@ -430,10 +476,11 @@
   }
 
   .pa-btn {
-    padding: 12px 24px;
-    border-radius: 12px;
+    padding: 14px 28px;
+    border-radius: 99px;
     border: none;
     font-weight: 800;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.2s;
   }
@@ -442,23 +489,34 @@
     background: linear-gradient(135deg, var(--accent-gold), #e6a817);
     color: #1a1200;
   }
+  .pa-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 200, 66, 0.4);
+  }
 
   .pa-btn.secondary {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
   }
+  .pa-btn.secondary:hover {
+    background: rgba(255,255,255,0.15);
+  }
 
   .pa-btn-sm {
-    padding: 8px 16px;
-    border-radius: 10px;
+    padding: 10px 20px;
+    border-radius: 99px;
     border: none;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 12px;
     cursor: pointer;
+    transition: all 0.2s;
   }
 
   .pa-btn-sm.primary { background: var(--accent-gold); color: #1a1200; }
+  .pa-btn-sm.primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(245, 200, 66, 0.3); }
+  
   .pa-btn-sm.secondary { background: rgba(255, 255, 255, 0.1); color: #fff; }
+  .pa-btn-sm.secondary:hover { background: rgba(255, 255, 255, 0.15); }
 
   .promo-card {
     background: linear-gradient(135deg, rgba(76, 29, 149, 0.2), rgba(30, 41, 59, 0.4));
@@ -471,19 +529,19 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 20px;
+    gap: 24px;
     flex: 1;
     justify-content: center;
   }
 
   .bonus-visual {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
   }
 
   .gift-box {
-    font-size: 60px;
+    font-size: 70px;
     position: relative;
     z-index: 2;
     animation: bounce 2s infinite;
@@ -503,38 +561,47 @@
 
   .pa-missions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
   }
 
   .pa-mission-card-large {
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pa-mission-card-large:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
   }
 
   .card-status {
-    padding: 4px 12px;
-    font-size: 10px;
+    padding: 8px 16px;
+    font-size: 11px;
     font-weight: 900;
     text-transform: uppercase;
     text-align: center;
     color: #000;
+    letter-spacing: 1px;
   }
 
   .card-main {
-    padding: 24px;
+    padding: 30px;
     display: flex;
-    gap: 16px;
+    gap: 20px;
     align-items: center;
     flex: 1;
   }
 
-  .large-icon { font-size: 40px; }
+  .large-icon { font-size: 48px; }
 
-  .large-info h3 { margin: 0 0 4px 0; font-size: 18px; }
-  .reward-text { margin: 0; color: var(--text-muted); font-size: 14px; }
+  .large-info h3 { margin: 0 0 8px 0; font-size: 20px; font-weight: 800; }
+  .reward-text { margin: 0; color: var(--text-muted); font-size: 15px; }
 
   .card-footer { padding: 16px; border-top: 1px solid rgba(255,255,255,0.05); }
 
