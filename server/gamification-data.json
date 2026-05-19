@@ -1,0 +1,256 @@
+{
+  "jackpots": {
+    "bronze": {
+      "name": "Bronze",
+      "amount": 1819.19,
+      "color": "#cd7f32",
+      "increment": 0.03
+    },
+    "silver": {
+      "name": "Silver",
+      "amount": 10062.66,
+      "color": "#c0c0c0",
+      "increment": 0.07
+    },
+    "gold": {
+      "name": "Gold",
+      "amount": 37746.93,
+      "color": "#ffd700",
+      "increment": 0.15
+    },
+    "diamond": {
+      "name": "Diamond",
+      "amount": 96160.67,
+      "color": "#00d4ff",
+      "increment": 0.25
+    }
+  },
+  "missions": [
+    {
+      "id": "m1",
+      "title": "Primul Pariu",
+      "desc": "Plasează primul pariu al zilei",
+      "reward": "10 Free Spins",
+      "rewardType": "free_spins",
+      "rewardAmount": 10,
+      "target": 1,
+      "progress": 0,
+      "completed": false,
+      "category": "daily"
+    },
+    {
+      "id": "m2",
+      "title": "Explorator",
+      "desc": "Joacă 5 jocuri diferite azi",
+      "reward": "20 Puncte XP",
+      "rewardType": "xp",
+      "rewardAmount": 20,
+      "target": 5,
+      "progress": 2,
+      "completed": false,
+      "category": "daily"
+    },
+    {
+      "id": "m3",
+      "title": "Depunere Rapidă",
+      "desc": "Efectuează o depunere azi",
+      "reward": "50% Bonus",
+      "rewardType": "bonus",
+      "rewardAmount": 50,
+      "target": 1,
+      "progress": 0,
+      "completed": false,
+      "category": "daily"
+    },
+    {
+      "id": "m4",
+      "title": "Maestrul Sloturilor",
+      "desc": "Joacă 50 de runde pe sloturi",
+      "reward": "100 Free Spins",
+      "rewardType": "free_spins",
+      "rewardAmount": 100,
+      "target": 50,
+      "progress": 23,
+      "completed": false,
+      "category": "weekly"
+    },
+    {
+      "id": "m5",
+      "title": "Campion Săptămânal",
+      "desc": "Câștigă 5 sesiuni consecutive",
+      "reward": "Bonus VIP",
+      "rewardType": "vip_bonus",
+      "rewardAmount": 0,
+      "target": 5,
+      "progress": 1,
+      "completed": false,
+      "category": "weekly"
+    }
+  ],
+  "tournament": {
+    "id": "t1",
+    "name": "",
+    "endsAt": "2026-05-14T18:47:40.180Z",
+    "prizePool": "",
+    "leaderboard": [
+      {
+        "rank": 1,
+        "name": "Elena P.",
+        "points": 96552,
+        "prize": "10,000 RON"
+      },
+      {
+        "rank": 2,
+        "name": "Andrei M.",
+        "points": 96078,
+        "prize": "15,000 RON"
+      },
+      {
+        "rank": 3,
+        "name": "Ana D.",
+        "points": 89706,
+        "prize": "3,000 RON"
+      },
+      {
+        "rank": 4,
+        "name": "Mihai T.",
+        "points": 87901,
+        "prize": "7,500 RON"
+      },
+      {
+        "rank": 5,
+        "name": "Radu C.",
+        "points": 87362,
+        "prize": "5,000 RON"
+      },
+      {
+        "rank": 6,
+        "name": "Ionuț V.",
+        "points": 6500,
+        "prize": "2,000 RON"
+      },
+      {
+        "rank": 7,
+        "name": "Maria L.",
+        "points": 5900,
+        "prize": "1,500 RON"
+      },
+      {
+        "rank": 8,
+        "name": "Dan F.",
+        "points": 4200,
+        "prize": "1,000 RON"
+      },
+      {
+        "rank": 9,
+        "name": "Sorin B.",
+        "points": 3800,
+        "prize": "750 RON"
+      },
+      {
+        "rank": 10,
+        "name": "Cristina N.",
+        "points": 2900,
+        "prize": "500 RON"
+      }
+    ]
+  },
+  "playerXP": {
+    "level": 7,
+    "xp": 3240,
+    "xpToNextLevel": 5000,
+    "totalXP": 18240,
+    "rank": "Gold"
+  },
+  "wheelPrizes": [
+    {
+      "label": "10 Free Spins",
+      "color": "#f59e0b",
+      "probability": 30,
+      "type": "free_spins",
+      "amount": 10
+    },
+    {
+      "label": "50 RON Bonus",
+      "color": "#10b981",
+      "probability": 15,
+      "type": "bonus",
+      "amount": 50
+    },
+    {
+      "label": "2x Multiplier",
+      "color": "#8b5cf6",
+      "probability": 10,
+      "type": "multiplier",
+      "amount": 2
+    },
+    {
+      "label": "25 Free Spins",
+      "color": "#ef4444",
+      "probability": 20,
+      "type": "free_spins",
+      "amount": 25
+    },
+    {
+      "label": "100 RON Bonus",
+      "color": "#3b82f6",
+      "probability": 5,
+      "type": "bonus",
+      "amount": 100
+    },
+    {
+      "label": "5 Free Spins",
+      "color": "#f97316",
+      "probability": 35,
+      "type": "free_spins",
+      "amount": 5
+    },
+    {
+      "label": "Încearcă din nou",
+      "color": "#6b7280",
+      "probability": 40,
+      "type": "retry",
+      "amount": 0
+    },
+    {
+      "label": "500 RON JACKPOT",
+      "color": "#ffd700",
+      "probability": 1,
+      "type": "jackpot",
+      "amount": 500
+    }
+  ],
+  "wheelSpinsLeft": 1,
+  "loyaltyConfig": {
+    "tiers": [
+      {
+        "name": "Bronze",
+        "pointsRequired": 0,
+        "xpMultiplier": 1
+      },
+      {
+        "name": "Silver",
+        "pointsRequired": 5000,
+        "xpMultiplier": 1.2
+      },
+      {
+        "name": "Gold",
+        "pointsRequired": 15000,
+        "xpMultiplier": 1.5
+      },
+      {
+        "name": "Platinum",
+        "pointsRequired": 50000,
+        "xpMultiplier": 2
+      }
+    ]
+  },
+  "cashbackConfig": {
+    "basePercentage": 10,
+    "minLoss": 100,
+    "maxAmount": 5000,
+    "awardDay": "Luni"
+  },
+  "updatedAt": "2026-05-12T20:37:16.117Z",
+  "jackpotEnabled": false
+}

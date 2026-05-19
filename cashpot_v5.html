@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CashPot Casino</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0e0b14;--bg2:#14101e;--surface:#1f1830;--surface2:#261e38;
+  --gold:#f5c842;--gold2:#ffd85a;--red:#e63946;--green:#2dc653;
+  --text:#f0ecff;--muted:#8a82a8;--border:rgba(255,255,255,0.07);
+  --r:10px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* NAV */
+.topbar{
+  position:sticky;top:0;z-index:100;
+  height:54px;display:flex;align-items:center;
+  padding:0 1.5rem;gap:1rem;
+  background:rgba(14,11,20,0.97);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);
+}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;color:var(--gold);text-decoration:none;flex-shrink:0}
+.logo span{color:var(--text)}
+.top-nav{display:flex;list-style:none;height:54px;align-items:stretch;margin-left:.5rem}
+.top-nav a{display:flex;align-items:center;gap:5px;padding:0 .9rem;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap}
+.top-nav a:hover{color:var(--text)}
+.top-nav a.active{color:var(--text);border-bottom-color:var(--gold)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);display:inline-block;animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+.btn-in{padding:7px 18px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:var(--text);font-size:13px;font-weight:600;cursor:pointer;font-family:'Barlow',sans-serif;transition:border-color .15s}
+.btn-in:hover{border-color:rgba(255,255,255,0.4)}
+.btn-reg{padding:7px 20px;border-radius:6px;border:none;background:var(--gold);color:#0e0b14;font-size:13px;font-weight:700;cursor:pointer;font-family:'Barlow',sans-serif}
+.btn-reg:hover{background:var(--gold2)}
+
+/* SUBNAV */
+.subnav{display:flex;align-items:center;background:var(--bg2);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;padding:0 1.5rem}
+.subnav::-webkit-scrollbar{display:none}
+.subnav a{flex-shrink:0;display:flex;align-items:center;gap:5px;padding:0 1rem;height:42px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;white-space:nowrap}
+.subnav a:hover{color:var(--text)}
+.subnav a.active{color:var(--gold);border-bottom-color:var(--gold)}
+.subnav-sep{width:1px;height:18px;background:var(--border);flex-shrink:0;margin:0 4px}
+
+/* JACKPOT TICKER */
+.jackpot-bar{
+  height:36px;display:flex;align-items:center;
+  background:rgba(245,200,66,0.05);
+  border-bottom:1px solid rgba(245,200,66,0.12);
+  overflow:hidden;
+}
+.jackpot-label{
+  flex-shrink:0;padding:0 1rem 0 1.5rem;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.8rem;font-weight:800;
+  color:var(--gold);letter-spacing:.8px;text-transform:uppercase;
+  background:linear-gradient(to right,var(--bg) 70%,transparent);
+  position:relative;z-index:2;
+}
+.jackpot-scroll{flex:1;overflow:hidden}
+.jackpot-inner{
+  display:flex;gap:2.5rem;align-items:center;
+  white-space:nowrap;
+  animation:jticker 35s linear infinite;
+}
+@keyframes jticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ji{display:flex;align-items:center;gap:.5rem;font-size:12px}
+.ji-name{color:var(--muted)}
+.ji-val{color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800}
+
+/* HERO */
+.hero{padding:1rem 1.5rem}
+.banners{display:grid;grid-template-columns:1.65fr 1fr;gap:10px}
+.banner{border-radius:var(--r);overflow:hidden;position:relative;cursor:pointer}
+.banner-main{background:linear-gradient(135deg,#1a0a3e 0%,#3d0060 55%,#1a0030 100%);min-height:220px}
+.banner-right{display:flex;flex-direction:column;gap:10px}
+.banner-sm{flex:1;border-radius:var(--r);overflow:hidden;position:relative;cursor:pointer}
+.banner-b{background:linear-gradient(135deg,#0a1a3e 0%,#003d6e 100%)}
+.banner-c{background:linear-gradient(135deg,#1a0a0a 0%,#5c0000 100%)}
+.banner-inner{padding:1.4rem;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative;z-index:1;min-height:105px}
+.banner-tag{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+.banner-title{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:900;line-height:1.1;margin-bottom:.4rem}
+.banner-title em{font-style:italic;color:var(--gold)}
+.banner-sm .banner-title{font-size:1.05rem}
+.banner-sub{font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:.7rem;line-height:1.5}
+.banner-sm .banner-sub{font-size:11px;margin-bottom:.45rem}
+.banner-cta{display:inline-block;padding:7px 18px;border-radius:6px;background:var(--gold);color:#0e0b14;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'Barlow',sans-serif;transition:background .15s;width:fit-content}
+.banner-sm .banner-cta{padding:6px 14px;font-size:12px}
+.banner-cta:hover{background:var(--gold2)}
+.deco{position:absolute;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none}
+
+/* SEARCH BAR */
+.search-section{padding:.6rem 1.5rem;background:var(--bg2)}
+.search-box{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 14px;border-radius:8px;
+  border:1px solid var(--border);background:var(--surface);
+  max-width:400px;
+}
+.search-box svg{width:14px;height:14px;stroke:var(--muted);fill:none;flex-shrink:0}
+.search-box input{background:transparent;border:none;outline:none;color:var(--text);font-size:13px;width:100%;font-family:'Barlow',sans-serif}
+.search-box input::placeholder{color:var(--muted)}
+
+/* CATEGORIES */
+.cat-bar{display:flex;align-items:center;gap:8px;padding:.6rem 1.5rem;background:var(--bg);overflow-x:auto;scrollbar-width:none}
+.cat-bar::-webkit-scrollbar{display:none}
+.cat-pill{flex-shrink:0;padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'Barlow',sans-serif;transition:all .15s}
+.cat-pill:hover{border-color:rgba(255,255,255,0.2);color:var(--text)}
+.cat-pill.on{background:var(--gold);border-color:var(--gold);color:#0e0b14}
+
+/* SECTION */
+.section{padding:.8rem 1.5rem 1.2rem}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:800;letter-spacing:.3px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.sec-title .accent{color:var(--gold)}
+.sec-count{font-size:11px;color:var(--muted);font-weight:400;font-family:'Barlow',sans-serif;text-transform:none}
+.sec-all{font-size:12px;font-weight:600;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:4px;transition:color .15s}
+.sec-all:hover{color:var(--text)}
+
+/* GRID */
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.h-scroll{overflow-x:auto;scrollbar-width:none}
+.h-scroll::-webkit-scrollbar{display:none}
+.h-row{display:flex;gap:8px;width:max-content}
+.h-row .game-card{width:130px;flex-shrink:0}
+
+/* CARD */
+.game-card{position:relative;border-radius:var(--r);overflow:hidden;cursor:pointer;background:var(--surface);transition:transform .18s}
+.game-card:hover{transform:translateY(-4px)}
+.game-card:hover .gc-ov{opacity:1}
+.game-card:hover .gc-img{transform:scale(1.07)}
+.gc-thumb{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--surface2)}
+.gc-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.gc-ov{position:absolute;inset:0;background:rgba(14,11,20,0.7);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.gc-play{width:46px;height:46px;border-radius:50%;background:var(--gold);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.gc-play svg{width:16px;height:16px;fill:#0e0b14;margin-left:2px}
+.gc-badge{position:absolute;top:6px;left:6px;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;pointer-events:none}
+.b-hot{background:var(--red);color:#fff}
+.b-new{background:var(--green);color:#fff}
+.gc-info{padding:7px 9px 9px}
+.gc-name{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gc-prov{font-size:10px;color:var(--muted);margin-top:1px}
+
+/* SKELETON */
+.skel{background:linear-gradient(90deg,var(--surface) 25%,var(--surface2) 50%,var(--surface) 75%);background-size:200% 100%;animation:sh 1.4s infinite;border-radius:var(--r)}
+@keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* PROVIDERS */
+.providers-section{padding:.5rem 1.5rem 1.2rem}
+.prov-grid{display:flex;gap:8px;flex-wrap:wrap}
+.prov-chip{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;font-family:'Barlow',sans-serif;transition:all .15s}
+.prov-chip:hover,.prov-chip.on{border-color:var(--gold);color:var(--gold)}
+
+/* FOOTER */
+footer{margin-top:2rem;padding:1.4rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.foot-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;color:var(--gold)}
+.foot-logo span{color:var(--muted)}
+.foot-note{font-size:11px;color:var(--muted);max-width:500px;line-height:1.6}
+.foot-badges{display:flex;gap:8px;flex-wrap:wrap}
+.fbadge{padding:3px 9px;border-radius:4px;border:1px solid var(--border);font-size:10px;font-weight:700;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="#" class="logo">Cash<span>Pot</span></a>
+  <ul class="top-nav">
+    <li><a href="#">Sport</a></li>
+    <li><a href="#">Live <span class="live-dot"></span></a></li>
+    <li><a href="#" class="active">Casino</a></li>
+    <li><a href="#">Casino Live</a></li>
+    <li><a href="#">Loto</a></li>
+    <li><a href="#">Promotii</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="btn-in">Intra in cont</button>
+    <button class="btn-reg">Inregistrare</button>
+  </div>
+</nav>
+
+<div class="subnav">
+  <a href="#" class="active">Cazinoul Meu</a>
+  <a href="#">Jocuri</a>
+  <a href="#">Casino Live</a>
+  <div class="subnav-sep"></div>
+  <a href="#">Jackpoturi</a>
+  <a href="#">Drops &amp; Wins</a>
+  <a href="#">Megaways</a>
+  <a href="#">Virtuale</a>
+  <div class="subnav-sep"></div>
+  <a href="#">Promotii</a>
+</div>
+
+<div class="jackpot-bar">
+  <div class="jackpot-label">Jackpot</div>
+  <div class="jackpot-scroll">
+    <div class="jackpot-inner" id="jticker">
+      <div class="ji"><span class="ji-name">Mega Moolah</span><span class="ji-val" data-base="4231880">€ 4.231.880</span></div>
+      <div class="ji"><span class="ji-name">Divine Fortune</span><span class="ji-val" data-base="182440">€ 182.440</span></div>
+      <div class="ji"><span class="ji-name">Wheel of Wishes</span><span class="ji-val" data-base="2100000">€ 2.100.000</span></div>
+      <div class="ji"><span class="ji-name">Age of Gods</span><span class="ji-val" data-base="654200">€ 654.200</span></div>
+      <div class="ji"><span class="ji-name">Jackpot Giant</span><span class="ji-val" data-base="387900">€ 387.900</span></div>
+      <div class="ji"><span class="ji-name">Mega Fortune</span><span class="ji-val" data-base="1820500">€ 1.820.500</span></div>
+      <div class="ji"><span class="ji-name">Hall of Gods</span><span class="ji-val" data-base="1340000">€ 1.340.000</span></div>
+      <div class="ji"><span class="ji-name">Beach Life</span><span class="ji-val" data-base="920000">€ 920.000</span></div>
+      <div class="ji"><span class="ji-name">Mega Moolah</span><span class="ji-val" data-base="4231880">€ 4.231.880</span></div>
+      <div class="ji"><span class="ji-name">Divine Fortune</span><span class="ji-val" data-base="182440">€ 182.440</span></div>
+      <div class="ji"><span class="ji-name">Wheel of Wishes</span><span class="ji-val" data-base="2100000">€ 2.100.000</span></div>
+      <div class="ji"><span class="ji-name">Age of Gods</span><span class="ji-val" data-base="654200">€ 654.200</span></div>
+      <div class="ji"><span class="ji-name">Jackpot Giant</span><span class="ji-val" data-base="387900">€ 387.900</span></div>
+      <div class="ji"><span class="ji-name">Mega Fortune</span><span class="ji-val" data-base="1820500">€ 1.820.500</span></div>
+      <div class="ji"><span class="ji-name">Hall of Gods</span><span class="ji-val" data-base="1340000">€ 1.340.000</span></div>
+      <div class="ji"><span class="ji-name">Beach Life</span><span class="ji-val" data-base="920000">€ 920.000</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="banners">
+    <div class="banner banner-main">
+      <div class="deco" style="width:200px;height:200px;right:-40px;top:-40px"></div>
+      <div class="deco" style="width:140px;height:140px;right:60px;bottom:-50px"></div>
+      <div class="banner-inner">
+        <div class="banner-tag">Oferta de bun venit</div>
+        <div class="banner-title">500 Rotiri +<br><em>10.000 RON</em> Bonus</div>
+        <div class="banner-sub">Cel mai mare pachet din Romania. Depune si primesti instant.</div>
+        <button class="banner-cta">Revendica acum</button>
+      </div>
+    </div>
+    <div class="banner-right">
+      <div class="banner banner-sm banner-b">
+        <div class="banner-inner">
+          <div class="banner-tag">Saptamanal</div>
+          <div class="banner-title">Cashback 15%</div>
+          <div class="banner-sub">Pe toate pierderile tale</div>
+          <button class="banner-cta">Afla mai multe</button>
+        </div>
+      </div>
+      <div class="banner banner-sm banner-c">
+        <div class="banner-inner">
+          <div class="banner-tag">Zilnic</div>
+          <div class="banner-title">Drops &amp; Wins</div>
+          <div class="banner-sub">€500.000 premii lunare</div>
+          <button class="banner-cta">Participa acum</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="search-section">
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><line x1="17" y1="17" x2="22" y2="22"/></svg>
+    <input type="text" id="searchInput" placeholder="Cauta joc dupa nume sau provider...">
+  </div>
+</div>
+
+<div class="cat-bar" id="catBar">
+  <div class="cat-pill on" data-f="toate">Toate</div>
+  <div class="cat-pill" data-f="amusnet">Amusnet</div>
+  <div class="cat-pill" data-f="novomatic">Novomatic</div>
+  <div class="cat-pill" data-f="egt">EGT</div>
+  <div class="cat-pill" data-f="casino technology">Casino Technology</div>
+  <div class="cat-pill" data-f="pragmatic">Pragmatic Play</div>
+</div>
+
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-title"><span class="accent">Recomandate</span> pentru tine</div>
+    <a href="#" class="sec-all">Vezi toate ›</a>
+  </div>
+  <div class="h-scroll"><div class="h-row" id="featuredRow"></div></div>
+</div>
+
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-title">Toate <span class="accent">Jocurile</span> <span class="sec-count" id="countLabel"></span></div>
+    <a href="#" class="sec-all">Mai multe ›</a>
+  </div>
+  <div class="games-grid" id="gamesGrid"></div>
+</div>
+
+<footer>
+  <div class="foot-logo">Cash<span>Pot</span></div>
+  <p class="foot-note">Jocurile de noroc pot crea dependenta. Joaca responsabil. Minimum 18 ani. Licentiat ONJN. Linie ajutor: 0800 800 020.</p>
+  <div class="foot-badges">
+    <div class="fbadge">ONJN</div><div class="fbadge">18+</div>
+    <div class="fbadge">SSL</div><div class="fbadge">Joc Responsabil</div>
+  </div>
+</footer>
+
+<script>
+const CDN = 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/';
+
+const GAMES = [
+  {n:'10 Burning Heart',p:'Amusnet',id:'00000004-0000-5000-9000-000000000001'},
+  {n:'100 Burning Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000002'},
+  {n:'100 Cats',p:'Amusnet',id:'00000004-0000-5000-9000-000000000003'},
+  {n:'20 Burning Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000007'},
+  {n:'20 Super Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000012'},
+  {n:'40 Burning Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000018'},
+  {n:'40 Super Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000023'},
+  {n:'Age of Troy',p:'Amusnet',id:'00000004-0000-5000-9000-000000000031'},
+  {n:'Ancient Dynasty',p:'Amusnet',id:'00000004-0000-5000-9000-000000000035'},
+  {n:'Aztec Glory',p:'Amusnet',id:'00000004-0000-5000-9000-000000000036'},
+  {n:'Book of Magic',p:'Amusnet',id:'00000004-0000-5000-9000-000000000038'},
+  {n:'Burning Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000040'},
+  {n:'Dragon Reborn',p:'Amusnet',id:'00000004-0000-5000-9000-000000000053'},
+  {n:'Egypt Sky',p:'Amusnet',id:'00000004-0000-5000-9000-000000000055'},
+  {n:'Extremely Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000062'},
+  {n:'Flaming Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000064'},
+  {n:'Genius of Leonardo',p:'Amusnet',id:'00000004-0000-5000-9000-000000000072'},
+  {n:'Gold Dust',p:'Amusnet',id:'00000004-0000-5000-9000-000000000073'},
+  {n:'Great Empire',p:'Amusnet',id:'00000004-0000-5000-9000-000000000077'},
+  {n:'Imperial Wars',p:'Amusnet',id:'00000004-0000-5000-9000-000000000082'},
+  {n:'Legendary Rome',p:'Amusnet',id:'00000004-0000-5000-9000-000000000090'},
+  {n:'Lucky Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000094'},
+  {n:'Majestic Forest',p:'Amusnet',id:'00000004-0000-5000-9000-000000000097'},
+  {n:'Olympus Glory',p:'Amusnet',id:'00000004-0000-5000-9000-000000000108'},
+  {n:'Rise of RA',p:'Amusnet',id:'00000004-0000-5000-9000-000000000117'},
+  {n:'Shining Crown',p:'Amusnet',id:'00000004-0000-5000-9000-000000000122'},
+  {n:'Supreme Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000127'},
+  {n:'The Great Egypt',p:'Amusnet',id:'00000004-0000-5000-9000-000000000130'},
+  {n:'Ultimate Hot',p:'Amusnet',id:'00000004-0000-5000-9000-000000000136'},
+  {n:'Vampire Night',p:'Amusnet',id:'00000004-0000-5000-9000-000000000137'},
+  {n:'Versailles Gold',p:'Amusnet',id:'00000004-0000-5000-9000-000000000139'},
+  {n:'Zodiac Wheel',p:'Amusnet',id:'00000004-0000-5000-9000-000000000145'},
+  {n:'Xtra Hot',p:'Novomatic',id:'00000012-0003-4001-8008-500000000001'},
+  {n:'Ultra Hot Deluxe',p:'Novomatic',id:'00000012-0003-4001-8008-500000000010'},
+  {n:'Sharky',p:'Novomatic',id:'00000012-0003-4001-8008-500000000044'},
+  {n:'Queen of Hearts Deluxe',p:'Novomatic',id:'00000012-0003-4001-8008-500000000066'},
+  {n:'Prized Panda',p:'Novomatic',id:'00000012-0003-4001-8008-500000000070'},
+  {n:'Power Stars',p:'Novomatic',id:'00000012-0003-4001-8008-500000000072'},
+  {n:'Plenty of Fruit 20',p:'Novomatic',id:'00000012-0003-4001-8008-500000000080'},
+  {n:'Mystic Secrets',p:'Novomatic',id:'00000012-0003-4001-8008-500000000086'},
+  {n:'Mermaid\'s Pearl',p:'Novomatic',id:'00000012-0003-4001-8008-500000000087'},
+  {n:'Lotus Flower',p:'Novomatic',id:'00000012-0003-4001-8008-500000000093'},
+  {n:'Lord of the Ocean Magic',p:'Novomatic',id:'00000012-0003-4001-8008-500000000094'},
+  {n:'Katana',p:'Novomatic',id:'00000012-0003-4001-8008-500000000097'},
+  {n:'Jackpot Crown',p:'Novomatic',id:'00000012-0003-4001-8008-500000000104'},
+  {n:'Indian Spirit deluxe',p:'Novomatic',id:'00000012-0003-4001-8008-500000000106'},
+  {n:'Fairy Queen',p:'Novomatic',id:'00000012-0003-4001-8008-500000000131'},
+  {n:'Columbus',p:'Novomatic',id:'00000012-0003-4001-8008-500000000145'},
+  {n:'Book of Ra Cash Connection',p:'Novomatic',id:'00000012-0003-4001-8008-500000000152'},
+  {n:'Book of Ra Magic',p:'Novomatic',id:'00000012-0003-4001-8008-500000000157'},
+  {n:'Book of Ra Deluxe 10',p:'Novomatic',id:'00000012-0003-4001-8008-500000000158'},
+  {n:'Autumn Queen',p:'Novomatic',id:'00000012-0003-4001-8008-500000000163'},
+  {n:'Always Hot Deluxe',p:'Novomatic',id:'00000012-0003-4001-8008-500000000174'},
+  {n:'African Magic',p:'Casino Technology',id:'00000017-dc86-47af-8013-c46b4c000001'},
+  {n:'Banana Party',p:'Casino Technology',id:'00000017-dc86-47af-8013-c46b4c000003'},
+  {n:'Brilliants Hot',p:'Casino Technology',id:'00000017-dc86-47af-8013-c46b4c000005'},
+  {n:'Great Queen Bee',p:'Casino Technology',id:'00000017-dc86-47af-8013-c46b4c000015'},
+  {n:'Mighty Rex',p:'Casino Technology',id:'00000017-dc86-47af-8013-c46b4c000016'},
+  {n:'Gaelic Warrior',p:'Casino Technology',id:'00000017-dc86-47af-8013-c46b4c000019'},
+  {n:'Duck of Luck returns',p:'Casino Technology',id:'00000017-dc86-47af-8013-c46b4c000021'},
+  {n:'Mystic Moon',p:'Casino Technology',id:'00000017-dc86-47af-8013-c46b4c000027'},
+  {n:'Lucky Clover',p:'Casino Technology',id:'00000017-dc86-47af-8013-c46b4c000040'},
+  {n:'20 Super Hot',p:'EGT',id:'00000021-dc86-47af-8013-c46b4c000001'},
+  {n:'40 Super Hot',p:'EGT',id:'00000021-dc86-47af-8013-c46b4c000002'},
+  {n:'Rise of Ra',p:'EGT',id:'00000021-dc86-47af-8013-c46b4c000003'},
+  {n:'Burning Hot Progressive',p:'EGT',id:'00000021-dc86-47af-8013-c46b4c000004'},
+  {n:'Versailles Gold',p:'EGT',id:'00000021-dc86-47af-8013-c46b4c000005'},
+  {n:'Dragons Realm',p:'EGT',id:'00000021-dc86-47af-8013-c46b4c000016'},
+  {n:'Leprechance Treasury',p:'EGT',id:'00000021-dc86-47af-8013-c46b4c000017'},
+  {n:'Princess Cash',p:'EGT',id:'00000021-dc86-47af-8013-c46b4c000018'},
+  {n:'Book of Ra',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000065'},
+  {n:'Book of Ra Deluxe',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000070'},
+  {n:'Book of Ra Magic',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000071'},
+  {n:'Dolphins Pearl',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000126'},
+  {n:'Dolphins Pearl Deluxe',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000128'},
+  {n:'Lord of the Ocean',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000205'},
+  {n:'Lucky Lady\'s Charm Deluxe',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000213'},
+  {n:'Power Stars',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000239'},
+  {n:'Ramses II',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000247'},
+  {n:'Sizzling Hot Deluxe',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000285'},
+  {n:'Xtra Hot',p:'Novomatic',id:'00000032-dc86-47af-8013-c46b4c000340'},
+  {n:'Sweet Bonanza',p:'Pragmatic Play',id:'5e2cecf4-0962-4bf5-b6b0-6d7b2277e192'},
+  {n:'Gates of Olympus',p:'Pragmatic Play',id:'426c0f32-66f6-40c9-9845-e0813bef5e58'},
+  {n:'Big Bass Bonanza',p:'Pragmatic Play',id:'9a1584c7-7d1d-441b-b8c8-43bc3d0985f1'},
+  {n:'Wolf Gold',p:'Pragmatic Play',id:'d15c135d-8b11-4b90-8bb3-f7f2caa8ad6d'},
+  {n:'Sugar Rush',p:'Pragmatic Play',id:'f138ca4a-471d-49bc-81a5-7db260e1972e'},
+  {n:'The Dog House',p:'Pragmatic Play',id:'678d7a4c-0149-4945-8a7d-1974c18d8391'},
+  {n:'Fruit Party',p:'Pragmatic Play',id:'10a93aa6-ef62-4629-b873-673ad83ecb39'},
+  {n:'Joc Special 1',p:'Cashpot',id:'c8705c85-751d-487e-92b8-8200c939dbe9'},
+  {n:'Joc Special 2',p:'Cashpot',id:'0bfca591-98a8-4c8f-9d22-6980ae116746'}
+];
+
+// Enrich with badge logic
+const HOT = ['Sweet Bonanza','Gates of Olympus','Book of Ra Deluxe','Sizzling Hot Deluxe',
+  'Lord of the Ocean','Lucky Lady\'s Charm Deluxe','Burning Hot','40 Super Hot','20 Super Hot',
+  'Dolphin\'s Pearl Deluxe','Xtra Hot','Shining Crown','Rise of Ra','Versailles Gold'];
+const NEW = ['Dragon Reborn','Genius of Leonardo','Stoichkov #8','Viking Rising','Dice Ways'];
+
+const allGames = GAMES.map(g => ({
+  ...g,
+  img: CDN + g.id + '.png',
+  badge: HOT.includes(g.n) ? 'hot' : NEW.includes(g.n) ? 'new' : null
+}));
+
+let activeFilter = 'toate';
+
+function cardHTML(g){
+  return `<div class="game-card">
+    <div class="gc-thumb">
+      <img class="gc-img" src="${g.img}" alt="${g.n}" loading="lazy">
+      <div class="gc-ov"><button class="gc-play"><svg viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></button></div>
+      ${g.badge ? `<div class="gc-badge b-${g.badge}">${g.badge==='hot'?'HOT':'NOU'}</div>` : ''}
+    </div>
+    <div class="gc-info"><div class="gc-name">${g.n}</div><div class="gc-prov">${g.p}</div></div>
+  </div>`;
+}
+
+function render(list){
+  document.getElementById('gamesGrid').innerHTML = list.length
+    ? list.map(cardHTML).join('')
+    : '<p style="color:var(--muted);font-size:13px;grid-column:1/-1;padding:2rem 0">Niciun joc gasit.</p>';
+  document.getElementById('featuredRow').innerHTML = list.slice(0,12).map(cardHTML).join('');
+  document.getElementById('countLabel').textContent = '(' + list.length + ')';
+}
+
+function applyFilter(){
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let list = allGames;
+  if(activeFilter !== 'toate') list = list.filter(g => g.p.toLowerCase().includes(activeFilter));
+  if(q) list = list.filter(g => g.n.toLowerCase().includes(q) || g.p.toLowerCase().includes(q));
+  render(list);
+}
+
+document.getElementById('catBar').addEventListener('click', e => {
+  const p = e.target.closest('[data-f]');
+  if(!p) return;
+  document.querySelectorAll('.cat-pill').forEach(x => x.classList.remove('on'));
+  p.classList.add('on');
+  activeFilter = p.dataset.f;
+  applyFilter();
+});
+document.getElementById('searchInput').addEventListener('input', applyFilter);
+
+setInterval(() => {
+  document.querySelectorAll('.ji-val').forEach(el => {
+    const b = parseInt(el.dataset.base);
+    el.textContent = '€ ' + (b + Math.floor(Math.random()*300)).toLocaleString('ro-RO');
+  });
+}, 3500);
+
+render(allGames);
+</script>
+</body>
+</html>
