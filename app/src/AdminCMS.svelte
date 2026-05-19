@@ -848,6 +848,18 @@
     }
   }
 
+  function handlePromoBgUpload(e, i) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        promoConfig[i].backgroundImage = ev.target.result;
+        promoConfig = [...promoConfig];
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   function handleBgUpload(e, index) {
     const file = e.target.files[0];
     if (file) {
@@ -3106,23 +3118,49 @@
                       {/each}
                     </div>
 
-                    <input
-                      type="text"
-                      bind:value={promo.backgroundImage}
-                      placeholder="Sau URL manual: https://..."
-                      style="width: 100%; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-hover); color: var(--text-main); outline: none;"
-                    />
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px; width: 100%;">
+                      <input
+                        type="text"
+                        bind:value={promo.backgroundImage}
+                        placeholder="URL Imagine sau încarcă un fișier..."
+                        style="flex: 1; padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-hover); color: var(--text-main); outline: none;"
+                      />
+                      <label
+                        class="cms-btn-primary"
+                        style="cursor: pointer; margin: 0; white-space: nowrap;"
+                      >
+                        📁 Încarcă
+                        <input
+                          type="file"
+                          accept="image/*,video/*"
+                          on:change={(e) => handlePromoBgUpload(e, i)}
+                          style="display:none;"
+                        />
+                      </label>
+                    </div>
 
-                    {#if promo.backgroundImage && !promo.backgroundImage.startsWith("/abstract_")}
+                    {#if promo.backgroundImage}
                       <div
                         class="cms-bg-preview"
-                        style="margin-top: 10px; height: 100px; overflow: hidden; border-radius: 8px;"
+                        style="height: 100px; overflow: hidden; border-radius: 8px; border: 1px solid var(--border-color);"
                       >
-                        <img
-                          src={promo.backgroundImage}
-                          alt="Promo Background"
-                          style="width: 100%; height: 100%; object-fit: cover;"
-                        />
+                        {#if promo.backgroundImage.includes('data:video/') || promo.backgroundImage.endsWith('.mp4') || promo.backgroundImage.endsWith('.webm') || promo.backgroundImage.endsWith('.mov')}
+                          <!-- svelte-ignore a11y-media-has-caption -->
+                          <video
+                            src={promo.backgroundImage}
+                            autoplay
+                            loop
+                            muted
+                            playsinline
+                            style="width: 100%; height: 100%; object-fit: cover;"
+                          ></video>
+                        {:else}
+                          <img
+                            src={promo.backgroundImage}
+                            alt="Promo Background"
+                            style="width: 100%; height: 100%; object-fit: cover;"
+                          />
+                        {/if}
                       </div>
                     {/if}
                   </div>
