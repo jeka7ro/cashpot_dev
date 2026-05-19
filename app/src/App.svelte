@@ -2431,7 +2431,7 @@
                   >
                     {#if (widgetsSource?.luckyWheel?.shape || 'widget') === 'gamecard'}
                       <button
-                        on:click={() => setView("playarena", "", "wheel")}
+                        on:click|stopPropagation={spinSidebarWheel}
                         style="width: 100%; aspect-ratio: 3/4; padding: 0; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: linear-gradient(160deg, rgba(40,10,80,0.98), rgba(0,0,0,0.9)); box-shadow: 0 8px 24px rgba(0,0,0,0.5); position: relative; cursor: pointer; display: flex; flex-direction: column; align-items: stretch; transition: transform 0.2s;"
                         on:mouseover={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
                         on:mouseout={(e) => (e.currentTarget.style.transform = "scale(1)")}
@@ -2445,13 +2445,13 @@
                         </div>
                         <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); z-index: 5; text-align: center;">
                           <div style="padding: 10px; border-radius: 99px; background: linear-gradient(135deg, #f5c842, #d97706); color: #1a1200; font-weight: 900; font-size: 12px; box-shadow: 0 4px 15px rgba(245,200,66,0.4);">
-                            {wheelSpinning ? "⏳ SE ROTEȘTE..." : "ÎNVÂRTE ACUM"}
+                            {wheelSpinning ? "⏳ SE ROTEȘTE..." : (showWheelPrize ? `🎉 ${wheelPrize}` : "ÎNVÂRTE ACUM")}
                           </div>
                         </div>
                       </button>
                     {:else if widgetsSource.luckyWheel.size === "s"}
                       <button
-                        on:click={() => setView("playarena", "", "wheel")}
+                        on:click|stopPropagation={spinSidebarWheel}
                         style="width: 100%; height: 52px; padding: 6px 10px; border-radius: 12px; background: linear-gradient(135deg, rgba(109,40,217,0.15), rgba(0,0,0,0.5)); border: var(--widget-border); cursor: pointer; text-align: left; transition: all 0.3s; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center;"
                       >
                         <div
@@ -2480,7 +2480,7 @@
                             <div
                               style="font-size: 11px; font-weight: 900; color: #fff; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                             >
-                              1 Rotire disponibilă
+                              {wheelSpinning ? "Se rotește..." : (showWheelPrize ? `🎉 ${wheelPrize}` : "1 Rotire disponibilă")}
                             </div>
                           </div>
                         </div>
