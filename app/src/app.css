@@ -356,7 +356,8 @@ header.topbar .logo img {
   }
   
   .notification-bell-btn {
-    margin-left: 32px; /* Push the bell (and everything to its right) to the right to avoid search bar overlap */
+    position: relative !important;
+    left: 24px; /* Visually shift the bell to the right to avoid overlapping the search bar */
   }
 }
 
