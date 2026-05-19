@@ -4684,15 +4684,23 @@ header.topbar .logo img {
   /* Mobile Header Adjustments - Single Row Forced */
   .topbar {
     height: 48px !important;
-    margin: calc(env(safe-area-inset-top, 0px) + 12px) 24px 0 24px !important;
-    /* Made even narrower */
-    padding: 0 4px 0 12px !important;
-    /* Pushed icons far right, gave logo a bit more space */
+    margin: calc(env(safe-area-inset-top, 0px)) 0 0 0 !important;
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    padding: 0 12px !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: space-between !important;
     gap: 6px !important;
     flex-wrap: nowrap !important;
+  }
+
+  /* Hide extra text in mobile wallet */
+  .header-wallet-text-top,
+  .header-wallet-level {
+    display: none !important;
   }
 
   .topbar-left {
