@@ -5264,7 +5264,10 @@
             <div style="flex:1;">
               <div style="font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Portofelul meu</div>
               <div style="font-size:22px; font-weight:900; color:var(--text-main); letter-spacing:-0.5px;">{userBalance.toLocaleString('ro-RO', {minimumFractionDigits: 2})} <span style="font-size:13px; color:var(--text-muted); font-weight:600;">RON</span></div>
-              <div style="font-size:11px; color:var(--accent-gold); font-weight:700; margin-top:2px;">⭐ 2.340 / 5.000 XP · Nivel {userLevel} {vipConfig.levels[userLevel - 1]?.name || ''}</div>
+              <div style="font-size:11px; color:var(--accent-gold); font-weight:700; margin-top:2px;">⭐ 2.340 / 5.000 XP · Nivel {userLevel}</div>
+              <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:4px; margin-top:6px; overflow:hidden;">
+                <div style="height:100%; width: 46%; background:linear-gradient(90deg, #f5c842, #e6a817); border-radius:4px; box-shadow: 0 0 10px rgba(245,200,66,0.5);"></div>
+              </div>
             </div>
             <button on:click={() => showMobileWallet = false} style="width:32px; height:32px; border-radius:50%; background:var(--bg-hover); border:1px solid var(--border-color); color:var(--text-muted); cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -5285,7 +5288,7 @@
 
           <!-- Deposit button full width -->
           <div style="margin:0 20px 16px;">
-            <button style="width:100%; padding:16px; border-radius:16px; background:linear-gradient(135deg,#f5c842,#e6a817); color:#1a1200; font-weight:900; font-size:17px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 20px rgba(245,200,66,0.4); letter-spacing:0.5px;">
+            <button on:click={() => { userBalance += 50; showMobileWallet = false; alert("Depunere inițiată (Apple Pay Simulation)"); }} style="width:100%; padding:16px; border-radius:16px; background:linear-gradient(135deg,#f5c842,#e6a817); color:#1a1200; font-weight:900; font-size:17px; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 20px rgba(245,200,66,0.4); letter-spacing:0.5px;">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
               DEPUNE ACUM
             </button>
@@ -5297,8 +5300,9 @@
             <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;">
               {#each [100, 200, 500, 1000] as amount}
                 <button style="padding:12px 0; border-radius:12px; background:var(--bg-hover); border:1px solid var(--border-color); color:var(--text-main); font-weight:800; font-size:13px; cursor:pointer; transition:all 0.2s; display:flex; flex-direction:column; align-items:center; gap:2px;"
-                  on:mouseover={(e) => { e.currentTarget.style.borderColor='var(--accent-gold)'; e.currentTarget.style.color='var(--accent-gold)'; }}
-                  on:mouseout={(e) => { e.currentTarget.style.borderColor='var(--border-color)'; e.currentTarget.style.color='var(--text-main)'; }}
+                  on:click={() => { userBalance += amount; showMobileWallet = false; alert(`Apple Pay: Depunere de ${amount} RON aprobată!`); }}
+                  on:mouseover={(e) => { e.currentTarget.style.borderColor='var(--accent-gold)'; e.currentTarget.style.color='var(--accent-gold)'; e.currentTarget.style.transform='scale(1.05)'; }}
+                  on:mouseout={(e) => { e.currentTarget.style.borderColor='var(--border-color)'; e.currentTarget.style.color='var(--text-main)'; e.currentTarget.style.transform='scale(1)'; }}
                 >
                   <span style="font-size:15px; font-weight:900;">{amount}</span>
                   <span style="font-size:9px; opacity:0.5; font-weight:600;">LEI</span>
