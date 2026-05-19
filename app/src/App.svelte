@@ -51,6 +51,7 @@
 
   let searchQuery = "";
   let activeView = "home";
+  let activeWalletCard = 0;
   let isAdminRoute = false;
 
   if (typeof window !== "undefined") {
@@ -261,6 +262,20 @@
     ? $cmsDraftJackpotFever2
     : $cmsJackpotFever2;
   $: bannersSource = $isPreviewMode ? $cmsDraftBanners : $cmsBanners;
+  $: bannersConfig = (() => {
+    if (!bannersSource) return bannersSource;
+    let clean = JSON.parse(JSON.stringify(bannersSource));
+    if (clean.items) {
+      clean.items = clean.items.map((item) => ({
+        ...item,
+        title: item.title?.trim() ? item.title : "",
+        subtitle: item.subtitle?.trim() ? item.subtitle : "",
+        tag: item.tag?.trim() ? item.tag : "",
+        buttonText: item.buttonText?.trim() ? item.buttonText : ""
+      }));
+    }
+    return clean;
+  })();
   $: promoSource = $isPreviewMode ? $cmsDraftPromoBanner : $cmsPromoBanner;
   $: gameEffectsSource = $isPreviewMode
     ? $cmsDraftGameEffects
@@ -1373,7 +1388,8 @@
           <h3 style="font-size:16px; font-weight:800; color:var(--text-main); margin:0;">Ultimele Jocuri</h3>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
-          {#each (topGamesConfig?.games || []).slice(0, 4) as game}
+          {#each (topGamesConfig?.games || []).slice(0, 4) as topGame}
+            {@const game = GAMES.find((g) => g.n === topGame.name) || { n: topGame.name, img: '' }}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <div
@@ -5379,7 +5395,8 @@
 
               <!-- Right Column: Recent Games Grid -->
               <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-content: start;">
-                {#each (topGamesConfig?.games || []).slice(0, 4) as game}
+                {#each (topGamesConfig?.games || []).slice(0, 4) as topGame}
+                  {@const game = GAMES.find((g) => g.n === topGame.name) || { n: topGame.name, img: '' }}
                   <!-- svelte-ignore a11y-click-events-have-key-events -->
                   <!-- svelte-ignore a11y-no-static-element-interactions -->
                   <div style="aspect-ratio:3/4; border-radius:8px; overflow:hidden; position:relative; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.3);" on:click={() => { showMobileWallet = false; selectGame(game); }}>

@@ -702,7 +702,7 @@ header.topbar .logo img {
     z-index: 50 !important;
   }
 
-  .topbar-search-container {
+  .topbar-search-wrapper {
     width: 100% !important;
     height: 100% !important;
     position: relative !important;
@@ -770,34 +770,34 @@ header.topbar .logo img {
   }
 
   /* Expandare dinamica la focus pe mobil */
-  .topbar-search-container:focus-within {
+  .topbar-search-wrapper:focus-within {
     position: absolute !important;
     right: 0 !important;
     width: 240px !important;
     /* Se extinde in stanga, acoperind logo-ul */
   }
 
-  .topbar-search-container:focus-within .topbar-search {
+  .topbar-search-wrapper:focus-within .topbar-search {
     background: var(--bg-panel) !important;
     border: 1px solid var(--primary) !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
   }
 
-  .topbar-search-container:focus-within input {
+  .topbar-search-wrapper:focus-within input {
     color: var(--text-main) !important;
     padding: 0 36px 0 32px !important;
     cursor: text;
   }
 
-  .topbar-search-container:focus-within input::placeholder {
+  .topbar-search-wrapper:focus-within input::placeholder {
     color: var(--text-muted) !important;
   }
 
-  .topbar-search-container:focus-within svg:not(.search-close-btn svg) {
+  .topbar-search-wrapper:focus-within svg:not(.search-close-btn svg) {
     color: var(--primary) !important;
   }
 
-  .topbar-search-container:focus-within .search-close-btn,
+  .topbar-search-wrapper:focus-within .search-close-btn,
   .search-close-btn.visible {
     opacity: 1;
     pointer-events: auto;
@@ -1113,6 +1113,10 @@ header.topbar .logo img {
   .vip-page-wrapper {
     padding: 16px 12px 100px !important;
     min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 30px !important;
   }
 
   /* VIP rewards grid pe mobil: 1 coloana */
@@ -4984,7 +4988,7 @@ header.topbar .logo img {
     background: transparent !important;
     border: none !important;
     color: var(--text-main) !important;
-    padding: 0 !important;
+    padding: 0 16px 0 32px !important;
     font-size: 14px !important;
     opacity: 1;
   }
@@ -5992,10 +5996,11 @@ header.topbar .logo img {
   right: 6px;
   top: 50%;
   transform: translateY(-50%);
-  height: 26px;
+  height: 28px;
+  min-width: 28px;
   padding: 0 10px;
   border-radius: 50px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 900;
   background: var(--primary, #6d28d9) !important;
   border: 1px solid rgba(250, 204, 21, 0.3) !important;
