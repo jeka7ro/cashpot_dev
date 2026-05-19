@@ -856,7 +856,8 @@
         : 'relative'}; top: 0; z-index: 100;"
     >
       <div class="topbar-left">
-        <a href="/" class="logo" style="display: flex; align-items: center;">
+        <!-- svelte-ignore a11y-invalid-attribute -->
+        <a href="/" class="logo" style="display: flex; align-items: center;" on:click|preventDefault={() => setView('home')}>
           <img
             src={headerConfigSource.logoUrl ||
               themeColorsSource?.logoUrl ||
@@ -892,7 +893,7 @@
       </div>
 
       <!-- Search bar — anchored at left edge of content area -->
-      <div style="position: absolute; left: calc(var(--sidebar-width, 260px) + 16px); top: 50%; transform: translateY(-50%); width: 320px; z-index: 5;">
+      <div class="topbar-search-wrapper">
         <div class="topbar-search">
           <svg viewBox="0 0 24 24"
             ><path
