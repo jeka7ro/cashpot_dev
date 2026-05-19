@@ -4319,7 +4319,10 @@
               class="promo-banner-section size-{promo.size?.toLowerCase() ||
                 'l'}"
               style="{promo.clickableBanner ? 'cursor: pointer;' : ''}"
-              on:click={promo.clickableBanner ? () => { if(promo.gameName) { selectGame(GAMES.find(g => g.n === promo.gameName) || GAMES[0]); } } : null}
+              on:click={promo.clickableBanner ? () => { 
+                if (promo.bannerLink) { window.location.href = promo.bannerLink; }
+                else if(promo.gameName) { selectGame(GAMES.find(g => g.n === promo.gameName) || GAMES[0]); } 
+              } : null}
             >
               {#if promo.backgroundImage}
                 {#if promo.backgroundImage.includes('data:video/') || promo.backgroundImage.endsWith('.mp4') || promo.backgroundImage.endsWith('.webm') || promo.backgroundImage.endsWith('.mov')}
@@ -4366,8 +4369,11 @@
                       '#22c55e'}; color: {promo.buttonTextColor ||
                       '#ffffff'}; border: {promo.buttonBorderWidth ||
                       0}px solid {promo.buttonBorderColor || 'transparent'}; pointer-events: {promo.clickableBanner ? 'none' : 'auto'};"
-                    >{promo.buttonText}</button
-                  >
+                    on:click={!promo.clickableBanner ? () => {
+                      if (promo.bannerLink) { window.location.href = promo.bannerLink; }
+                      else if(promo.gameName) { selectGame(GAMES.find(g => g.n === promo.gameName) || GAMES[0]); }
+                    } : null}
+                  >{promo.buttonText}</button>
                 {/if}
               </div>
             </section>
@@ -4694,7 +4700,10 @@
                       class="promo-banner-section size-{promo.size?.toLowerCase() ||
                         'l'}"
                       style="margin: 32px 0; width: 100%; {promo.clickableBanner ? 'cursor: pointer;' : ''}"
-                      on:click={promo.clickableBanner ? () => { if(promo.gameName) { selectGame(GAMES.find(g => g.n === promo.gameName) || GAMES[0]); } } : null}
+                      on:click={promo.clickableBanner ? () => { 
+                        if (promo.bannerLink) { window.location.href = promo.bannerLink; }
+                        else if(promo.gameName) { selectGame(GAMES.find(g => g.n === promo.gameName) || GAMES[0]); } 
+                      } : null}
                     >
                       {#if promo.backgroundImage}
                         {#if promo.backgroundImage.includes('data:video/') || promo.backgroundImage.endsWith('.mp4') || promo.backgroundImage.endsWith('.webm') || promo.backgroundImage.endsWith('.mov')}
@@ -4741,6 +4750,10 @@
                               'var(--accent-gold)'}; color: {promo.buttonTextColor ||
                               '#000000'}; border: {promo.buttonBorderWidth ||
                               0}px solid {promo.buttonBorderColor || 'transparent'}; pointer-events: {promo.clickableBanner ? 'none' : 'auto'};"
+                            on:click={!promo.clickableBanner ? () => {
+                              if (promo.bannerLink) { window.location.href = promo.bannerLink; }
+                              else if(promo.gameName) { selectGame(GAMES.find(g => g.n === promo.gameName) || GAMES[0]); }
+                            } : null}
                           >
                             {promo.buttonText}
                           </button>

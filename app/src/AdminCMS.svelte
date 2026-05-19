@@ -3290,13 +3290,22 @@
                       {/if}
                     </div>
 
-                    <label style="margin-top: 16px;"
-                      >URL Imagine Joc Central (Poate fi modificat manual)</label
-                    >
+                    <label style="margin-top: 16px;">URL Imagine Joc Central (Poate fi modificat manual)</label>
                     <input
                       type="text"
                       bind:value={promo.gameImage}
                       placeholder="https://..."
+                      style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-hover); color: var(--text-main); width: 100%; outline: none;"
+                    />
+
+                    <label style="margin-top: 16px; display: flex; align-items: center; gap: 8px;">
+                      <span>Link Personalizat pe Banner / Buton (Opțional)</span>
+                      <span style="font-size: 11px; font-weight: normal; color: var(--text-muted);">(Dacă este setat, va ignora jocul selectat)</span>
+                    </label>
+                    <input
+                      type="text"
+                      bind:value={promo.bannerLink}
+                      placeholder="ex: /vip sau https://alte-site.ro"
                       style="padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-hover); color: var(--text-main); width: 100%; outline: none;"
                     />
                   </div>
