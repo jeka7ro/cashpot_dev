@@ -718,6 +718,12 @@
   $: totalProgressPercentage = (userLevel - 1) * 20 + xpPercentage / 5;
   let showUserPanel = false;
   let showMobileWallet = false;
+  function formatBalance(bal) {
+    if (bal === undefined || bal === null) return "";
+    const parts = bal.toLocaleString("ro-RO", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).split(",");
+    return `${parts[0]}<span style="font-size: 0.7em;">,${parts[1]}</span>`;
+  }
+
   let userPanelRect = { top: 70, right: 20 };
 
   function openUserPanel(e) {
@@ -1051,9 +1057,7 @@
               <div style="display:flex; flex-direction:column; align-items:flex-start; text-align:left;">
                 <div class="header-wallet-text-top">Portofel</div>
                 <div class="header-wallet-balance">
-                  {userBalance.toLocaleString("ro-RO", {
-                    minimumFractionDigits: 2,
-                  })} <span>RON</span>
+                  {@html formatBalance(userBalance)} <span>RON</span>
                   <svg
                     class="header-wallet-chevron"
                     viewBox="0 0 24 24"
@@ -1215,9 +1219,7 @@
             <div
               style="color:var(--text-main); font-weight:800; font-size:16px;"
             >
-              {userBalance.toLocaleString("ro-RO", {
-                minimumFractionDigits: 2,
-              })}
+              {@html formatBalance(userBalance)}
               <span style="font-size:10px; opacity:0.6; font-weight: 600;"
                 >RON</span
               >
@@ -1234,7 +1236,7 @@
             <div
               style="color:var(--accent-gold); font-weight:800; font-size:16px;"
             >
-              {userBonus.toLocaleString("ro-RO", { minimumFractionDigits: 2 })}
+              {@html formatBalance(userBonus)}
               <span style="font-size:10px; opacity:0.6; font-weight: 600;"
                 >RON</span
               >
@@ -1610,9 +1612,7 @@
                                 <div
                                   style="font-size: 13px; font-weight: 900; color: var(--accent-gold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;"
                                 >
-                                  {userBalance.toLocaleString("ro-RO", {
-                                    minimumFractionDigits: 0,
-                                  })} <span style="font-size: 8px;">RON</span>
+                                  {@html formatBalance(userBalance)} <span style="font-size: 8px;">RON</span>
                                 </div>
                               {/if}
                               {#if widgetsSource.walletWidget.showName}
@@ -1674,9 +1674,7 @@
                                       ? '22px'
                                       : '18px'}; font-weight: 900; color: var(--accent-gold); font-family: 'Inter', monospace;"
                                   >
-                                    {userBalance.toLocaleString("ro-RO", {
-                                      minimumFractionDigits: 2,
-                                    })}
+                                    {@html formatBalance(userBalance)}
                                     <span style="font-size: 12px;">RON</span>
                                   </div>
                                 {/if}
@@ -2201,9 +2199,7 @@
                               <div
                                 style="font-size: 13px; font-weight: 900; color: var(--accent-gold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;"
                               >
-                                {userBalance.toLocaleString("ro-RO", {
-                                  minimumFractionDigits: 0,
-                                })} <span style="font-size: 8px;">RON</span>
+                                {@html formatBalance(userBalance)} <span style="font-size: 8px;">RON</span>
                               </div>
                             {/if}
                             {#if widgetsSource.walletWidget.showName}
@@ -2265,9 +2261,7 @@
                                     ? '22px'
                                     : '18px'}; font-weight: 900; color: var(--accent-gold); font-family: 'Inter', monospace;"
                                 >
-                                  {userBalance.toLocaleString("ro-RO", {
-                                    minimumFractionDigits: 2,
-                                  })} <span style="font-size: 12px;">RON</span>
+                                  {@html formatBalance(userBalance)} <span style="font-size: 12px;">RON</span>
                                 </div>
                               {/if}
                             </div>
@@ -5311,7 +5305,7 @@
             </div>
             
             <div style="font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Portofelul meu</div>
-            <div style="font-size:26px; font-weight:900; color:var(--text-main); letter-spacing:-0.5px;">{userBalance.toLocaleString('ro-RO', {minimumFractionDigits: 2})} <span style="font-size:14px; color:var(--text-muted); font-weight:600;">RON</span></div>
+            <div style="font-size:26px; font-weight:900; color:var(--text-main); letter-spacing:-0.5px;">{@html formatBalance(userBalance)} <span style="font-size:14px; color:var(--text-muted); font-weight:600;">RON</span></div>
             <div style="font-size:12px; color:var(--accent-gold); font-weight:700; margin-top:4px;">⭐ 2.340 / 5.000 XP · Nivel {userLevel}</div>
             
             <div style="width:100%; max-width:240px; height:6px; background:rgba(255,255,255,0.1); border-radius:4px; margin-top:12px; overflow:hidden;">
@@ -5323,11 +5317,11 @@
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 20px 20px;">
             <div style="background:var(--bg-hover); border:1px solid var(--border-color); border-radius:14px; padding:14px;">
               <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; font-weight:600;">Balanță reală</div>
-              <div style="font-size:18px; font-weight:900; color:var(--text-main);">{userBalance.toLocaleString('ro-RO', {minimumFractionDigits:2})} <span style="font-size:10px; opacity:0.6;">RON</span></div>
+              <div style="font-size:18px; font-weight:900; color:var(--text-main);">{@html formatBalance(userBalance)} <span style="font-size:10px; opacity:0.6;">RON</span></div>
             </div>
             <div style="background:var(--bg-hover); border:1px solid var(--border-color); border-radius:14px; padding:14px;">
               <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; font-weight:600;">Bonus</div>
-              <div style="font-size:18px; font-weight:900; color:var(--accent-gold);">{userBonus.toLocaleString('ro-RO', {minimumFractionDigits:2})} <span style="font-size:10px; opacity:0.6;">RON</span></div>
+              <div style="font-size:18px; font-weight:900; color:var(--accent-gold);">{@html formatBalance(userBonus)} <span style="font-size:10px; opacity:0.6;">RON</span></div>
             </div>
           </div>
 
