@@ -2,6 +2,10 @@ import { writable } from 'svelte/store';
 
 // ─── Game Catalog ─────────────────────────────────────────────────
 export const GAMES = [
+  { n: 'Noble Hot Crown', p: 'Amusnet', c: ['fructe', 'coroane', 'septari', 'clasic', 'jackpot', 'pacanele'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/00000004-0000-5000-9000-000000000002.png' },
+  { n: 'Candy Blast', p: 'Pragmatic Play', c: ['dulciuri', 'speciala'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/def3451a-3444-40b5-9f9d-937ab16fb1b6.png' },
+  { n: 'Gold of Ra', p: 'Novomatic', c: ['egipt'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/00000032-dc86-47af-8013-c46b4c000065.png' },
+  { n: 'Moon Fortune', p: 'Amusnet', c: ['fructe'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/43a53a73-7d61-4cee-8d14-3ccbf36a1fe9.png' },
   { n: 'Sweet Bonanza', p: 'Pragmatic Play', c: ['fructe', 'dulciuri', 'speciala', 'cumpara speciala', 'promotii', 'jocuri noi'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/5e2cecf4-0962-4bf5-b6b0-6d7b2277e192.png' },
   { n: 'Gates of Olympus', p: 'Pragmatic Play', c: ['zei', 'speciala', 'cumpara speciala', 'mitologie', 'promotii', 'megaways'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/426c0f32-66f6-40c9-9845-e0813bef5e58.png' },
   { n: '100 Burning Hot', p: 'Amusnet', c: ['fructe', 'clasic', 'septari', 'jackpot', 'pacanele'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/00000004-0000-5000-9000-000000000002.png' },
