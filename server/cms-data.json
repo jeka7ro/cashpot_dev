@@ -302,7 +302,7 @@
       "id": "promo_1",
       "enabled": true,
       "title": "Jocul favorit",
-      "size": "S",
+      "size": "XL",
       "gameImage": "https://prod-cdn-gaming.freetls.fastly.net/cdn/images/icore_1003601_ro/f6f5490e-f2ee-4ac3-abd4-88a99e9906df.gif",
       "backgroundImage": "/abstract_casino_bg_2.png",
       "buttonText": "JOACĂ",
@@ -370,6 +370,13 @@
   },
   "auditLog": [
     {
+      "id": 1779177147366,
+      "timestamp": "19.05.2026, 10:52:27",
+      "user": "Admin",
+      "action": "PUBLICARE",
+      "details": "S-au aplicat modificările. Configurație curentă: 5 categorii vizibile, 0 programate."
+    },
+    {
       "id": 1779173490550,
       "timestamp": "19.05.2026, 09:51:30",
       "user": "Admin",
@@ -412,7 +419,7 @@
       "details": "S-a creat categoria \"Categorie Nouă\"."
     }
   ],
-  "updatedAt": "2026-05-19T07:25:16.203Z",
+  "updatedAt": "2026-05-19T07:52:28.764Z",
   "winnersConfig": {
     "enabled": true,
     "showImage": true,

@@ -319,19 +319,24 @@ function getInitial(key, def) {
            parsed = { ...JSON.parse(JSON.stringify(def)), ...parsed, jackpotWidget: parsed.jackpotWidget || def.jackpotWidget };
            
            if (key === 'cashpot_cms_vip' && parsed.levels) {
-             parsed.levels = parsed.levels.map((lvl, i) => ({...def.levels[i], ...lvl, benefits: lvl.benefits || def.levels[i].benefits}));
+             parsed.levels = parsed.levels.map((lvl, i) => ({
+                 ...def.levels[i], 
+                 ...lvl, 
+                 benefits: (!lvl.benefits || lvl.benefits.length === 0) ? def.levels[i].benefits : lvl.benefits
+             }));
            }
            if (key === 'cashpot_cms_play_arena') {
              const iconMap = {
                '🏠': '/icons/pa_icon_home.png', '🎯': '/icons/pa_icon_missions.png',
                '🏆': '/icons/pa_icon_tournaments.png', '🎁': '/icons/pa_icon_bonus.png',
-               '💰': '/icons/pa_icon_coin.png', '🐻': '/icons/pa_icon_bonus.png'
+               '💰': '/icons/pa_icon_coin.png', '🐻': '/icons/pa_icon_bonus.png',
+               '📅': '/icons/pa_icon_missions.png'
              };
              if (parsed.items) {
-               parsed.items = parsed.items.map(item => ({...item, icon: iconMap[item.icon] || item.icon}));
+               parsed.items = parsed.items.map(item => ({...item, icon: iconMap[typeof item.icon === 'string' ? item.icon.trim() : item.icon] || item.icon}));
              }
              if (parsed.missions) {
-               parsed.missions = parsed.missions.map(mission => ({...mission, icon: iconMap[mission.icon] || mission.icon}));
+               parsed.missions = parsed.missions.map(mission => ({...mission, icon: iconMap[typeof mission.icon === 'string' ? mission.icon.trim() : mission.icon] || mission.icon}));
              }
            }
            return parsed;

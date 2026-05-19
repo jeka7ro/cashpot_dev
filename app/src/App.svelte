@@ -2296,9 +2296,9 @@
                         style="padding: 16px; background: linear-gradient(135deg, rgba(109,40,217,0.15), rgba(0,0,0,0.5)); border: var(--widget-border); border-radius: 16px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"
                       >
                         <div
-                          style="font-size: 10px; color: var(--accent-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;"
+                          style="font-size: 10px; color: var(--accent-gold); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 4px;"
                         >
-                          🎮 Play Arena
+                          <img src="/icons/pa_icon_home.png" alt="home" style="height:12px; object-fit:contain;" /> PLAY ARENA
                         </div>
                         <div
                           style="font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 12px;"
@@ -2307,11 +2307,11 @@
                         </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;">
                           <button style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px 4px; cursor: pointer; transition: all 0.2s;" on:click={() => setView('playarena', '', 'missions')} on:mouseover={(e) => e.currentTarget.style.background='rgba(255,255,255,0.1)'} on:mouseout={(e) => e.currentTarget.style.background='rgba(0,0,0,0.4)'}>
-                            <div style="font-size: 16px; margin-bottom: 4px;">⚡</div>
+                            <div style="font-size: 16px; margin-bottom: 4px;"><img src="/icons/pa_icon_missions.png" alt="missions" style="height:20px; object-fit:contain;" /></div>
                             <div style="font-size: 9px; font-weight: 800; color: #fff; text-transform: uppercase;">{playArenaConfig.missionsCount || 2} Misiuni Active</div>
                           </button>
                           <button style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 10px 4px; cursor: pointer; transition: all 0.2s;" on:click={() => setView('playarena', '', 'tournaments')} on:mouseover={(e) => e.currentTarget.style.background='rgba(255,255,255,0.1)'} on:mouseout={(e) => e.currentTarget.style.background='rgba(0,0,0,0.4)'}>
-                            <div style="font-size: 16px; margin-bottom: 4px;">🏆</div>
+                            <div style="font-size: 16px; margin-bottom: 4px;"><img src="/icons/pa_icon_tournaments.png" alt="tournaments" style="height:20px; object-fit:contain;" /></div>
                             <div style="font-size: 9px; font-weight: 800; color: #fff; text-transform: uppercase;">Turneu Săptămânal</div>
                           </button>
                         </div>
@@ -3637,7 +3637,7 @@
                     <div
                       style="font-size:11px; color:#a78bfa; font-weight:700; text-transform:uppercase; letter-spacing:1px;"
                     >
-                      🏆 Turneu Activ
+                      <img src="/icons/pa_icon_tournaments.png" alt="turneu" style="height:14px; vertical-align:middle; margin-right:4px;" /> Turneu Activ
                     </div>
                     <h3
                       style="font-size:20px; font-weight:900; color:{isDarkTheme ? '#fff' : 'var(--text-main)'}; margin:4px 0 0; font-family: var(--font-condensed);"
@@ -3706,10 +3706,8 @@
                 <div
                   style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;"
                 >
-                  <h3
-                    style="font-size:16px; font-weight:900; color:var(--text-main); margin:0;"
-                  >
-                    ⚡ Misiuni Active
+                  <h3 style="font-size: 16px; font-weight: 900; color: {isDarkTheme ? '#fff' : 'var(--text-main)'}; margin: 0; font-family: var(--font-condensed); display: flex; align-items: center;">
+                    <img src="/icons/pa_icon_missions.png" alt="misiuni" style="height:16px; margin-right:6px;" /> Misiuni Active
                   </h3>
                   <button
                     style="font-size:12px; color:#a78bfa; font-weight:700; background:none; border:none; cursor:pointer; padding:0;"
@@ -3799,7 +3797,7 @@
                     <div
                       style="width:42px; height:42px; border-radius:12px; background:linear-gradient(135deg,#7c3aed,#4c1d95); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;"
                     >
-                      🏆
+                      <img src="/icons/pa_icon_tournaments.png" alt="trophy" style="height:24px; object-fit:contain;" />
                     </div>
                     <div style="flex:1; min-width:0;">
                       <div
@@ -4306,7 +4304,7 @@
                 <div
                   style="padding: 0 20px; font-weight: 800; color: var(--accent-gold); z-index: 2; background: {isDarkTheme ? 'rgba(26, 22, 37, 1)' : 'var(--bg-panel)'}; border-radius: 16px 0 0 16px; box-shadow: 10px 0 20px {isDarkTheme ? 'rgba(26, 22, 37, 1)' : 'var(--bg-panel)'}; position: absolute; left: 0; display: flex; align-items: center; height: 100%;"
                 >
-                  🏆 TOP CÂȘTIGĂTORI
+                  <img src="/icons/pa_icon_tournaments.png" alt="top" style="height:14px; vertical-align:middle; margin-right:4px;" /> TOP CÂȘTIGĂTORI
                 </div>
                 <div
                   style="display: inline-block; padding-left: 200px; animation: marquee 40s linear infinite; gap: 32px;"
@@ -4831,7 +4829,7 @@
           <div
             style="padding: 0 16px; font-weight: 800; color: var(--accent-gold); z-index: 2; background: var(--bg-dark); box-shadow: 10px 0 15px var(--bg-dark); position: absolute; left: 0; display: flex; align-items: center; height: 100%;"
           >
-            🏆 TOP CÂȘTIGĂTORI
+            <img src="/icons/pa_icon_tournaments.png" alt="top" style="height:14px; vertical-align:middle; margin-right:4px;" /> TOP CÂȘTIGĂTORI
           </div>
           <div
             style="display: inline-block; padding-left: max(100%, 200px); animation: marquee 40s linear infinite; gap: 32px;"
