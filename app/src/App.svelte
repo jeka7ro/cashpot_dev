@@ -953,32 +953,6 @@
           </div>
         {/if}
 
-        <!-- Notification Bell (logged in only) -->
-        {#if isLoggedIn && widgetsSource?.notificationBell?.enabled !== false}
-          <button
-            class="btn-theme-toggle"
-            style="position:relative; flex-shrink:0;"
-            title="Notificări"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              width="18"
-              height="18"
-            >
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-            </svg>
-            <!-- Notification badge -->
-            <span
-              style="position:absolute; top:-2px; right:-2px; width:16px; height:16px; border-radius:50%; background:#ef4444; font-size:9px; font-weight:900; color:#fff; display:flex; align-items:center; justify-content:center; border:2px solid {isDarkTheme ? 'var(--bg-dark)' : 'var(--bg-panel)'};"
-              >3</span
-            >
-          </button>
-        {/if}
-
         {#if (themeColorsSource?.showLangToggle ?? headerConfigSource.showLangToggle)}
           <button class="btn-lang-toggle" on:click={toggleLang}>
             {#if currentLang === "RO"}
@@ -1007,6 +981,32 @@
                 ><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg
               >
             {/if}
+          </button>
+        {/if}
+
+        <!-- Notification Bell (logged in only) -->
+        {#if isLoggedIn && widgetsSource?.notificationBell?.enabled !== false}
+          <button
+            class="btn-theme-toggle"
+            style="position:relative; flex-shrink:0;"
+            title="Notificări"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              width="18"
+              height="18"
+            >
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            <!-- Notification badge -->
+            <span
+              style="position:absolute; top:-2px; right:-2px; width:16px; height:16px; border-radius:50px; background:#ef4444; font-size:9px; font-weight:900; color:#fff; display:flex; align-items:center; justify-content:center; border:2px solid {isDarkTheme ? 'var(--bg-dark)' : 'var(--bg-panel)'};"
+              >3</span
+            >
           </button>
         {/if}
 
