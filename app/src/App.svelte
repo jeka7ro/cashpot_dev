@@ -5243,22 +5243,25 @@
             <div style="width:40px; height:4px; background:rgba(255,255,255,0.2); border-radius:99px;"></div>
           </div>
 
-          <!-- Header with VIP avatar -->
-          <div style="display:flex; align-items:center; gap:14px; padding:16px 20px 20px;">
-            <div style="width:56px; height:56px; border-radius:50%; border:3px solid {vipConfig.levels[userLevel - 1]?.color || 'var(--accent-gold)'}; overflow:hidden; flex-shrink:0; box-shadow:0 0 20px {vipConfig.levels[userLevel - 1]?.color || 'rgba(245,200,66,0.4)'};">
-              <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
-            </div>
-            <div style="flex:1;">
-              <div style="font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Portofelul meu</div>
-              <div style="font-size:22px; font-weight:900; color:var(--text-main); letter-spacing:-0.5px;">{userBalance.toLocaleString('ro-RO', {minimumFractionDigits: 2})} <span style="font-size:13px; color:var(--text-muted); font-weight:600;">RON</span></div>
-              <div style="font-size:11px; color:var(--accent-gold); font-weight:700; margin-top:2px;">⭐ 2.340 / 5.000 XP · Nivel {userLevel}</div>
-              <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:4px; margin-top:6px; overflow:hidden;">
-                <div style="height:100%; width: 46%; background:linear-gradient(90deg, #f5c842, #e6a817); border-radius:4px; box-shadow: 0 0 10px rgba(245,200,66,0.5);"></div>
-              </div>
-            </div>
-            <button on:click={() => showMobileWallet = false} style="width:32px; height:32px; border-radius:50%; background:var(--bg-hover); border:1px solid var(--border-color); color:var(--text-muted); cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <!-- Header with VIP avatar (Centered with Progress Ring) -->
+          <div style="position:relative; display:flex; flex-direction:column; align-items:center; text-align:center; padding:16px 20px 24px;">
+            <button on:click={() => showMobileWallet = false} style="position:absolute; top:16px; right:20px; width:32px; height:32px; border-radius:50%; background:var(--bg-hover); border:1px solid var(--border-color); color:var(--text-muted); cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2;">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
+            
+            <div style="width:72px; height:72px; border-radius:50%; background:conic-gradient(from 180deg, #3b82f6 0%, #a855f7 40%, #f5c842 100%); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:-4px 0 15px rgba(59,130,246,0.4), 4px 0 15px rgba(245,200,66,0.3); padding:3px; margin-bottom:12px;">
+              <div style="width:100%; height:100%; border-radius:50%; overflow:hidden; background:var(--bg-dark); border:3px solid var(--bg-dark);">
+                <img src={vipConfig.levels[userLevel - 1]?.img || "/koi_vip.png"} alt="VIP" style="width:100%; height:100%; object-fit:cover;" />
+              </div>
+            </div>
+            
+            <div style="font-size:12px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">Portofelul meu</div>
+            <div style="font-size:26px; font-weight:900; color:var(--text-main); letter-spacing:-0.5px;">{userBalance.toLocaleString('ro-RO', {minimumFractionDigits: 2})} <span style="font-size:14px; color:var(--text-muted); font-weight:600;">RON</span></div>
+            <div style="font-size:12px; color:var(--accent-gold); font-weight:700; margin-top:4px;">⭐ 2.340 / 5.000 XP · Nivel {userLevel}</div>
+            
+            <div style="width:100%; max-width:240px; height:6px; background:rgba(255,255,255,0.1); border-radius:4px; margin-top:12px; overflow:hidden;">
+              <div style="height:100%; width: 46%; background:linear-gradient(90deg, #f5c842, #e6a817); border-radius:4px; box-shadow: 0 0 10px rgba(245,200,66,0.5);"></div>
+            </div>
           </div>
 
           <!-- Balance boxes -->

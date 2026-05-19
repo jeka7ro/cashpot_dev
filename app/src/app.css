@@ -6015,17 +6015,17 @@ header.topbar .logo img {
 
 .search-bubble {
   position: absolute;
-  right: 12px;
+  right: 6px;
   top: 50%;
   transform: translateY(-50%);
-  height: 22px;
-  padding: 0 8px;
+  height: 26px;
+  padding: 0 10px;
   border-radius: 50px;
-  font-size: 11px;
-  font-weight: 700;
-  background: rgba(245, 200, 66, 0.15) !important;
-  border: 1px solid rgba(245, 200, 66, 0.4) !important;
-  color: #facc15 !important;
+  font-size: 13px;
+  font-weight: 900;
+  background: var(--primary, #6d28d9) !important;
+  border: 1px solid rgba(250, 204, 21, 0.3) !important;
+  color: var(--accent-gold, #facc15) !important;
   display: flex;
   align-items: center;
   justify-content: center;
