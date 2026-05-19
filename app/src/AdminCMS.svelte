@@ -2977,12 +2977,28 @@
                     />
                   </div>
                   <div class="cms-field">
-                    <label>Text Buton</label>
-                    <input
-                      type="text"
-                      bind:value={promo.buttonText}
-                      placeholder="ex: JOACĂ"
-                    />
+                    <label>Setări Acțiune & Buton</label>
+                    <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 12px; margin-top: 8px;">
+                      <label class="cms-switch" style="transform: scale(0.85); margin: 0;">
+                        <input type="checkbox" bind:checked={promo.showButton} />
+                        <span class="cms-slider"></span>
+                      </label>
+                      <span style="font-size: 12px; color: var(--text-main); font-weight: 600;">Afișează Buton</span>
+                      
+                      <label class="cms-switch" style="transform: scale(0.85); margin: 0; margin-left: 12px;">
+                        <input type="checkbox" bind:checked={promo.clickableBanner} />
+                        <span class="cms-slider"></span>
+                      </label>
+                      <span style="font-size: 12px; color: var(--text-main); font-weight: 600;">Banner Clickable</span>
+                    </div>
+                    {#if promo.showButton}
+                      <input
+                        type="text"
+                        bind:value={promo.buttonText}
+                        placeholder="Text Buton (ex: JOACĂ)"
+                        style="width: 100%;"
+                      />
+                    {/if}
                   </div>
                   <div class="cms-field">
                     <label>Poziție pe Site (după câte categorii să apară)</label

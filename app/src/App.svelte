@@ -4314,11 +4314,32 @@
           <!-- Top Promos (Index 0) -->
           <div style="order:{pco.indexOf('categoryTabs')>=0?pco.indexOf('categoryTabs'):0}; width: 100%;">
           {#each promoConfig.filter((p) => p.enabled && p.positionIndex === 0) as promo}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <section
               class="promo-banner-section size-{promo.size?.toLowerCase() ||
                 'l'}"
-              style="background-image: url({promo.backgroundImage});"
+              style="{promo.clickableBanner ? 'cursor: pointer;' : ''}"
+              on:click={promo.clickableBanner ? () => { if(promo.gameName) { selectGame(GAMES.find(g => g.n === promo.gameName) || GAMES[0]); } } : null}
             >
+              {#if promo.backgroundImage}
+                {#if promo.backgroundImage.includes('data:video/') || promo.backgroundImage.endsWith('.mp4') || promo.backgroundImage.endsWith('.webm') || promo.backgroundImage.endsWith('.mov')}
+                  <!-- svelte-ignore a11y-media-has-caption -->
+                  <video
+                    src={promo.backgroundImage}
+                    autoplay
+                    loop
+                    muted
+                    playsinline
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"
+                  ></video>
+                {:else}
+                  <img
+                    src={promo.backgroundImage}
+                    alt="Promo Background"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"
+                  />
+                {/if}
+              {/if}
               <div class="promo-overlay"></div>
               <div class="promo-content">
                 <h2
@@ -4336,13 +4357,13 @@
                     on:error={(e) => (e.target.style.display = "none")}
                   />
                 {/if}
-                {#if promo.buttonText}
+                {#if promo.showButton !== false && promo.buttonText}
                   <button
                     class="btn-green"
                     style="background: {promo.buttonColor ||
                       '#22c55e'}; color: {promo.buttonTextColor ||
                       '#ffffff'}; border: {promo.buttonBorderWidth ||
-                      0}px solid {promo.buttonBorderColor || 'transparent'};"
+                      0}px solid {promo.buttonBorderColor || 'transparent'}; pointer-events: {promo.clickableBanner ? 'none' : 'auto'};"
                     >{promo.buttonText}</button
                   >
                 {/if}
@@ -4666,11 +4687,32 @@
                   {/each}
 
                   {#each catPromos as promo}
+                    <!-- svelte-ignore a11y-click-events-have-key-events -->
                     <section
                       class="promo-banner-section size-{promo.size?.toLowerCase() ||
                         'l'}"
-                      style="background-image: url({promo.backgroundImage}); margin: 32px 0; width: 100%;"
+                      style="margin: 32px 0; width: 100%; {promo.clickableBanner ? 'cursor: pointer;' : ''}"
+                      on:click={promo.clickableBanner ? () => { if(promo.gameName) { selectGame(GAMES.find(g => g.n === promo.gameName) || GAMES[0]); } } : null}
                     >
+                      {#if promo.backgroundImage}
+                        {#if promo.backgroundImage.includes('data:video/') || promo.backgroundImage.endsWith('.mp4') || promo.backgroundImage.endsWith('.webm') || promo.backgroundImage.endsWith('.mov')}
+                          <!-- svelte-ignore a11y-media-has-caption -->
+                          <video
+                            src={promo.backgroundImage}
+                            autoplay
+                            loop
+                            muted
+                            playsinline
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"
+                          ></video>
+                        {:else}
+                          <img
+                            src={promo.backgroundImage}
+                            alt="Promo Background"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"
+                          />
+                        {/if}
+                      {/if}
                       <div class="promo-overlay"></div>
                       <div class="promo-content">
                         <h2
@@ -4688,13 +4730,13 @@
                             on:error={(e) => (e.target.style.display = "none")}
                           />
                         {/if}
-                        {#if promo.buttonText}
+                        {#if promo.showButton !== false && promo.buttonText}
                           <button
                             class="promo-btn"
                             style="background-color: {promo.buttonColor ||
                               'var(--accent-gold)'}; color: {promo.buttonTextColor ||
                               '#000000'}; border: {promo.buttonBorderWidth ||
-                              0}px solid {promo.buttonBorderColor || 'transparent'};"
+                              0}px solid {promo.buttonBorderColor || 'transparent'}; pointer-events: {promo.clickableBanner ? 'none' : 'auto'};"
                           >
                             {promo.buttonText}
                           </button>
