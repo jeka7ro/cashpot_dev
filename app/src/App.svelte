@@ -2945,10 +2945,10 @@
             </div>
 
             <div class="vip-content-container">
-              <div style="display: flex; justify-content: center; width: 100%; margin-top: 50px; margin-bottom: 40px;">
-                <div class="vip-header-wrapper" style="text-align: center; background: rgba(15,23,42,0.6); backdrop-filter: blur(12px); border-radius: 24px; padding: 30px 60px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
-                  <h1 style="font-size: 3.5rem; font-weight: 800; color: #f5c842; text-shadow: 0 0 20px rgba(245,200,66,0.5); margin-bottom: 12px; letter-spacing: 1.5px; margin-top: 0;">CASHPOT VIP CLUB</h1>
-                  <p style="font-size: 1.3rem; color: #fff; opacity: 0.9; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-bottom: 0;">Progresează jucând ca să meriți nivelele superioare</p>
+              <div class="vip-hero-box-container">
+                <div class="vip-hero-box">
+                  <h1 class="vip-hero-title">CASHPOT VIP CLUB</h1>
+                  <p class="vip-hero-subtitle">Progresează jucând ca să meriți nivelele superioare</p>
                 </div>
               </div>
 
