@@ -3374,7 +3374,7 @@
                             <img src={slide.image} class="banner-bg" alt="Banner Slide" />
                           {/if}
                         {/if}
-                        <div class="banner-content ${(bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== '') || (bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== '') || (bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== '') || (bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor};">
+                        <div class="banner-content ${(slide.tag && slide.tag.trim() !== '') || (slide.title && slide.title.trim() !== '') || (slide.subtitle && slide.subtitle.trim() !== '') || (slide.showButton && slide.buttonText && slide.buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor};">
                           {#if slide.tag}<span class="banner-tag">{slide.tag}</span>{/if}
                           <h2 style="color: {slide.textColor}; {slide.titleSize ? `font-size: ${slide.titleSize};` : ''}">{slide.title}</h2>
                           <p style="color: {slide.textColor}; opacity: 0.9; {slide.subtitleSize ? `font-size: ${slide.subtitleSize};` : ''}">{slide.subtitle}</p>
@@ -3417,7 +3417,7 @@
                       {/if}
                     {/if}
                     <div
-                      class="banner-content ${(bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== '') || (bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== '') || (bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== '') || (bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}"
+                      class="banner-content ${(bannersConfig.items[0].tag && bannersConfig.items[0].tag.trim() !== '') || (bannersConfig.items[0].title && bannersConfig.items[0].title.trim() !== '') || (bannersConfig.items[0].subtitle && bannersConfig.items[0].subtitle.trim() !== '') || (bannersConfig.items[0].showButton && bannersConfig.items[0].buttonText && bannersConfig.items[0].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}"
                       style="color: {bannersConfig.items[0].textColor};"
                     >
                       {#if bannersConfig.items[0].tag}<span class="banner-tag"
