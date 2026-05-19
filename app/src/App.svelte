@@ -2387,17 +2387,17 @@
                         on:mouseout={(e) => (e.currentTarget.style.transform = "scale(1)")}
                       >
                         <img src="/shark_cash.png" alt="Cashback" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.8;" />
-                        <div style="position: absolute; top: 12px; left: 0; width: 100%; text-align: center; z-index: 5;">
-                          <div style="font-size: 16px; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">Cashback</div>
-                          <div style="font-size: 12px; color: var(--accent-gold); font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">{widgetsSource.cashbackProgress.level} - {widgetsSource.cashbackProgress.percentage}%</div>
+                        <div style="position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: calc(100% - 24px); text-align: center; z-index: 5; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); padding: 8px 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                          <div style="font-size: 15px; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px;">Cashback</div>
+                          <div style="font-size: 12px; color: var(--accent-gold); font-weight: 800;">{widgetsSource.cashbackProgress.level} - {widgetsSource.cashbackProgress.percentage}%</div>
                         </div>
-                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 16px; background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); z-index: 5;">
-                          <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 6px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+                        <div style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); width: calc(100% - 24px); padding: 12px; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); z-index: 5; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+                          <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 6px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.5) inset;">
                             <div style="height: 100%; width: {widgetsSource.cashbackProgress.percentage}%; background: linear-gradient(90deg, #f5c842, #d97706); box-shadow: 0 0 10px #f5c842;"></div>
                           </div>
-                          <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 10px; color: rgba(255,255,255,0.8); font-weight: 700;">
+                          <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 10px; color: rgba(255,255,255,0.9); font-weight: 700;">
                             <span>{widgetsSource.cashbackProgress.points} pts</span>
-                            <span style="color: var(--accent-gold);">{widgetsSource.cashbackProgress.nextLevel}</span>
+                            <span style="color: var(--accent-gold); font-size: 11px;">{widgetsSource.cashbackProgress.nextLevel}</span>
                           </div>
                         </div>
                       </button>
@@ -4745,7 +4745,7 @@
                         {/if}
                         {#if promo.showButton !== false && promo.buttonText}
                           <button
-                            class="promo-btn"
+                            class="btn-green"
                             style="background-color: {promo.buttonColor ||
                               'var(--accent-gold)'}; color: {promo.buttonTextColor ||
                               '#000000'}; border: {promo.buttonBorderWidth ||
