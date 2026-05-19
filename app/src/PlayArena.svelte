@@ -739,10 +739,36 @@
   }
 
   @media (max-width: 768px) {
-    .pa-grid { grid-template-columns: 1fr; }
-    .pa-hero-content { flex-direction: column; align-items: flex-start; }
-    .pa-stats-grid { width: 100%; }
-    .pa-stat-card { flex: 1; }
+    .play-arena-wrapper {
+      padding: 20px 12px 100px;
+    }
+    .pa-hero {
+      padding: 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .pa-grid { grid-template-columns: 1fr; gap: 16px; }
+    .pa-hero-content { flex-direction: column; align-items: stretch; gap: 16px; }
+    .pa-user-info { gap: 12px; }
+    .pa-avatar-wrapper { width: 60px; height: 60px; }
+    .pa-level-badge { width: 28px; height: 28px; font-size: 11px; bottom: -2px; right: -2px; border-width: 2px; }
+    .pa-user-text h1 { font-size: 22px; }
+    .pa-user-text p { font-size: 13px; }
+    .pa-stats-grid { width: 100%; gap: 10px; }
+    .pa-stat-card { flex: 1; padding: 12px; min-width: 0; }
+    .pa-stat-value { font-size: 20px; }
+    .pa-nav-item { padding: 10px 16px; font-size: 13px; }
+    .pa-section { padding: 16px; border-radius: 20px; }
+    .pa-mission-card { padding: 12px; gap: 12px; }
+    .mission-icon-box { width: 40px; height: 40px; font-size: 20px; }
+    .mission-info h3 { font-size: 14px; }
+    .mission-info p { font-size: 12px; }
+    .pa-missions-grid { grid-template-columns: 1fr; gap: 16px; }
+    .pa-mission-card-large { border-radius: 20px; }
+    .card-main { padding: 20px; gap: 16px; }
+    .large-icon { font-size: 36px; }
+    .large-info h3 { font-size: 16px; }
+    .pa-wheel-wrapper { width: 260px; height: 260px; }
   }
   
   /* Wheel Styles */

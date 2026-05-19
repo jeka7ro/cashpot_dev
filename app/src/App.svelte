@@ -3374,7 +3374,7 @@
                             <img src={slide.image} class="banner-bg" alt="Banner Slide" />
                           {/if}
                         {/if}
-                        <div class="banner-content" style="color: {slide.textColor};">
+                        <div class="banner-content ${(bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== '') || (bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== '') || (bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== '') || (bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor};">
                           {#if slide.tag}<span class="banner-tag">{slide.tag}</span>{/if}
                           <h2 style="color: {slide.textColor}; {slide.titleSize ? `font-size: ${slide.titleSize};` : ''}">{slide.title}</h2>
                           <p style="color: {slide.textColor}; opacity: 0.9; {slide.subtitleSize ? `font-size: ${slide.subtitleSize};` : ''}">{slide.subtitle}</p>
@@ -3417,7 +3417,7 @@
                       {/if}
                     {/if}
                     <div
-                      class="banner-content"
+                      class="banner-content ${(bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== '') || (bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== '') || (bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== '') || (bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}"
                       style="color: {bannersConfig.items[0].textColor};"
                     >
                       {#if bannersConfig.items[0].tag}<span class="banner-tag"
@@ -3478,7 +3478,7 @@
                           {/if}
                         {/if}
                         <div
-                          class="banner-content"
+                          class="banner-content ${(bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== '') || (bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== '') || (bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== '') || (bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}"
                           style="color: {bannersConfig.items[idx].textColor};"
                         >
                           {#if bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== ""}<span
@@ -3553,7 +3553,7 @@
                           {/if}
                         {/if}
                         <div
-                          class="banner-content"
+                          class="banner-content ${(bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== '') || (bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== '') || (bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== '') || (bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}"
                           style="height: 100%; color: {bannersConfig.items[idx]
                             .textColor};"
                         >
@@ -3632,7 +3632,7 @@
                           {/if}
                         {/if}
                         <div
-                          class="banner-content"
+                          class="banner-content ${(bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== '') || (bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== '') || (bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== '') || (bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}"
                           style="color: {bannersConfig.items[idx].textColor};"
                         >
                           {#if bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== ""}<span
@@ -3706,7 +3706,7 @@
                           {/if}
                         {/if}
                         <div
-                          class="banner-content"
+                          class="banner-content ${(bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== '') || (bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== '') || (bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== '') || (bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}"
                           style="color: {bannersConfig.items[idx].textColor};"
                         >
                           {#if bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== ""}<span
@@ -5202,8 +5202,8 @@
 
           <a
             href="#"
-            class="nav-item {activeView === 'live' ? 'active' : ''}"
-            on:click|preventDefault={() => setView("home", "live")}
+            class="nav-item {activeView === 'playarena' ? 'active' : ''}"
+            on:click|preventDefault={() => setView("playarena")}
           >
             <svg
               viewBox="0 0 24 24"
@@ -5213,10 +5213,9 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <circle cx="12" cy="8" r="4"></circle>
-              <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"></path>
+              <rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="8" cy="12" r="1"></circle><circle cx="16" cy="12" r="1"></circle><path d="M12 12v.01"></path>
             </svg>
-            <span>LIVE</span>
+            <span>ARENA</span>
           </a>
 
           <!-- CENTRAL WALLET BUTTON -->

@@ -6796,6 +6796,7 @@ header.topbar .logo img {
     margin-left: -12px !important; /* Counteract wrapper padding if any */
     scroll-snap-type: x mandatory !important;
     scroll-padding: 16px !important;
+    gap: 24px !important;
   }
   .vip-step-item {
     flex: 0 0 auto !important;
@@ -6811,3 +6812,14 @@ header.topbar .logo img {
     margin-top: 20px !important;
   }
 }
+
+/* REMOVE BALANCE HEADER BG ON MOBILE */
+@media (max-width: 1024px) {
+  .header-wallet-btn {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.hide-banner-bg { background: transparent !important; }
