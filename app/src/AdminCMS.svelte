@@ -3113,8 +3113,17 @@
                     </div>
                   </div>
                   <div class="cms-field" style="grid-column: 1/-1;">
-                    <label>Imagine Fundal Banner</label>
-
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <label style="margin: 0;">Imagine Fundal Banner</label>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 11px; color: var(--text-muted);">Mod Afișare:</span>
+                        <select bind:value={promo.backgroundFit} style="padding: 4px 8px; border-radius: 4px; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--border-color); outline: none; font-size: 11px;">
+                          <option value="cover">Taie marginile (Cover)</option>
+                          <option value="contain">Încadrează toată poza (Contain)</option>
+                          <option value="fill">Întinde complet (Fill)</option>
+                        </select>
+                      </div>
+                    </div>
                     <div
                       style="display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; margin-bottom: 12px;"
                     >
@@ -3168,13 +3177,13 @@
                             loop
                             muted
                             playsinline
-                            style="width: 100%; height: 100%; object-fit: cover;"
+                            style="width: 100%; height: 100%; object-fit: {promo.backgroundFit || 'cover'};"
                           ></video>
                         {:else}
                           <img
                             src={promo.backgroundImage}
                             alt="Promo Background"
-                            style="width: 100%; height: 100%; object-fit: cover;"
+                            style="width: 100%; height: 100%; object-fit: {promo.backgroundFit || 'cover'};"
                           />
                         {/if}
                       </div>

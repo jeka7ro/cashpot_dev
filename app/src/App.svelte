@@ -4330,13 +4330,13 @@
                     loop
                     muted
                     playsinline
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: {promo.backgroundFit || 'cover'}; z-index: 0;"
                   ></video>
                 {:else}
                   <img
                     src={promo.backgroundImage}
                     alt="Promo Background"
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: {promo.backgroundFit || 'cover'}; z-index: 0;"
                   />
                 {/if}
               {/if}
@@ -4703,13 +4703,13 @@
                             loop
                             muted
                             playsinline
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: {promo.backgroundFit || 'cover'}; z-index: 0;"
                           ></video>
                         {:else}
                           <img
                             src={promo.backgroundImage}
                             alt="Promo Background"
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: {promo.backgroundFit || 'cover'}; z-index: 0;"
                           />
                         {/if}
                       {/if}
