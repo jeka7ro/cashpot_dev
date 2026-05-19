@@ -1845,7 +1845,7 @@
             <div class="cms-glass-card" style="padding: 28px;">
               <h3 class="cms-section-title">Layout Bannere</h3>
               <div class="cms-layout-picker">
-                {#each [["1_big_2_small", "1 Mare + 2 Mici"], ["4_small", "4 Mici"], ["4_medium", "4 Medii"], ["2_big", "2 Mari"]] as [val, label]}
+                {#each [["slider", "Slider / Carusel Automat"], ["1_big_2_small", "1 Mare + 2 Mici"], ["4_small", "4 Mici"], ["4_medium", "4 Medii"], ["2_big", "2 Mari"]] as [val, label]}
                   <button
                     class="cms-layout-btn {bannersConfig.layout === val
                       ? 'active'
@@ -1857,6 +1857,25 @@
                   </button>
                 {/each}
               </div>
+              
+              {#if bannersConfig.layout === "slider"}
+                <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1);">
+                  <div class="cms-field" style="display: flex; align-items: center; margin-bottom: 16px;">
+                    <label class="cms-switch">
+                      <input type="checkbox" bind:checked={bannersConfig.autoSlide} />
+                      <span class="cms-slider"></span>
+                    </label>
+                    <span style="margin-left: 10px; color: var(--text-main); font-weight: 600;">Schimbare Automată a Bannerelor</span>
+                  </div>
+                  {#if bannersConfig.autoSlide}
+                    <div class="cms-field">
+                      <label>Timp între bannere (secunde)</label>
+                      <input type="range" min="2" max="15" bind:value={bannersConfig.slideInterval} style="width: 200px;" />
+                      <span style="margin-left: 12px; font-weight: 700; color: var(--accent-gold);">{bannersConfig.slideInterval}s</span>
+                    </div>
+                  {/if}
+                </div>
+              {/if}
             </div>
 
             {#each filteredBanners as banner, i}

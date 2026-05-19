@@ -1764,6 +1764,8 @@ header.topbar .logo img {
 /* PROMO BANNER (GAME OF THE WEEK) */
 .promo-banner-section {
   margin: 32px 24px;
+  width: calc(100% - 48px);
+  box-sizing: border-box;
   border-radius: var(--radius-xl, 24px);
   position: relative;
   overflow: hidden;

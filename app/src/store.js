@@ -87,7 +87,9 @@ const defaultJackpots = [
 ];
 
 const defaultBanners = {
-  layout: "1_big_2_small",
+  layout: "slider",
+  autoSlide: true,
+  slideInterval: 5,
   items: [
     { id: 'b1', image: '/baner1.webp', tag: 'Ofertă de bun venit', title: '500 Rotiri +\n10.000 RON Bonus', subtitle: 'Cel mai mare pachet din România.', buttonText: 'Revendică acum', showButton: true, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 },
     { id: 'b2', image: '/baner2.webp', tag: 'Săptămânal', title: 'Cashback 15%', subtitle: 'Pe toate pierderile tale', buttonText: '', showButton: false, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 },
