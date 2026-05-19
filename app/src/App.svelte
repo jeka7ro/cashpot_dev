@@ -5243,7 +5243,7 @@
             {/if}
           </div>
 
-          <a href="#" class="nav-item">
+          <a href="#" class="nav-item" on:click|preventDefault={() => { isMobileMenuOpen = false; setView("vip"); }}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -5252,21 +5252,16 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             >
-              <circle cx="12" cy="12" r="10"></circle>
-              <path
-                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-              ></path>
-              <path d="M2 12h20"></path>
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
             </svg>
-            <span>SPORTS</span>
+            <span>VIP CLUB</span>
           </a>
 
           <a
             href="#"
             class="nav-item"
             on:click|preventDefault={() => {
-              if (isLoggedIn) showUserPanel = !showUserPanel;
-              else showLoginModal = true;
+              isMobileMenuOpen = !isMobileMenuOpen;
             }}
           >
             <svg
