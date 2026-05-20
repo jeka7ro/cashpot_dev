@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import "./app.css";
   import ClubVip2 from "./ClubVip2.svelte";
+  import ClubVip3 from "./ClubVip3.svelte";
 
   // ─── Lucky Wheel State ───
   let wheelRotation = 0;
@@ -66,7 +67,7 @@
       if (!isAdminRoute) {
         if (hash && hash !== "#admin") {
           const view = hash.substring(1);
-          if (["vip", "vip2", "playarena", "home", "slots", "live", "sport", "promo", "loto", "rtp", "support"].includes(view)) {
+          if (["vip", "vip2", "vip3", "playarena", "home", "slots", "live", "sport", "promo", "loto", "rtp", "support"].includes(view)) {
             activeView = view;
           }
         } else {
@@ -1961,6 +1962,19 @@
                           {/if}
                           <span class="nav-label">Club VIP 2</span>
                         </a>
+                        <!-- Link to VIP3 added exactly below VIP 2 -->
+                        <a
+                          href="#"
+                          class="nav-item {activeView === 'vip3' ? 'active' : ''}"
+                          on:click|preventDefault={() => setView("vip3")}
+                          style="color: {activeView === 'vip3' ? 'var(--text-main)' : 'var(--accent-gold)'};"
+                          title="Slot Legends (VIP 3)"
+                        >
+                          {#if themeColorsSource.showSidebarIcons || themeColorsSource.showIcons}
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                          {/if}
+                          <span class="nav-label">Slot Legends</span>
+                        </a>
                       {:else if sni.id === "sn_slots"}
                         <a
                           href="#"
@@ -3423,6 +3437,8 @@
           </section>
         {:else if activeView === "vip2"}
           <ClubVip2 />
+        {:else if activeView === "vip3"}
+          <ClubVip3 />
         {:else}
           <!-- Hero Banners -->
           <div style="order:{pco.indexOf('heroBanners')>=0?pco.indexOf('heroBanners'):-1};">
