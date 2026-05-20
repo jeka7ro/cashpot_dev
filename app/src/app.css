@@ -1165,11 +1165,12 @@ header.topbar .logo img {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('/bg-mercedes-navy.png');
+  background-image: url('/bg-mercedes-blue-tiny-airy.png');
   background-size: 350px 350px;
   background-position: center top;
   background-repeat: repeat;
   image-rendering: crisp-edges;
+  filter: brightness(0.6) saturate(1.2);
   pointer-events: none;
   opacity: 1;
   -webkit-mask-image: radial-gradient(ellipse at center top, rgba(0,0,0,1) 40%, rgba(0,0,0,0.1) 100%);
