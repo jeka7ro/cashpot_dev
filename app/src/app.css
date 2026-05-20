@@ -1261,9 +1261,8 @@ header.topbar .logo img {
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-bottom: 40px;
-  padding-top: 24px;
-  margin-top: 0px;
+  padding-bottom: 16px;
+  margin-top: 24px;
   position: relative;
   z-index: 1;
 }
@@ -1279,17 +1278,18 @@ header.topbar .logo img {
 }
 
 .jc-games-slider .game-card .img-wrapper {
+  aspect-ratio: 3 / 4;
   height: auto;
   position: relative;
   width: 100%;
-  overflow: visible;
+  overflow: hidden;
   flex: none;
 }
 
 .jc-games-slider .game-card .img-wrapper img {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
@@ -2708,8 +2708,7 @@ header.topbar .logo img {
   flex-wrap: nowrap;
   gap: 20px;
   width: 100%;
-  padding-bottom: 40px;
-  padding-top: 24px;
+  padding-bottom: 10px;
   overflow-x: auto;
   scrollbar-width: none; /* Hide scrollbar */
 }
@@ -2723,32 +2722,34 @@ header.topbar .logo img {
   flex-direction: column;
   position: relative;
   overflow: visible;
+  /* Allow scale and shadow to show */
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: transparent;
+  background: rgba(255, 255, 255, 0.04);
   z-index: 1;
 }
 
 .games-slider .game-card:hover {
   transform: scale(1.05);
   z-index: 50;
-  background: transparent;
-  box-shadow: none;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  background: var(--bg-panel);
 }
 
 /* img-wrapper fills the designated height */
 .games-slider .game-card .img-wrapper {
   position: relative;
   width: 100%;
-  overflow: visible;
+  overflow: hidden;
   flex: 1;
   min-height: 0;
 }
 
 .games-slider .game-card .img-wrapper img {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
@@ -6833,40 +6834,3 @@ header.topbar .logo img {
 }
 
 .hide-banner-bg { background: transparent !important; }
-
-/* Fix for game text being cut off */
-.game-info {
-  padding: 12px 0 0 0;
-  margin-top: auto;
-}
-.game-info .g-name {
-  line-height: 1.2;
-  margin-bottom: 4px;
-}
-.game-info .g-prov {
-  line-height: 1.2;
-}
-
-/* Fix for game hover overlay (JOACA button) taking up space and breaking layout */
-.game-hover-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 10;
-  border-radius: 12px;
-}
-
-.game-card:hover .game-hover-overlay {
-  opacity: 1;
-  pointer-events: auto;
-}
