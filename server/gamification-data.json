@@ -2,25 +2,25 @@
   "jackpots": {
     "bronze": {
       "name": "Bronze",
-      "amount": 3826.39,
+      "amount": 3832.71,
       "color": "#cd7f32",
       "increment": 0.03
     },
     "silver": {
       "name": "Silver",
-      "amount": 14740.24,
+      "amount": 14753.42,
       "color": "#c0c0c0",
       "increment": 0.07
     },
     "gold": {
       "name": "Gold",
-      "amount": 47827.51,
+      "amount": 47856.3,
       "color": "#ffd700",
       "increment": 0.15
     },
     "diamond": {
       "name": "Diamond",
-      "amount": 112853.77,
+      "amount": 112902.01,
       "color": "#00d4ff",
       "increment": 0.25
     }
@@ -96,32 +96,32 @@
       {
         "rank": 1,
         "name": "Andrei M.",
-        "points": 373523,
+        "points": 374621,
         "prize": "15,000 RON"
       },
       {
         "rank": 2,
         "name": "Radu C.",
-        "points": 373186,
+        "points": 374107,
         "prize": "5,000 RON"
       },
       {
         "rank": 3,
         "name": "Mihai T.",
-        "points": 370550,
+        "points": 371400,
         "prize": "7,500 RON"
       },
       {
         "rank": 4,
-        "name": "Ana D.",
-        "points": 369107,
-        "prize": "3,000 RON"
+        "name": "Elena P.",
+        "points": 369865,
+        "prize": "10,000 RON"
       },
       {
         "rank": 5,
-        "name": "Elena P.",
-        "points": 368783,
-        "prize": "10,000 RON"
+        "name": "Ana D.",
+        "points": 369516,
+        "prize": "3,000 RON"
       },
       {
         "rank": 6,

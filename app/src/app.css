@@ -1167,7 +1167,7 @@ header.topbar .logo img {
   bottom: 0;
   background-image: url('/bg-mercedes-starry.png');
   background-size: 550px 550px;
-  background-position: center top;
+  background-position: center 50px;
   background-repeat: repeat;
   image-rendering: crisp-edges;
   pointer-events: none;
