@@ -3478,7 +3478,7 @@
                               <img src={slide.image} alt="Promo" class="banner-bg" style="object-position: center;" />
                             {/if}
                           {/if}
-                          <div class="banner-content ${(slide.tag && slide.tag.trim() !== '') || (slide.title && slide.title.trim() !== '') || (slide.subtitle && slide.subtitle.trim() !== '') || (slide.showButton && slide.buttonText && slide.buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor};">
+                          <div class="banner-content ${(slide.tag && slide.tag.trim() !== '') || (slide.title && slide.title.trim() !== '') || (slide.subtitle && slide.subtitle.trim() !== '') || (slide.showButton && slide.buttonText && slide.buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor}; padding: 24px; width: 100%; height: 100%; box-sizing: border-box;">
                             {#if slide.tag && slide.tag.trim() !== ""}<span class="banner-tag">{slide.tag}</span>{/if}
                             {#if slide.title && slide.title.trim() !== ""}<h3 style="color: {slide.textColor}; {slide.titleSize ? `font-size: ${slide.titleSize};` : ''}">{slide.title}</h3>{/if}
                             {#if slide.subtitle && slide.subtitle.trim() !== ""}<p style="color: {slide.textColor}; opacity: 0.9; {slide.subtitleSize ? `font-size: ${slide.subtitleSize};` : ''}">{slide.subtitle}</p>{/if}
@@ -3508,7 +3508,7 @@
                               <img src={slide.image} alt="Promo" class="banner-bg" style="object-position: center;" />
                             {/if}
                           {/if}
-                          <div class="banner-content ${(slide.tag && slide.tag.trim() !== '') || (slide.title && slide.title.trim() !== '') || (slide.subtitle && slide.subtitle.trim() !== '') || (slide.showButton && slide.buttonText && slide.buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor};">
+                          <div class="banner-content ${(slide.tag && slide.tag.trim() !== '') || (slide.title && slide.title.trim() !== '') || (slide.subtitle && slide.subtitle.trim() !== '') || (slide.showButton && slide.buttonText && slide.buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor}; padding: 24px; width: 100%; height: 100%; box-sizing: border-box;">
                             {#if slide.tag && slide.tag.trim() !== ""}<span class="banner-tag">{slide.tag}</span>{/if}
                             {#if slide.title && slide.title.trim() !== ""}<h3 style="color: {slide.textColor}; {slide.titleSize ? `font-size: ${slide.titleSize};` : ''}">{slide.title}</h3>{/if}
                             {#if slide.subtitle && slide.subtitle.trim() !== ""}<p style="color: {slide.textColor}; opacity: 0.9; {slide.subtitleSize ? `font-size: ${slide.subtitleSize};` : ''}">{slide.subtitle}</p>{/if}
