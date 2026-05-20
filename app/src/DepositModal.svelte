@@ -53,39 +53,64 @@
       <p>Fiecare depunere poate fi răsplătită!<br/>Alege-ți mai jos bonusul:</p>
     </div>
 
-    <!-- Payment Method Stack (Modern Approach) -->
+    <!-- Payment Method Selector (Card + Miniatures) -->
     <div class="section-label">ALEGE METODA:</div>
-    <div class="card-stack" on:click={nextMethod} role="button" tabindex="0">
-      {#each paymentMethods as pm, idx}
-        {@const distance = (idx - selectedMethodIndex + paymentMethods.length) % paymentMethods.length}
-        {#if distance < 4}
-          <div 
-            class="card-item"
-            style="
-              top: {distance * -12}px; 
-              background: {pm.bg}; 
-              color: {pm.textColor};
-              transform: scale({1 - distance * 0.04});
-              z-index: {10 - distance};
-              opacity: {1 - distance * 0.15};
-              box-shadow: 0 {distance * 4 + 4}px {distance * 8 + 10}px rgba(0,0,0,0.6);
-            "
-          >
-            <div class="card-left">
-              {#if pm.provider}<div class="provider-badge">{pm.provider}</div>{/if}
-              <div class="card-name">{pm.name}</div>
-              <div class="card-logos">
-                {#each pm.logos as logo}
-                  <div class="mock-logo {logo}"></div>
-                {/each}
-              </div>
-            </div>
-            {#if distance === 0}
-              <div class="card-change-btn">SCHIMBĂ</div>
+    <div class="payment-selector-container">
+      <!-- Main Active Card -->
+      <div class="active-card" style="background: {paymentMethods[selectedMethodIndex].bg}; color: {paymentMethods[selectedMethodIndex].textColor};">
+        <div class="active-card-top">
+          <div class="active-card-name">{paymentMethods[selectedMethodIndex].name}</div>
+          {#if paymentMethods[selectedMethodIndex].provider}
+            <div class="active-card-provider">{paymentMethods[selectedMethodIndex].provider}</div>
+          {/if}
+        </div>
+        
+        <div class="active-card-middle">
+          {#if paymentMethods[selectedMethodIndex].type === 'card'}
+            <div class="card-chip"></div>
+            <div class="card-nfc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M5.5 19.5A11 11 0 0 1 5.5 4.5" stroke-opacity="0.2"/><path d="M9 16.5A7 7 0 0 1 9 7.5" stroke-opacity="0.5"/><path d="M12.5 13.5a3 3 0 0 1 0-3" stroke-opacity="0.8"/></svg></div>
+          {/if}
+        </div>
+
+        <div class="active-card-bottom">
+          <div class="active-card-number">
+            {#if paymentMethods[selectedMethodIndex].type === 'card'}
+              **** **** **** 8421
+            {:else if paymentMethods[selectedMethodIndex].type === 'paysafecard'}
+              PIN: **** **** **** ****
+            {:else}
+              ID: eugen.cazmal
             {/if}
           </div>
-        {/if}
-      {/each}
+          <div class="active-card-logos">
+            {#each paymentMethods[selectedMethodIndex].logos as logo}
+              <div class="mock-logo {logo}"></div>
+            {/each}
+          </div>
+        </div>
+      </div>
+
+      <!-- Miniatures on the right -->
+      <div class="miniatures-sidebar">
+        {#each paymentMethods as pm, idx}
+          {#if idx !== selectedMethodIndex}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <div 
+              class="miniature-card" 
+              style="background: {pm.bg};" 
+              on:click={() => selectedMethodIndex = idx}
+              title={pm.name}
+            >
+              {#if pm.logos.length > 0}
+                <div class="mock-logo {pm.logos[0]}"></div>
+              {:else}
+                <div class="miniature-text">{pm.name.substring(0,3).toUpperCase()}</div>
+              {/if}
+            </div>
+          {/if}
+        {/each}
+      </div>
     </div>
 
     <!-- Amount Selection -->
@@ -206,7 +231,7 @@
     line-height: 1.4;
   }
 
-  /* Stacked Card UI */
+  /* Modern Card + Miniatures UI */
   .section-label {
     font-size: 10px;
     color: var(--text-muted);
@@ -215,67 +240,127 @@
     margin-bottom: 8px;
     letter-spacing: 0.5px;
   }
-  .card-stack {
-    position: relative;
-    height: 85px;
-    margin-bottom: 24px;
-    cursor: pointer;
-    perspective: 1000px;
-    margin-top: 20px;
-  }
-  .card-item {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 80px;
-    border-radius: 14px;
-    padding: 16px;
-    border: 1px solid rgba(255,255,255,0.15);
+  .payment-selector-container {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transform-origin: top center;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    gap: 16px;
+    margin-bottom: 24px;
+    height: 180px;
   }
-  .card-left {
+  
+  /* Main Card */
+  .active-card {
+    flex: 1;
+    border-radius: 16px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.3s ease;
   }
-  .provider-badge {
-    background: #fff;
-    color: #000;
-    font-size: 9px;
+  .active-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .active-card-name {
+    font-size: 20px;
     font-weight: 900;
-    padding: 2px 6px;
-    border-radius: 4px;
-    width: fit-content;
+    line-height: 1.1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }
-  .card-name {
-    font-size: 16px;
+  .active-card-provider {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 10px;
     font-weight: 800;
+    text-transform: uppercase;
   }
-  .card-logos {
+  .active-card-middle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.8;
+  }
+  .card-chip {
+    width: 38px;
+    height: 28px;
+    background: linear-gradient(135deg, #d4af37, #aa8000);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-chip::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(0,0,0,0.2) 1px, transparent 1px);
+    background-size: 12px 10px;
+  }
+  .card-nfc {
+    color: inherit;
+  }
+  .active-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .active-card-number {
+    font-size: 15px;
+    font-family: monospace;
+    opacity: 0.9;
+    letter-spacing: 2px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  .active-card-logos {
     display: flex;
     gap: 6px;
-    margin-top: 4px;
   }
-  .mock-logo {
-    height: 14px;
-    width: 24px;
+
+  /* Miniatures Sidebar */
+  .miniatures-sidebar {
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .miniatures-sidebar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .miniatures-sidebar::-webkit-scrollbar-thumb {
     background: rgba(255,255,255,0.2);
-    border-radius: 2px;
+    border-radius: 4px;
   }
-  .mock-logo.mastercard { background: linear-gradient(90deg, #eb001b 50%, #f79e1b 50%); border-radius: 14px; width: 22px; }
-  .mock-logo.visa { background: #1a1f71; }
-  .mock-logo.revolut { background: #000; border-radius: 14px; width: 14px; }
-  .card-change-btn {
-    background: rgba(255,255,255,0.1);
-    padding: 6px 12px;
-    border-radius: 20px;
+  .miniature-card {
+    width: 100%;
+    aspect-ratio: 1.58;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    opacity: 0.5;
+    transition: all 0.2s ease;
+  }
+  .miniature-card:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+  .miniature-text {
     font-size: 11px;
-    font-weight: 800;
-    backdrop-filter: blur(4px);
+    font-weight: 900;
+    color: #fff;
   }
 
   .amount-input-container {
