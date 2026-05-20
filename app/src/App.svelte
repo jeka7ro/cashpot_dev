@@ -168,6 +168,8 @@
   import Fever2Widget from "./Fever2Widget.svelte";
   import ToolbarWidget from "./ToolbarWidget.svelte";
   import PlayArena from "./PlayArena.svelte";
+  import PaymentCardStack from "./PaymentCardStack.svelte";
+  import DepositModal from "./DepositModal.svelte";
 
   $: isDarkTheme = $siteTheme === "dark";
   let isNoCookie = false;
@@ -244,11 +246,12 @@
   }
 
   function handleDeposit() {
-    // This would typically open a modal or navigate to payment
-    alert("Deschide fereastra de Depunere Rapidă (50, 100, 200 lei)");
+    showUserPanel = false;
+    showMobileWallet = false;
+    showDepositModal = true;
     addAuditLog(
       "DEPOSIT_CLICK",
-      "S-a apăsat butonul de Depunere Rapidă din Toolbar.",
+      "S-a deschis fereastra de Depunere.",
     );
   }
 
@@ -703,6 +706,7 @@
   let loginErrorMsg = "";
   let loggedInUsername = isLoggedIn ? "Eugen Cazmal" : "";
   let userBalance = 80249.8;
+  let showDepositModal = false;
   let userBonus = 0;
   let userLevel = 1;
   let userXP = 750;
@@ -1247,6 +1251,7 @@
         <!-- Deposit -->
         <button
           class="btn-gold"
+          on:click={handleDeposit}
           style="width:100%; border:none; border-radius:12px; padding:14px; font-weight:800; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow: 0 4px 15px rgba(252,211,77,0.3);"
         >
           <svg
@@ -1391,19 +1396,7 @@
           <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin-bottom:10px;">Depunere rapidă</div>
           
           <!-- Saved Card Widget -->
-          <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px 12px; margin-bottom:12px;">
-            <div style="display:flex; align-items:center; gap:12px;">
-              <div style="width:36px; height:24px; background:linear-gradient(135deg, #222, #111); border-radius:4px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.2);">
-                <div style="width:14px; height:14px; border-radius:50%; background:#eb001b; position:absolute; left:5px; opacity:0.9;"></div>
-                <div style="width:14px; height:14px; border-radius:50%; background:#f79e1b; position:absolute; right:5px; mix-blend-mode:screen; opacity:0.9;"></div>
-              </div>
-              <div style="display:flex; flex-direction:column;">
-                <span style="font-size:12px; font-weight:800; color:var(--text-main); line-height:1;">Mastercard Premium</span>
-                <span style="font-size:10px; color:var(--text-muted); font-family:monospace; margin-top:2px;">**** **** **** 8421</span>
-              </div>
-            </div>
-            <button style="background:transparent; border:none; color:var(--accent-gold); font-size:10px; font-weight:800; cursor:pointer; text-transform:uppercase; letter-spacing:0.5px; padding:4px 8px; border-radius:4px; transition:all 0.2s;" on:mouseover={(e) => e.currentTarget.style.background='rgba(252,211,77,0.1)'} on:mouseout={(e) => e.currentTarget.style.background='transparent'}>Schimbă</button>
-          </div>
+          <PaymentCardStack />
 
           <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;">
             {#each [100, 200, 500, 1000] as amount}
@@ -5154,6 +5147,17 @@
         {/if}
       </main>
 
+      {#if showDepositModal}
+        <DepositModal 
+          bind:userBalance={userBalance} 
+          on:close={() => showDepositModal = false} 
+          on:deposit={(e) => { 
+            userBalance += e.detail;
+            alert(`Depunere de ${e.detail} RON realizată cu succes!`);
+          }} 
+        />
+      {/if}
+
       <!-- ─── Top Winners Marquee (BOTTOM) ─── -->
       {#if activeView === "home" && winnersSource?.enabled && winnersSource?.position === "bottom" && !activeView.startsWith("preview_")}
         <div
@@ -5371,19 +5375,7 @@
             <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin-bottom:10px;">Depunere rapidă</div>
             
             <!-- Saved Card Widget -->
-            <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:12px 16px; margin-bottom:16px;">
-              <div style="display:flex; align-items:center; gap:12px;">
-                <div style="width:40px; height:26px; background:linear-gradient(135deg, #222, #111); border-radius:4px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.2);">
-                  <div style="width:16px; height:16px; border-radius:50%; background:#eb001b; position:absolute; left:6px; opacity:0.9;"></div>
-                  <div style="width:16px; height:16px; border-radius:50%; background:#f79e1b; position:absolute; right:6px; mix-blend-mode:screen; opacity:0.9;"></div>
-                </div>
-                <div style="display:flex; flex-direction:column;">
-                  <span style="font-size:13px; font-weight:800; color:var(--text-main); line-height:1;">Mastercard Premium</span>
-                  <span style="font-size:11px; color:var(--text-muted); font-family:monospace; margin-top:2px;">**** **** **** 8421</span>
-                </div>
-              </div>
-              <button style="background:transparent; border:none; color:var(--accent-gold); font-size:11px; font-weight:800; cursor:pointer; text-transform:uppercase; letter-spacing:0.5px; padding:6px 10px; border-radius:6px; transition:all 0.2s;" on:click={() => alert('Deschide selectorul de carduri salvate')}>Schimbă</button>
-            </div>
+            <PaymentCardStack />
 
             <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;">
               {#each [100, 200, 500, 1000] as amount}
