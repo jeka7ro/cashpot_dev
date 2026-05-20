@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import "./app.css";
+  import ClubVip2 from "./ClubVip2.svelte";
 
   // ─── Lucky Wheel State ───
   let wheelRotation = 0;
@@ -65,7 +66,7 @@
       if (!isAdminRoute) {
         if (hash && hash !== "#admin") {
           const view = hash.substring(1);
-          if (["vip", "playarena", "home", "slots", "live", "sport", "promo", "loto", "rtp", "support"].includes(view)) {
+          if (["vip", "vip2", "playarena", "home", "slots", "live", "sport", "promo", "loto", "rtp", "support"].includes(view)) {
             activeView = view;
           }
         } else {
@@ -3407,6 +3408,8 @@
 
             </div>
           </section>
+        {:else if activeView === "vip2"}
+          <ClubVip2 />
         {:else}
           <!-- Hero Banners -->
           <div style="order:{pco.indexOf('heroBanners')>=0?pco.indexOf('heroBanners'):-1};">
