@@ -3388,7 +3388,7 @@
               {#if bannersConfig.layout === "slider"}
                 {@const activeItems = bannersConfig.items.filter(i => i.enabled !== false && (i.position === 'general' || !i.position))}
                 {#if activeItems.length > 0}
-                  <div class="banner-slider-container" style="width: 100%; position: relative; overflow: hidden; border-radius: 20px; min-height: 400px; display: flex;">
+                  <div class="banner-slider-container" style="width: 100%; position: relative; overflow: hidden; border-radius: var(--card-radius); border: 1px solid rgba(255, 255, 255, 0.1); min-height: 400px; display: flex;">
                     {#each activeItems as slide, idx}
                       <div class="banner banner-large" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: {idx === slidersState.general ? '1' : '0'}; transition: opacity 0.8s ease-in-out; z-index: {idx === slidersState.general ? '2' : '1'};">
                         {#if slide.image}
@@ -3434,7 +3434,7 @@
                 {@const small2Items = bannersConfig.items.filter(i => i.enabled !== false && i.position === 'small_2')}
                 
                 {#if bigItems.length > 0}
-                  <div class="banner-slider-container" style="width: 100%; position: relative; overflow: hidden; border-radius: 20px; display: flex;">
+                  <div class="banner-slider-container" style="width: 100%; position: relative; overflow: hidden; border-radius: var(--card-radius); border: 1px solid rgba(255, 255, 255, 0.1); display: flex;">
                     {#each bigItems as slide, idx}
                       <div class="banner banner-large" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: {idx === slidersState.big ? '1' : '0'}; transition: opacity 0.8s ease-in-out; z-index: {idx === slidersState.big ? '2' : '1'};">
                         {#if slide.image}
@@ -3467,7 +3467,7 @@
                 {/if}
                 <div class="banner-stack">
                   {#if small1Items.length > 0}
-                    <div class="banner-slider-container banner-small" style="position: relative; overflow: hidden; border-radius: 20px; width: 100%; height: 100%; min-height: 190px;">
+                    <div class="banner-slider-container banner-small" style="position: relative; overflow: hidden; border-radius: var(--card-radius); border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; height: 100%; min-height: 190px;">
                       {#each small1Items as slide, idx}
                         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: {idx === slidersState.small_1 ? '1' : '0'}; transition: opacity 0.8s ease-in-out; z-index: {idx === slidersState.small_1 ? '2' : '1'};">
                           {#if slide.image}
@@ -3497,7 +3497,7 @@
                     </div>
                   {/if}
                   {#if small2Items.length > 0}
-                    <div class="banner-slider-container banner-small" style="position: relative; overflow: hidden; border-radius: 20px; width: 100%; height: 100%; min-height: 190px;">
+                    <div class="banner-slider-container banner-small" style="position: relative; overflow: hidden; border-radius: var(--card-radius); border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; height: 100%; min-height: 190px;">
                       {#each small2Items as slide, idx}
                         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: {idx === slidersState.small_2 ? '1' : '0'}; transition: opacity 0.8s ease-in-out; z-index: {idx === slidersState.small_2 ? '2' : '1'};">
                           {#if slide.image}
