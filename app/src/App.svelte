@@ -105,8 +105,8 @@
     } catch (e) {}
   }
 
-  // Show hotspots/toolbar ONLY if we are in site preview mode (not blocking the admin panel itself)
-  $: isVisualCMSActive = $isAdminLoggedIn && !isAdminRoute;
+  // Visual CMS pencils removed as requested by user
+  $: isVisualCMSActive = false;
   let showCmsToolbar = false; // Hidden by default — admin must explicitly open it
 
   $: filteredGames = GAMES.filter(

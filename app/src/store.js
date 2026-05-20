@@ -498,7 +498,18 @@ function applyServerData(data) {
   if (data.jackpot?.length) { cmsJackpot.set(data.jackpot); cmsDraftJackpot.set(JSON.parse(JSON.stringify(data.jackpot))); }
   if (data.jackpotFever) { cmsJackpotFever.set(data.jackpotFever); cmsDraftJackpotFever.set(JSON.parse(JSON.stringify(data.jackpotFever))); }
   if (data.jackpotFever2) { cmsJackpotFever2.set(data.jackpotFever2); cmsDraftJackpotFever2.set(JSON.parse(JSON.stringify(data.jackpotFever2))); }
-  if (data.banners?.items?.length) { cmsBanners.set(data.banners); cmsDraftBanners.set(JSON.parse(JSON.stringify(data.banners))); }
+  if (data.banners?.items?.length) { 
+    if (!data.banners.items[0]?.position) {
+      data.banners.items = data.banners.items.map((item, idx) => ({
+         ...item,
+         position: idx === 0 ? 'big' : (idx === 1 ? 'small_1' : 'small_2')
+      }));
+      const general = data.banners.items.map(i => ({...i, id: i.id+'_g', position: 'general'}));
+      data.banners.items = [...data.banners.items, ...general];
+    }
+    cmsBanners.set(data.banners); 
+    cmsDraftBanners.set(JSON.parse(JSON.stringify(data.banners))); 
+  }
   if (data.promo?.length) { cmsPromoBanner.set(data.promo); cmsDraftPromoBanner.set(JSON.parse(JSON.stringify(data.promo))); }
   if (data.themeColors && Object.keys(data.themeColors).length) { cmsThemeColors.set(data.themeColors); cmsDraftThemeColors.set(JSON.parse(JSON.stringify(data.themeColors))); }
   if (data.gameEffects && Object.keys(data.gameEffects).length) {
