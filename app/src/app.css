@@ -1178,10 +1178,30 @@ header.topbar .logo img {
 }
 
 .jc-header {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 24px;
   position: relative;
   z-index: 1;
+}
+
+.jc-header::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  min-width: 280px;
+  height: calc(100% + 24px);
+  background: rgba(5, 5, 26, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  z-index: -1;
 }
 
 .jc-tickers {
@@ -2467,7 +2487,7 @@ header.topbar .logo img {
 }
 
 .jackpot-cards-section.size-m .jc-header .jc-logo {
-  height: 54px !important;
+  height: 70px !important;
 }
 
 .jackpot-cards-section.size-m .jc-header h2 {
@@ -2489,7 +2509,7 @@ header.topbar .logo img {
 }
 
 .jackpot-cards-section.size-l .jc-header .jc-logo {
-  height: 80px !important;
+  height: 100px !important;
 }
 
 .jackpot-cards-section.size-l .jc-header h2 {
