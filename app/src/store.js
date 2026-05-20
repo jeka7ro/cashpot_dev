@@ -402,6 +402,9 @@ function getInitial(key, def) {
              if (parsed.hotImage && typeof parsed.hotImage === 'string' && parsed.hotImage.includes('midjourney')) parsed.hotImage = '🔥';
              if (parsed.coldImage && typeof parsed.coldImage === 'string' && parsed.coldImage.includes('midjourney')) parsed.coldImage = '🧊';
            }
+           if (key === 'cashpot_cms_banners') {
+             parsed.layout = 'slider'; // Force slider layout to match production
+           }
            return parsed;
         }
         return parsed;
@@ -560,7 +563,12 @@ function _loadFromLocalStorage() {
     const jpf2 = localStorage.getItem('cashpot_cms_jackpotFever2');
     if (jpf2) { const v = JSON.parse(jpf2); cmsJackpotFever2.set(v); cmsDraftJackpotFever2.set(JSON.parse(jpf2)); }
     const bn = localStorage.getItem('cashpot_cms_banners');
-    if (bn) { const v = JSON.parse(bn); cmsBanners.set(v); cmsDraftBanners.set(JSON.parse(bn)); }
+    if (bn) { 
+      const v = JSON.parse(bn); 
+      v.layout = 'slider'; // Force slider layout to match production
+      cmsBanners.set(v); 
+      cmsDraftBanners.set(JSON.parse(JSON.stringify(v))); 
+    }
     const pr = localStorage.getItem('cashpot_cms_promo');
     if (pr) { const v = JSON.parse(pr); cmsPromoBanner.set(v); cmsDraftPromoBanner.set(JSON.parse(pr)); }
     const tc = localStorage.getItem('cashpot_cms_theme_colors');
