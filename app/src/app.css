@@ -1154,6 +1154,8 @@ header.topbar .logo img {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .jackpot-cards-section::before {
@@ -1163,12 +1165,14 @@ header.topbar .logo img {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('/bg-mercedes-blue-micro.png');
-  background-size: cover;
+  background-image: url('/bg-mercedes-blue-alt.png');
+  background-size: 250px 250px;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   pointer-events: none;
-  opacity: 1;
+  opacity: 0.8;
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%);
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%);
 }
 
 .jc-header {
