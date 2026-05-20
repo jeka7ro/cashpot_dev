@@ -1383,9 +1383,26 @@
       </div>
       </div> <!-- End Left Column -->
 
-      <!-- Right Column: Recent Games (Desktop only) -->
+      <!-- Right Column: Recent Games & Quick Deposit (Desktop only) -->
       {#if !userPanelRect.isMobile}
       <div style="width:320px; padding:24px; display:flex; flex-direction:column;">
+        <!-- Depunere rapida -->
+        <div style="margin-bottom: 24px;">
+          <div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:700; margin-bottom:10px;">Depunere rapidă</div>
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;">
+            {#each [100, 200, 500, 1000] as amount}
+              <button style="padding:10px 0; border-radius:10px; background:var(--bg-hover); border:1px solid var(--border-color); color:var(--text-main); font-weight:800; font-size:13px; cursor:pointer; transition:all 0.2s; display:flex; flex-direction:column; align-items:center; gap:2px;"
+                on:click={() => { userBalance += amount; showUserPanel = false; alert(`Apple Pay: Depunere de ${amount} RON aprobată!`); }}
+                on:mouseover={(e) => { e.currentTarget.style.borderColor='var(--accent-gold)'; e.currentTarget.style.color='var(--accent-gold)'; e.currentTarget.style.transform='scale(1.05)'; }}
+                on:mouseout={(e) => { e.currentTarget.style.borderColor='var(--border-color)'; e.currentTarget.style.color='var(--text-main)'; e.currentTarget.style.transform='scale(1)'; }}
+              >
+                <span style="font-size:14px; font-weight:900;">{amount}</span>
+                <span style="font-size:8px; opacity:0.5; font-weight:600;">LEI</span>
+              </button>
+            {/each}
+          </div>
+        </div>
+
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
           <h3 style="font-size:16px; font-weight:800; color:var(--text-main); margin:0;">Ultimele Jocuri</h3>
         </div>
