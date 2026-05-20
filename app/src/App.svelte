@@ -713,8 +713,24 @@
   let loginErrorMsg = "";
   let loggedInUsername = isLoggedIn ? "Eugen Cazmal" : "";
   let userBalance = 80249.8;
+  let userBonus = 2340.0;
+  
+  let pendingWithdrawals = [
+    { id: 1, amount: 10000, date: 'Azi, 14:30' },
+    { id: 2, amount: 100, date: 'Ieri, 09:15' },
+    { id: 3, amount: 5000, date: '18 Mai 2026' }
+  ];
+  let withdrawalToCancel = null;
+
+  function confirmCancelWithdrawal() {
+    if (withdrawalToCancel) {
+      userBalance += withdrawalToCancel.amount;
+      pendingWithdrawals = pendingWithdrawals.filter(w => w.id !== withdrawalToCancel.id);
+      withdrawalToCancel = null;
+    }
+  }
   let showDepositModal = false;
-  let userBonus = 0;
+  
   let userLevel = 1;
   let userXP = 750;
   $: xpPercentage = Math.round((userXP / 1000) * 100);
@@ -1277,6 +1293,28 @@
           >
           DEPUNERE
         </button>
+
+        <!-- Pending Withdrawals -->
+        {#if pendingWithdrawals.length > 0}
+          <div style="margin-top: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px;">Retrageri în așteptare ({pendingWithdrawals.length})</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              {#each pendingWithdrawals as w}
+                <div style="background:var(--bg-panel); border:1px solid var(--border-color); border-radius:8px; padding:10px; display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <div style="font-size:14px; font-weight:800; color:var(--text-main);">{@html formatBalance(w.amount)} <span style="font-size:10px; color:var(--text-muted);">RON</span></div>
+                    <div style="font-size:10px; color:var(--accent-gold);">{w.date}</div>
+                  </div>
+                  <button on:click={() => withdrawalToCancel = w} style="background:rgba(239, 68, 68, 0.1); color:#ef4444; border:1px solid rgba(239, 68, 68, 0.2); border-radius:6px; padding:6px 12px; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.2s;" on:mouseover={(e) => e.currentTarget.style.background="rgba(239, 68, 68, 0.2)"} on:mouseout={(e) => e.currentTarget.style.background="rgba(239, 68, 68, 0.1)"}>
+                    Anulează
+                  </button>
+                </div>
+              {/each}
+            </div>
+          </div>
+        {/if}
       </div>
 
       <!-- Menu Links -->
@@ -1445,6 +1483,27 @@
         </button>
       </div>
       {/if}
+    </div>
+  {/if}
+
+  {#if withdrawalToCancel}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div style="position:fixed; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(4px); z-index:10000; display:flex; align-items:center; justify-content:center;" on:click={() => withdrawalToCancel = null}>
+      <div style="background:var(--bg-panel); border:1px solid var(--border-color); border-radius:16px; padding:24px; width:320px; box-shadow:0 10px 40px rgba(0,0,0,0.5); text-align:center;" on:click|stopPropagation>
+        <div style="width:48px; height:48px; border-radius:50%; background:rgba(239,68,68,0.1); color:#ef4444; display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3 style="color:var(--text-main); font-size:18px; font-weight:800; margin-bottom:8px;">Anulare Retragere</h3>
+        <p style="color:var(--text-muted); font-size:13px; line-height:1.4; margin-bottom:20px;">
+          Ești sigur că vrei să anulezi retragerea de <strong style="color:var(--text-main);">{@html formatBalance(withdrawalToCancel.amount)} RON</strong>?<br/>
+          Banii vor fi returnați instant în balanța ta.
+        </p>
+        <div style="display:flex; gap:12px;">
+          <button on:click={() => withdrawalToCancel = null} style="flex:1; background:var(--bg-hover); color:var(--text-main); border:1px solid var(--border-color); border-radius:8px; padding:10px; font-weight:700; cursor:pointer;">Înapoi</button>
+          <button on:click={confirmCancelWithdrawal} style="flex:1; background:#ef4444; color:#fff; border:none; border-radius:8px; padding:10px; font-weight:700; cursor:pointer; box-shadow:0 4px 12px rgba(239,68,68,0.3);">Da, Anulează</button>
+        </div>
+      </div>
     </div>
   {/if}
 
