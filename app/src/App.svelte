@@ -407,24 +407,31 @@
   let bannersConfig;
   let promoConfig;
 
-  let heroSliderIndex = 0;
-  let heroSliderInterval;
+  let slidersState = {
+    general: 0,
+    big: 0,
+    small_1: 0,
+    small_2: 0
+  };
+  let masterSliderInterval;
 
   $: jackpotConfig = jackpotSource;
   $: jackpotFeverConfig = jackpotFeverSource;
   $: bannersConfig = bannersSource;
   $: promoConfig = promoSource;
   
-  $: if (bannersConfig?.layout === "slider" && bannersConfig?.autoSlide) {
-    if (heroSliderInterval) clearInterval(heroSliderInterval);
-    heroSliderInterval = setInterval(() => {
-      const activeCount = bannersConfig.items.filter(b => b.enabled !== false).length;
-      if (activeCount > 0) {
-        heroSliderIndex = (heroSliderIndex + 1) % activeCount;
-      }
+  $: if (bannersConfig?.autoSlide) {
+    if (masterSliderInterval) clearInterval(masterSliderInterval);
+    masterSliderInterval = setInterval(() => {
+      slidersState = {
+         general: (slidersState.general + 1) % Math.max(1, bannersConfig.items.filter(b => b.enabled !== false && (b.position === 'general' || !b.position)).length),
+         big: (slidersState.big + 1) % Math.max(1, bannersConfig.items.filter(b => b.enabled !== false && b.position === 'big').length),
+         small_1: (slidersState.small_1 + 1) % Math.max(1, bannersConfig.items.filter(b => b.enabled !== false && b.position === 'small_1').length),
+         small_2: (slidersState.small_2 + 1) % Math.max(1, bannersConfig.items.filter(b => b.enabled !== false && b.position === 'small_2').length)
+      };
     }, (bannersConfig.slideInterval || 5) * 1000);
   } else {
-    if (heroSliderInterval) clearInterval(heroSliderInterval);
+    if (masterSliderInterval) clearInterval(masterSliderInterval);
   }
 
   function getGameEffect(gameName, effectsSource) {
@@ -3379,11 +3386,11 @@
               {/if}
 
               {#if bannersConfig.layout === "slider"}
-                {@const activeItems = bannersConfig.items.filter(i => i.enabled !== false)}
+                {@const activeItems = bannersConfig.items.filter(i => i.enabled !== false && (i.position === 'general' || !i.position))}
                 {#if activeItems.length > 0}
                   <div class="banner-slider-container" style="width: 100%; position: relative; overflow: hidden; border-radius: 20px; min-height: 400px; display: flex;">
                     {#each activeItems as slide, idx}
-                      <div class="banner banner-large" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: {idx === heroSliderIndex ? '1' : '0'}; transition: opacity 0.8s ease-in-out; z-index: {idx === heroSliderIndex ? '2' : '1'};">
+                      <div class="banner banner-large" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: {idx === slidersState.general ? '1' : '0'}; transition: opacity 0.8s ease-in-out; z-index: {idx === slidersState.general ? '2' : '1'};">
                         {#if slide.image}
                           {#if slide.image.includes('data:video/') || slide.image.endsWith('.mp4') || slide.image.endsWith('.webm') || slide.image.endsWith('.mov')}
                             <!-- svelte-ignore a11y-media-has-caption -->
@@ -3412,139 +3419,113 @@
                         </div>
                       </div>
                     {/each}
+                    {#if activeItems.length > 1}
                     <div class="slider-dots" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10;">
                       {#each activeItems as _, idx}
-                        <button on:click={() => (heroSliderIndex = idx)} style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.8); background: {idx === heroSliderIndex ? '#fff' : 'transparent'}; cursor: pointer; padding: 0; transition: all 0.3s;"></button>
+                        <button on:click={() => (slidersState.general = idx)} style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.8); background: {idx === slidersState.general ? '#fff' : 'transparent'}; cursor: pointer; padding: 0; transition: all 0.3s;"></button>
                       {/each}
                     </div>
+                    {/if}
                   </div>
                 {/if}
               {:else if bannersConfig.layout === "1_big_2_small"}
-                {#if bannersConfig.items[0] && bannersConfig.items[0].enabled !== false}
-                  <div class="banner banner-large">
-                    {#if bannersConfig.items[0].image}
-                      {#if bannersConfig.items[0].image.includes('data:video/') || bannersConfig.items[0].image.endsWith('.mp4') || bannersConfig.items[0].image.endsWith('.webm') || bannersConfig.items[0].image.endsWith('.mov')}
-                        <!-- svelte-ignore a11y-media-has-caption -->
-                        <video
-                          src={bannersConfig.items[0].image}
-                          class="banner-bg"
-                          autoplay
-                          loop
-                          muted
-                          playsinline
-                          style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1;"
-                        ></video>
-                      {:else}
-                        <img
-                          src={bannersConfig.items[0].image}
-                          class="banner-bg"
-                          alt="Welcome Banner"
-                        />
-                      {/if}
+                {@const bigItems = bannersConfig.items.filter(i => i.enabled !== false && i.position === 'big')}
+                {@const small1Items = bannersConfig.items.filter(i => i.enabled !== false && i.position === 'small_1')}
+                {@const small2Items = bannersConfig.items.filter(i => i.enabled !== false && i.position === 'small_2')}
+                
+                {#if bigItems.length > 0}
+                  <div class="banner-slider-container" style="width: 100%; position: relative; overflow: hidden; border-radius: 20px; display: flex;">
+                    {#each bigItems as slide, idx}
+                      <div class="banner banner-large" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: {idx === slidersState.big ? '1' : '0'}; transition: opacity 0.8s ease-in-out; z-index: {idx === slidersState.big ? '2' : '1'};">
+                        {#if slide.image}
+                          {#if slide.image.includes('data:video/') || slide.image.endsWith('.mp4') || slide.image.endsWith('.webm') || slide.image.endsWith('.mov')}
+                            <!-- svelte-ignore a11y-media-has-caption -->
+                            <video src={slide.image} class="banner-bg" autoplay loop muted playsinline style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1;"></video>
+                          {:else}
+                            <img src={slide.image} class="banner-bg" alt="Welcome Banner" />
+                          {/if}
+                        {/if}
+                        <div class="banner-content ${(slide.tag && slide.tag.trim() !== '') || (slide.title && slide.title.trim() !== '') || (slide.subtitle && slide.subtitle.trim() !== '') || (slide.showButton && slide.buttonText && slide.buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor};">
+                          {#if slide.tag}<span class="banner-tag">{slide.tag}</span>{/if}
+                          <h2 style="color: {slide.textColor}; {slide.titleSize ? `font-size: ${slide.titleSize};` : ''}">{slide.title}</h2>
+                          <p style="color: {slide.textColor}; opacity: 0.9; {slide.subtitleSize ? `font-size: ${slide.subtitleSize};` : ''}">{slide.subtitle}</p>
+                          {#if slide.showButton}
+                            <button class="btn-gold" style="background: {slide.buttonColor}; color: {slide.buttonTextColor}; border: {slide.buttonBorderWidth || 0}px solid {slide.buttonBorderColor || 'transparent'};">{slide.buttonText}</button>
+                          {/if}
+                        </div>
+                      </div>
+                    {/each}
+                    <div class="banner banner-large" style="opacity: 0; pointer-events: none;"></div>
+                    {#if bigItems.length > 1}
+                      <div class="slider-dots" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 10;">
+                        {#each bigItems as _, idx}
+                          <button on:click={() => (slidersState.big = idx)} style="width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.8); background: {idx === slidersState.big ? '#fff' : 'transparent'}; cursor: pointer; padding: 0; transition: all 0.3s;"></button>
+                        {/each}
+                      </div>
                     {/if}
-                    <div
-                      class="banner-content ${(bannersConfig.items[0].tag && bannersConfig.items[0].tag.trim() !== '') || (bannersConfig.items[0].title && bannersConfig.items[0].title.trim() !== '') || (bannersConfig.items[0].subtitle && bannersConfig.items[0].subtitle.trim() !== '') || (bannersConfig.items[0].showButton && bannersConfig.items[0].buttonText && bannersConfig.items[0].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}"
-                      style="color: {bannersConfig.items[0].textColor};"
-                    >
-                      {#if bannersConfig.items[0].tag}<span class="banner-tag"
-                          >{bannersConfig.items[0].tag}</span
-                        >{/if}
-                      <h2
-                        style="color: {bannersConfig.items[0]
-                          .textColor}; {bannersConfig.items[0].titleSize
-                          ? `font-size: ${bannersConfig.items[0].titleSize};`
-                          : ''}"
-                      >
-                        {bannersConfig.items[0].title}
-                      </h2>
-                      <p
-                        style="color: {bannersConfig.items[0]
-                          .textColor}; opacity: 0.9; {bannersConfig.items[0]
-                          .subtitleSize
-                          ? `font-size: ${bannersConfig.items[0].subtitleSize};`
-                          : ''}"
-                      >
-                        {bannersConfig.items[0].subtitle}
-                      </p>
-                      {#if bannersConfig.items[0].showButton}<button
-                          class="btn-gold"
-                          style="background: {bannersConfig.items[0]
-                            .buttonColor}; color: {bannersConfig.items[0]
-                            .buttonTextColor}; border: {bannersConfig.items[0]
-                            .buttonBorderWidth || 0}px solid {bannersConfig
-                            .items[0].buttonBorderColor || 'transparent'};"
-                          >{bannersConfig.items[0].buttonText}</button
-                        >{/if}
-                    </div>
                   </div>
                 {/if}
                 <div class="banner-stack">
-                  {#each [1, 2] as idx}
-                    {#if bannersConfig.items[idx] && bannersConfig.items[idx].enabled !== false}
-                      <div class="banner banner-small">
-                        {#if bannersConfig.items[idx].image}
-                          {#if bannersConfig.items[idx].image.includes('data:video/') || bannersConfig.items[idx].image.endsWith('.mp4') || bannersConfig.items[idx].image.endsWith('.webm') || bannersConfig.items[idx].image.endsWith('.mov')}
-                            <!-- svelte-ignore a11y-media-has-caption -->
-                            <video
-                              src={bannersConfig.items[idx].image}
-                              class="banner-bg"
-                              autoplay
-                              loop
-                              muted
-                              playsinline
-                              style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1;"
-                            ></video>
-                          {:else}
-                            <img
-                              src={bannersConfig.items[idx].image}
-                              alt="Promo"
-                              class="banner-bg"
-                              style="object-position: center;"
-                            />
+                  {#if small1Items.length > 0}
+                    <div class="banner-slider-container banner-small" style="position: relative; overflow: hidden; border-radius: 20px; width: 100%; height: 100%; min-height: 190px;">
+                      {#each small1Items as slide, idx}
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: {idx === slidersState.small_1 ? '1' : '0'}; transition: opacity 0.8s ease-in-out; z-index: {idx === slidersState.small_1 ? '2' : '1'};">
+                          {#if slide.image}
+                            {#if slide.image.includes('data:video/') || slide.image.endsWith('.mp4') || slide.image.endsWith('.webm') || slide.image.endsWith('.mov')}
+                              <!-- svelte-ignore a11y-media-has-caption -->
+                              <video src={slide.image} class="banner-bg" autoplay loop muted playsinline style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1;"></video>
+                            {:else}
+                              <img src={slide.image} alt="Promo" class="banner-bg" style="object-position: center;" />
+                            {/if}
                           {/if}
-                        {/if}
-                        <div
-                          class="banner-content ${(bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== '') || (bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== '') || (bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== '') || (bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== '') ? '' : 'hide-banner-bg'}"
-                          style="color: {bannersConfig.items[idx].textColor};"
-                        >
-                          {#if bannersConfig.items[idx].tag && bannersConfig.items[idx].tag.trim() !== ""}<span
-                              class="banner-tag"
-                              >{bannersConfig.items[idx].tag}</span
-                            >{/if}
-                          {#if bannersConfig.items[idx].title && bannersConfig.items[idx].title.trim() !== ""}<h3
-                            style="color: {bannersConfig.items[idx]
-                              .textColor}; {bannersConfig.items[idx].titleSize
-                              ? `font-size: ${bannersConfig.items[idx].titleSize};`
-                              : ''}"
-                          >
-                            {bannersConfig.items[idx].title}
-                          </h3>{/if}
-                          {#if bannersConfig.items[idx].subtitle && bannersConfig.items[idx].subtitle.trim() !== ""}<p
-                            style="color: {bannersConfig.items[idx]
-                              .textColor}; opacity: 0.9; {bannersConfig.items[
-                              idx
-                            ].subtitleSize
-                              ? `font-size: ${bannersConfig.items[idx].subtitleSize};`
-                              : ''}"
-                          >
-                            {bannersConfig.items[idx].subtitle}
-                          </p>{/if}
-                          {#if bannersConfig.items[idx].showButton && bannersConfig.items[idx].buttonText && bannersConfig.items[idx].buttonText.trim() !== ""}<button
-                              class="btn-gold"
-                              style="padding: 6px 12px; font-size: 12px; margin-top: 8px; background: {bannersConfig
-                                .items[idx].buttonColor}; color: {bannersConfig
-                                .items[idx]
-                                .buttonTextColor}; border: {bannersConfig.items[
-                                idx
-                              ].buttonBorderWidth || 0}px solid {bannersConfig
-                                .items[idx].buttonBorderColor ||
-                                'transparent'};"
-                              >{bannersConfig.items[idx].buttonText}</button
-                            >{/if}
+                          <div class="banner-content ${(slide.tag && slide.tag.trim() !== '') || (slide.title && slide.title.trim() !== '') || (slide.subtitle && slide.subtitle.trim() !== '') || (slide.showButton && slide.buttonText && slide.buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor};">
+                            {#if slide.tag && slide.tag.trim() !== ""}<span class="banner-tag">{slide.tag}</span>{/if}
+                            {#if slide.title && slide.title.trim() !== ""}<h3 style="color: {slide.textColor}; {slide.titleSize ? `font-size: ${slide.titleSize};` : ''}">{slide.title}</h3>{/if}
+                            {#if slide.subtitle && slide.subtitle.trim() !== ""}<p style="color: {slide.textColor}; opacity: 0.9; {slide.subtitleSize ? `font-size: ${slide.subtitleSize};` : ''}">{slide.subtitle}</p>{/if}
+                            {#if slide.showButton && slide.buttonText && slide.buttonText.trim() !== ""}<button class="btn-gold" style="padding: 6px 12px; font-size: 12px; margin-top: 8px; background: {slide.buttonColor}; color: {slide.buttonTextColor}; border: {slide.buttonBorderWidth || 0}px solid {slide.buttonBorderColor || 'transparent'};">{slide.buttonText}</button>{/if}
+                          </div>
                         </div>
-                      </div>
-                    {/if}
-                  {/each}
+                      {/each}
+                      <div class="banner banner-small" style="opacity: 0; pointer-events: none; min-height: 190px;"></div>
+                      {#if small1Items.length > 1}
+                        <div class="slider-dots" style="position: absolute; bottom: 10px; right: 10px; display: flex; gap: 6px; z-index: 10;">
+                          {#each small1Items as _, idx}
+                            <button on:click={() => (slidersState.small_1 = idx)} style="width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.8); background: {idx === slidersState.small_1 ? '#fff' : 'transparent'}; cursor: pointer; padding: 0; transition: all 0.3s;"></button>
+                          {/each}
+                        </div>
+                      {/if}
+                    </div>
+                  {/if}
+                  {#if small2Items.length > 0}
+                    <div class="banner-slider-container banner-small" style="position: relative; overflow: hidden; border-radius: 20px; width: 100%; height: 100%; min-height: 190px;">
+                      {#each small2Items as slide, idx}
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: {idx === slidersState.small_2 ? '1' : '0'}; transition: opacity 0.8s ease-in-out; z-index: {idx === slidersState.small_2 ? '2' : '1'};">
+                          {#if slide.image}
+                            {#if slide.image.includes('data:video/') || slide.image.endsWith('.mp4') || slide.image.endsWith('.webm') || slide.image.endsWith('.mov')}
+                              <!-- svelte-ignore a11y-media-has-caption -->
+                              <video src={slide.image} class="banner-bg" autoplay loop muted playsinline style="object-fit: cover; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1;"></video>
+                            {:else}
+                              <img src={slide.image} alt="Promo" class="banner-bg" style="object-position: center;" />
+                            {/if}
+                          {/if}
+                          <div class="banner-content ${(slide.tag && slide.tag.trim() !== '') || (slide.title && slide.title.trim() !== '') || (slide.subtitle && slide.subtitle.trim() !== '') || (slide.showButton && slide.buttonText && slide.buttonText.trim() !== '') ? '' : 'hide-banner-bg'}" style="color: {slide.textColor};">
+                            {#if slide.tag && slide.tag.trim() !== ""}<span class="banner-tag">{slide.tag}</span>{/if}
+                            {#if slide.title && slide.title.trim() !== ""}<h3 style="color: {slide.textColor}; {slide.titleSize ? `font-size: ${slide.titleSize};` : ''}">{slide.title}</h3>{/if}
+                            {#if slide.subtitle && slide.subtitle.trim() !== ""}<p style="color: {slide.textColor}; opacity: 0.9; {slide.subtitleSize ? `font-size: ${slide.subtitleSize};` : ''}">{slide.subtitle}</p>{/if}
+                            {#if slide.showButton && slide.buttonText && slide.buttonText.trim() !== ""}<button class="btn-gold" style="padding: 6px 12px; font-size: 12px; margin-top: 8px; background: {slide.buttonColor}; color: {slide.buttonTextColor}; border: {slide.buttonBorderWidth || 0}px solid {slide.buttonBorderColor || 'transparent'};">{slide.buttonText}</button>{/if}
+                          </div>
+                        </div>
+                      {/each}
+                      <div class="banner banner-small" style="opacity: 0; pointer-events: none; min-height: 190px;"></div>
+                      {#if small2Items.length > 1}
+                        <div class="slider-dots" style="position: absolute; bottom: 10px; right: 10px; display: flex; gap: 6px; z-index: 10;">
+                          {#each small2Items as _, idx}
+                            <button on:click={() => (slidersState.small_2 = idx)} style="width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.8); background: {idx === slidersState.small_2 ? '#fff' : 'transparent'}; cursor: pointer; padding: 0; transition: all 0.3s;"></button>
+                          {/each}
+                        </div>
+                      {/if}
+                    </div>
+                  {/if}
                 </div>
               {:else if bannersConfig.layout === "4_medium"}
                 <div

@@ -91,14 +91,14 @@ const defaultJackpots = [
 ];
 
 const defaultBanners = {
-  layout: "slider",
+  layout: "1_big_2_small",
   autoSlide: true,
   slideInterval: 5,
   items: [
-    { id: 'b1', image: '/baner1.webp', tag: 'Ofertă de bun venit', title: '500 Rotiri +\n10.000 RON Bonus', subtitle: 'Cel mai mare pachet din România.', buttonText: 'Revendică acum', showButton: true, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 },
-    { id: 'b2', image: '/baner2.webp', tag: 'Săptămânal', title: 'Cashback 15%', subtitle: 'Pe toate pierderile tale', buttonText: '', showButton: false, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 },
-    { id: 'b3', image: '/baner4.webp', tag: 'Zilnic', title: 'Drops & Wins', subtitle: '€ 500.000 premii lunare', buttonText: '', showButton: false, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 },
-    { id: 'b4', image: '/baner3.webp', tag: 'Turneu', title: 'Slot Race', subtitle: 'Joacă și câștigă', buttonText: 'Participă', showButton: false, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 }
+    { id: 'b1', position: 'big', image: '/baner1.webp', tag: 'Ofertă de bun venit', title: '500 Rotiri +\n10.000 RON Bonus', subtitle: 'Cel mai mare pachet din România.', buttonText: 'Revendică acum', showButton: true, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 },
+    { id: 's1', position: 'small_1', image: '/baner2.webp', tag: 'Săptămânal', title: 'Cashback 15%', subtitle: 'Pe toate pierderile tale', buttonText: '', showButton: false, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 },
+    { id: 's2', position: 'small_2', image: '/baner4.webp', tag: 'Zilnic', title: 'Drops & Wins', subtitle: '€ 500.000 premii lunare', buttonText: '', showButton: false, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 },
+    { id: 'g1', position: 'general', image: '/baner1.webp', tag: 'Ofertă de bun venit', title: '500 Rotiri +\n10.000 RON Bonus', subtitle: 'Cel mai mare pachet din România.', buttonText: 'Revendică acum', showButton: true, textColor: '#ffffff', buttonColor: '#22c55e', buttonTextColor: '#ffffff', buttonBorderColor: 'transparent', buttonBorderWidth: 0 }
   ]
 };
 
@@ -378,9 +378,9 @@ function getInitial(key, def) {
            
            if (key === 'cashpot_cms_vip' && parsed.levels) {
              parsed.levels = parsed.levels.map((lvl, i) => ({
-                 ...def.levels[i], 
+                 ...(def.levels[i] || {}), 
                  ...lvl, 
-                 benefits: (!lvl.benefits || lvl.benefits.length === 0) ? def.levels[i].benefits : lvl.benefits
+                 benefits: (!lvl.benefits || lvl.benefits.length === 0) ? (def.levels[i] ? def.levels[i].benefits : []) : lvl.benefits
              }));
            }
            if (key === 'cashpot_cms_play_arena') {
@@ -403,7 +403,16 @@ function getInitial(key, def) {
              if (parsed.coldImage && typeof parsed.coldImage === 'string' && parsed.coldImage.includes('midjourney')) parsed.coldImage = '🧊';
            }
            if (key === 'cashpot_cms_banners') {
-             parsed.layout = 'slider'; // Force slider layout to match production
+             // Migration for position
+             if (parsed.items && !parsed.items[0]?.position) {
+               parsed.items = parsed.items.map((item, idx) => ({
+                 ...item,
+                 position: idx === 0 ? 'big' : (idx === 1 ? 'small_1' : 'small_2')
+               }));
+               // Also clone for general
+               const general = parsed.items.map(i => ({...i, id: i.id+'_g', position: 'general'}));
+               parsed.items = [...parsed.items, ...general];
+             }
            }
            return parsed;
         }
@@ -519,9 +528,9 @@ function applyServerData(data) {
     };
     if (mergedVip.levels) {
         mergedVip.levels = mergedVip.levels.map((lvl, i) => ({
-            ...defaultVipConfig.levels[i],
+            ...(defaultVipConfig.levels[i] || {}),
             ...lvl,
-            benefits: (!lvl.benefits || lvl.benefits.length === 0) ? defaultVipConfig.levels[i].benefits : lvl.benefits
+            benefits: (!lvl.benefits || lvl.benefits.length === 0) ? (defaultVipConfig.levels[i] ? defaultVipConfig.levels[i].benefits : []) : lvl.benefits
         }));
     }
     cmsVipConfig.set(mergedVip); 
@@ -565,7 +574,6 @@ function _loadFromLocalStorage() {
     const bn = localStorage.getItem('cashpot_cms_banners');
     if (bn) { 
       const v = JSON.parse(bn); 
-      v.layout = 'slider'; // Force slider layout to match production
       cmsBanners.set(v); 
       cmsDraftBanners.set(JSON.parse(JSON.stringify(v))); 
     }

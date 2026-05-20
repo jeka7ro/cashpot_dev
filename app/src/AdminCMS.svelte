@@ -938,7 +938,7 @@
               y2="9"
             /><line x1="9" y1="21" x2="9" y2="9" /></svg
           >
-          Acasă
+          Bannere
         </button>
         <button
           class="cms-nav-item {activeTab === 'categories' ? 'active' : ''}"
@@ -1857,7 +1857,7 @@
             <div class="cms-glass-card" style="padding: 28px;">
               <h3 class="cms-section-title">Layout Bannere</h3>
               <div class="cms-layout-picker">
-                {#each [["slider", "Slider / Carusel Automat"], ["1_big_2_small", "1 Mare + 2 Mici"], ["4_small", "4 Mici"], ["4_medium", "4 Medii"], ["2_big", "2 Mari"]] as [val, label]}
+                {#each [["slider", "General (Slider Full-Width)"], ["1_big_2_small", "Grilă (1 Mare + 2 Mici) cu Slidere"], ["4_small", "4 Mici"], ["4_medium", "4 Medii"], ["2_big", "2 Mari"]] as [val, label]}
                   <button
                     class="cms-layout-btn {bannersConfig.layout === val
                       ? 'active'
@@ -2013,8 +2013,17 @@
                   </div>
 
                   <div
-                    style="display: grid; grid-template-columns: 1fr 1.5fr 1.5fr; gap: 12px; margin-bottom: 16px;"
+                    style="display: grid; grid-template-columns: 1fr 1fr 1.5fr 1.5fr; gap: 12px; margin-bottom: 16px;"
                   >
+                    <div class="cms-field">
+                      <label>Poziție (Unde apare?)</label>
+                      <select bind:value={banner.position} style="width:100%; padding:10px; background:var(--bg-dark); border:1px solid var(--border-color); border-radius:8px; color:var(--text-main); font-size:13px;">
+                        <option value="general">General (Slider Full-Width)</option>
+                        <option value="big">Grilă: Mare (Stânga)</option>
+                        <option value="small_1">Grilă: Mic 1 (Sus Dreapta)</option>
+                        <option value="small_2">Grilă: Mic 2 (Jos Dreapta)</option>
+                      </select>
+                    </div>
                     <div class="cms-field">
                       <label>Tag</label><input
                         type="text"
