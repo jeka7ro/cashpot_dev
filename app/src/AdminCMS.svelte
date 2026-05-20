@@ -2210,6 +2210,36 @@
               </div>
             {/each}
 
+            <div style="display: flex; justify-content: center; margin-bottom: 24px; margin-top: 16px;">
+              <button 
+                class="cms-btn-add" 
+                style="padding: 12px 24px; font-size: 14px; border-radius: 99px;"
+                on:click={() => {
+                  bannersConfig.items = [
+                    ...bannersConfig.items,
+                    { 
+                      id: 'b_' + Date.now(), 
+                      position: 'general',
+                      image: '', 
+                      tag: 'Nou', 
+                      title: 'Banner Nou', 
+                      subtitle: 'Editează acest banner', 
+                      buttonText: 'Află mai mult', 
+                      showButton: false, 
+                      textColor: '#ffffff', 
+                      buttonColor: '#22c55e', 
+                      buttonTextColor: '#ffffff', 
+                      buttonBorderColor: 'transparent', 
+                      buttonBorderWidth: 0,
+                      enabled: true
+                    }
+                  ];
+                }}
+              >
+                + Adaugă Banner Nou
+              </button>
+            </div>
+
             <!-- Contextual Integrated Preview -->
             <div class="cms-context-preview">
               <div class="cms-context-preview-header">
