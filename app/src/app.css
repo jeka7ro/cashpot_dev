@@ -1279,7 +1279,6 @@ header.topbar .logo img {
 }
 
 .jc-games-slider .game-card .img-wrapper {
-  aspect-ratio: 3 / 4;
   height: auto;
   position: relative;
   width: 100%;
@@ -1289,10 +1288,9 @@ header.topbar .logo img {
 
 .jc-games-slider .game-card .img-wrapper img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
   display: block;
-  border-radius: var(--radius-md);
 }
 
 .jc-games-slider .game-info .g-name {
@@ -2725,19 +2723,17 @@ header.topbar .logo img {
   flex-direction: column;
   position: relative;
   overflow: visible;
-  /* Allow scale and shadow to show */
-  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(255, 255, 255, 0.04);
+  background: transparent;
   z-index: 1;
 }
 
 .games-slider .game-card:hover {
   transform: scale(1.05);
   z-index: 50;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
-  background: var(--bg-panel);
+  background: transparent;
+  box-shadow: none;
 }
 
 /* img-wrapper fills the designated height */
@@ -2751,10 +2747,9 @@ header.topbar .logo img {
 
 .games-slider .game-card .img-wrapper img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
   display: block;
-  border-radius: var(--radius-md);
 }
 
 /* S — Compact */
@@ -6841,7 +6836,7 @@ header.topbar .logo img {
 
 /* Fix for game text being cut off */
 .game-info {
-  padding: 12px 8px;
+  padding: 12px 0 0 0;
   margin-top: auto;
 }
 .game-info .g-name {
@@ -6850,4 +6845,28 @@ header.topbar .logo img {
 }
 .game-info .g-prov {
   line-height: 1.2;
+}
+
+/* Fix for game hover overlay (JOACA button) taking up space and breaking layout */
+.game-hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 10;
+  border-radius: 12px;
+}
+
+.game-card:hover .game-hover-overlay {
+  opacity: 1;
+  pointer-events: auto;
 }
