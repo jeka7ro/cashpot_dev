@@ -56,10 +56,10 @@
 
   .vip2-container {
     padding: 32px;
-    background: #09090b; /* Very dark background to make neon pop */
+    background: var(--bg-dark, #09090b); /* Use theme variable for light/dark mode */
     min-height: 100vh;
     font-family: 'Outfit', sans-serif;
-    color: #fff;
+    color: var(--text-main, #fff);
   }
 
   .vip2-header {
@@ -136,7 +136,7 @@
     height: 450px;
     border: 2px solid transparent;
     transition: all 0.3s ease;
-    background: #111;
+    background: var(--bg-panel, #111);
   }
 
   .vip2-card:hover {

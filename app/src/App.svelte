@@ -1928,14 +1928,13 @@
                           {/if}
                           <span class="nav-label">{sni.label}</span>
                         </a>
-                      {:else if sni.id === "sn_vip"}
+                      {:else if sni.id === "sn_vip" || sni.id === "sn_vip2" || sni.id === "sn_vip3"}
+                        {@const viewId = sni.id.replace('sn_', '')}
                         <a
                           href="#"
-                          class="nav-item {activeView === 'vip'
-                            ? 'active'
-                            : ''}"
-                          on:click|preventDefault={() => setView("vip")}
-                          style="color: {activeView === 'vip'
+                          class="nav-item {activeView === viewId ? 'active' : ''}"
+                          on:click|preventDefault={() => setView(viewId)}
+                          style="color: {activeView === viewId
                             ? 'var(--text-main)'
                             : 'var(--accent-gold)'};"
                           title={sni.label}
@@ -1948,32 +1947,6 @@
                             >
                           {/if}
                           <span class="nav-label">{sni.label}</span>
-                        </a>
-                        <!-- Link to VIP2 added exactly below VIP -->
-                        <a
-                          href="#"
-                          class="nav-item {activeView === 'vip2' ? 'active' : ''}"
-                          on:click|preventDefault={() => setView("vip2")}
-                          style="color: {activeView === 'vip2' ? 'var(--text-main)' : 'var(--accent-gold)'};"
-                          title="Club VIP 2"
-                        >
-                          {#if themeColorsSource.showSidebarIcons || themeColorsSource.showIcons}
-                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                          {/if}
-                          <span class="nav-label">Club VIP 2</span>
-                        </a>
-                        <!-- Link to VIP3 added exactly below VIP 2 -->
-                        <a
-                          href="#"
-                          class="nav-item {activeView === 'vip3' ? 'active' : ''}"
-                          on:click|preventDefault={() => setView("vip3")}
-                          style="color: {activeView === 'vip3' ? 'var(--text-main)' : 'var(--accent-gold)'};"
-                          title="Slot Legends (VIP 3)"
-                        >
-                          {#if themeColorsSource.showSidebarIcons || themeColorsSource.showIcons}
-                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                          {/if}
-                          <span class="nav-label">Slot Legends</span>
                         </a>
                       {:else if sni.id === "sn_slots"}
                         <a
@@ -2993,7 +2966,7 @@
                       style="background: #222; border-radius: 12px; height: 120px; display: flex; align-items: center; padding: 20px; gap: 20px;"
                     >
                       <img
-                        src={b.img}
+                        src={b.image}
                         alt="Banner"
                         style="height: 100%; border-radius: 8px;"
                       />

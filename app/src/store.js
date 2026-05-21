@@ -203,6 +203,8 @@ export const defaultSidebarNavConfig = {
   items: [
     { id: 'sn_home',      label: 'Acasă',          icon: 'home',       enabled: true },
     { id: 'sn_vip',       label: 'Club VIP',        icon: 'star',       enabled: true },
+    { id: 'sn_vip2',      label: 'Club VIP 2',      icon: 'star',       enabled: true },
+    { id: 'sn_vip3',      label: 'Slot Legends',    icon: 'star',       enabled: true },
     { id: 'sn_slots',     label: 'Slots',           icon: 'slots',      enabled: true },
     { id: 'sn_live',      label: 'Cazino Live',     icon: 'live',       enabled: true },
     { id: 'sn_sport',     label: 'Sport',           icon: 'sport',      enabled: true },
