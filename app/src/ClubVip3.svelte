@@ -4,7 +4,7 @@
 
   const levels = [
     { id: 1, name: 'BIG BASS', provider: 'Pragmatic Play', image: '/vip3-fisher.png', points: '0 - 1,000', color: '#0ea5e9' }, // Light Blue
-    { id: 2, name: 'SWEET BOSS', provider: 'Pragmatic Play', image: '/vip3-candy.png', points: '1,001 - 5,000', color: '#ec4899' }, // Pink
+    { id: 2, name: 'DOG FATHER', provider: 'Pragmatic Play', image: '/vip3-dogfather.png', points: '1,001 - 5,000', color: '#f97316' }, // Orange
     { id: 3, name: 'EXPLORER', provider: 'Pragmatic/Greentube', image: '/vip3-explorer.png', points: '5,001 - 20,000', color: '#eab308' }, // Gold
     { id: 4, name: 'VAMPIRE LORD', provider: 'EGT/Amusnet', image: '/vip3-vampire.png', points: '20,001 - 50,000', color: '#dc2626' }, // Blood Red
     { id: 5, name: 'CROWN MASTER', provider: 'EGT/Amusnet', image: '/vip3-crown.png', points: '50,001 - 150,000', color: '#22c55e' }, // Burning Green
@@ -23,7 +23,7 @@
       <div class="progress-bar-fill" style="width: {progress}%;"></div>
     </div>
     <div class="progress-labels">
-      <span>Current: SWEET BOSS</span>
+      <span>Current: DOG FATHER</span>
       <span>Next: EXPLORER (55% left)</span>
     </div>
   </div>

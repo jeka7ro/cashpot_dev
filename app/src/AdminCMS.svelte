@@ -72,6 +72,7 @@
     return titles[tab] || "Pagina Admin";
   };
   import Gamification from "./Gamification.svelte";
+  import CmsMagicStudio from "./CmsMagicStudio.svelte";
 
   let username = "admin",
     password = "cashpot2026",
@@ -1015,6 +1016,24 @@
           Thumbnails & Grid
         </button>
 
+        <button
+          class="cms-nav-item {activeTab === 'magicstudio' ? 'active' : ''}"
+          on:click={() => (activeTab = "magicstudio")}
+          style="background: linear-gradient(90deg, rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2)); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 8px; margin-top: 8px; padding-left: 12px; position: relative; overflow: hidden;"
+        >
+          <span style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(to bottom, #a855f7, #ec4899);"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="url(#magicGrad)" stroke-width="2" width="18" height="18">
+            <defs>
+              <linearGradient id="magicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#a855f7" />
+                <stop offset="100%" stop-color="#ec4899" />
+              </linearGradient>
+            </defs>
+            <path d="M12 2v4m0 12v4m10-10h-4M6 12H2M19.07 4.93l-2.83 2.83M7.76 16.24l-2.83 2.83M19.07 19.07l-2.83-2.83M7.76 7.76L4.93 4.93" stroke-linecap="round"/>
+          </svg>
+          Magic Studio <span style="font-size: 10px; background: #ec4899; color: #fff; padding: 2px 6px; border-radius: 4px; margin-left: auto;">AI</span>
+        </button>
+
 
         <button
           class="cms-nav-item {activeTab === 'promo' ? 'active' : ''}"
@@ -1610,6 +1629,10 @@
         {/if}
 
         <!-- TAB: THUMBNAILS -->
+        {#if activeTab === "magicstudio"}
+          <CmsMagicStudio />
+        {/if}
+
         {#if activeTab === "thumbnails"}
           <div class="cms-tab-content">
             <h1 class="cms-page-title-main">{getTabTitle(activeTab)}</h1>
