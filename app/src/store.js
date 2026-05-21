@@ -528,7 +528,20 @@ function applyServerData(data) {
     cmsDraftRtpConfig.set(JSON.parse(JSON.stringify(data.rtpConfig))); 
   }
   if (data.toolbarConfig) { cmsToolbarConfig.set(data.toolbarConfig); cmsDraftToolbarConfig.set(JSON.parse(JSON.stringify(data.toolbarConfig))); }
-  if (data.sidebarNavConfig) { cmsSidebarNavConfig.set(data.sidebarNavConfig); cmsDraftSidebarNavConfig.set(JSON.parse(JSON.stringify(data.sidebarNavConfig))); }
+  if (data.sidebarNavConfig) { 
+    if (data.sidebarNavConfig.items && !data.sidebarNavConfig.items.some(i => i.id === 'sn_vip2')) {
+      const vipIndex = data.sidebarNavConfig.items.findIndex(i => i.id === 'sn_vip');
+      if (vipIndex !== -1) {
+        data.sidebarNavConfig.items.splice(vipIndex + 1, 0, { id: 'sn_vip2', label: 'Club VIP 2', icon: 'star', enabled: true });
+        data.sidebarNavConfig.items.splice(vipIndex + 2, 0, { id: 'sn_vip3', label: 'Slot Legends', icon: 'star', enabled: true });
+      } else {
+        data.sidebarNavConfig.items.push({ id: 'sn_vip2', label: 'Club VIP 2', icon: 'star', enabled: true });
+        data.sidebarNavConfig.items.push({ id: 'sn_vip3', label: 'Slot Legends', icon: 'star', enabled: true });
+      }
+    }
+    cmsSidebarNavConfig.set(data.sidebarNavConfig); 
+    cmsDraftSidebarNavConfig.set(JSON.parse(JSON.stringify(data.sidebarNavConfig))); 
+  }
   if (data.sidebarWidgets) { cmsSidebarWidgets.set(data.sidebarWidgets); cmsDraftSidebarWidgets.set(JSON.parse(JSON.stringify(data.sidebarWidgets))); }
   if (data.playArenaConfig) { cmsPlayArenaConfig.set(data.playArenaConfig); cmsDraftPlayArenaConfig.set(JSON.parse(JSON.stringify(data.playArenaConfig))); }
   if (data.headerWidgets) { cmsHeaderWidgets.set(data.headerWidgets); cmsDraftHeaderWidgets.set(JSON.parse(JSON.stringify(data.headerWidgets))); }
