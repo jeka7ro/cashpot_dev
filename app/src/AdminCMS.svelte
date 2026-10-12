@@ -42,6 +42,8 @@
     cmsDraftHeaderWidgets,
     cmsHeaderConfig,
     cmsDraftHeaderConfig,
+    cmsFooterConfig,
+    cmsDraftFooterConfig,
     saveToServer,
   } from "./store.js";
 
@@ -58,6 +60,7 @@
       restore: "Backup & Restore",
       gamification: "Gamification (Misiuni & Turnee)",
       winners: "Top Câștigători",
+      footer: "Footer (Subsol Pagina)",
       topgames: "Top Jocuri",
       rtp: "Jocuri RTP",
       toolbar: "Toolbar Widget",
@@ -250,6 +253,15 @@
     }
   });
 
+  let footerConfig = {};
+  cmsDraftFooterConfig.subscribe((v) => {
+    if (v && Object.keys(v).length > 0) {
+      try { footerConfig = JSON.parse(JSON.stringify(v)); } catch(e) { footerConfig = v; }
+    } else {
+      footerConfig = {};
+    }
+  });
+
   let jackpotConfig = [];
 
   // Reactive sync for all stores to ensure Live Preview works perfectly
@@ -268,6 +280,7 @@
   $: if (playArenaConfig) cmsDraftPlayArenaConfig.set(playArenaConfig);
   $: if (vipConfig) cmsDraftVipConfig.set(vipConfig);
   $: if (headerConfig) cmsDraftHeaderConfig.set(headerConfig);
+  $: if (footerConfig && Object.keys(footerConfig).length > 0) cmsDraftFooterConfig.set(footerConfig);
 
   cmsDraftJackpot.subscribe((v) => {
     let config = JSON.parse(JSON.stringify(v));
@@ -689,6 +702,7 @@
       vipConfig: JSON.parse(JSON.stringify(vipConfig)),
       headerWidgets: JSON.parse(JSON.stringify(headerWidgetsConfig)),
       headerConfig: JSON.parse(JSON.stringify(headerConfig)),
+      footerConfig: JSON.parse(JSON.stringify(footerConfig)),
       auditLog: get(cmsAuditLog),
     };
 
@@ -727,6 +741,8 @@
       cmsSidebarNavConfig.set(payload.sidebarNavConfig);
       cmsPlayArenaConfig.set(payload.playArenaConfig);
       cmsVipConfig.set(payload.vipConfig);
+      cmsHeaderConfig.set(payload.headerConfig);
+      cmsFooterConfig.set(payload.footerConfig);
       saveSuccess = true;
       const activeCats = categories.filter((c) => c.showOnPage).length;
       const scheduledCats = categories.filter(
@@ -759,6 +775,7 @@
     cmsDraftVipConfig.set(JSON.parse(JSON.stringify(vipConfig)));
     cmsDraftHeaderWidgets.set(JSON.parse(JSON.stringify(headerWidgetsConfig)));
     cmsDraftHeaderConfig.set(JSON.parse(JSON.stringify(headerConfig)));
+    cmsDraftFooterConfig.set(JSON.parse(JSON.stringify(footerConfig)));
   }
 
   function startPreview() {
@@ -994,6 +1011,14 @@
         >
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 3h18v4H3V3zM3 10h18v11H3V10z"/></svg>
           Header & Logo
+        </button>
+
+        <button
+          class="cms-nav-item {activeTab === 'footer' ? 'active' : ''}"
+          on:click={() => (activeTab = "footer")}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 21h18v-4H3v4zM3 14h18V3H3v11z"/></svg>
+          Footer Config
         </button>
 
         <button
@@ -6117,6 +6142,126 @@
                 </div>
               </div>
             </div>
+          </div>
+        {/if}
+
+        {#if activeTab === "footer"}
+          <div class="cms-tab-content">
+            <h1 class="cms-page-title-main">{getTabTitle(activeTab)}</h1>
+            <p class="cms-page-desc">Configurare subsol pagina (link-uri, metode de plată, sponsori).</p>
+            
+            <div class="cms-actions-top">
+              <button class="cms-btn primary" on:click={applyDrafts}>💾 Salvează & Publică Footer-ul</button>
+            </div>
+
+            <div class="cms-card">
+              <h2 class="cms-card-title">Secțiuni Link-uri (Coloane)</h2>
+              <div class="cms-fields-grid" style="grid-template-columns: repeat(3, 1fr);">
+                
+                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px;">
+                  <span class="cms-label" style="display:block; margin-bottom:8px; font-weight:700;">DESPRE CASHPOT</span>
+                  {#if footerConfig.aboutLinks}
+                    {#each footerConfig.aboutLinks as link}
+                      <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <input type="text" class="cms-input" bind:value={link.label} placeholder="Text" style="flex: 1; padding: 4px;" />
+                        <input type="text" class="cms-input" bind:value={link.url} placeholder="URL" style="flex: 1; padding: 4px;" />
+                      </div>
+                    {/each}
+                  {/if}
+                </div>
+
+                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px;">
+                  <span class="cms-label" style="display:block; margin-bottom:8px; font-weight:700;">OFERTĂ</span>
+                  {#if footerConfig.offerLinks}
+                    {#each footerConfig.offerLinks as link}
+                      <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <input type="text" class="cms-input" bind:value={link.label} placeholder="Text" style="flex: 1; padding: 4px;" />
+                        <input type="text" class="cms-input" bind:value={link.url} placeholder="URL" style="flex: 1; padding: 4px;" />
+                      </div>
+                    {/each}
+                  {/if}
+                </div>
+
+                <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px;">
+                  <span class="cms-label" style="display:block; margin-bottom:8px; font-weight:700;">AJUTOR</span>
+                  {#if footerConfig.helpLinks}
+                    {#each footerConfig.helpLinks as link}
+                      <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <input type="text" class="cms-input" bind:value={link.label} placeholder="Text" style="flex: 1; padding: 4px;" />
+                        <input type="text" class="cms-input" bind:value={link.url} placeholder="URL" style="flex: 1; padding: 4px;" />
+                      </div>
+                    {/each}
+                  {/if}
+                </div>
+
+              </div>
+            </div>
+
+            <div class="cms-card">
+              <h2 class="cms-card-title">Metode de Plată & Aplicații</h2>
+              <p class="cms-text-sm" style="margin-bottom:12px;">Iconițe integrate SVG pentru fiecare metodă.</p>
+              
+              <h3 style="color:#fff; font-size:14px; margin-bottom:8px;">Aplicații</h3>
+              <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
+                {#if footerConfig.apps}
+                  {#each footerConfig.apps as app, i}
+                    <div style="background: rgba(255,255,255,0.02); padding: 8px; border-radius: 8px; display: flex; gap: 8px; align-items: center;">
+                      <span style="color:#a855f7; font-size:12px; font-weight:bold;">{app.iconType}</span>
+                      <input type="text" class="cms-input" bind:value={app.label} style="width: 100px; padding: 4px;" />
+                    </div>
+                  {/each}
+                {/if}
+              </div>
+
+              <h3 style="color:#fff; font-size:14px; margin-bottom:8px;">Metode de Plată</h3>
+              <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                {#if footerConfig.paymentMethods}
+                  {#each footerConfig.paymentMethods as pm, i}
+                    <div style="background: rgba(255,255,255,0.02); padding: 8px; border-radius: 8px; display: flex; gap: 8px; align-items: center;">
+                      <span style="color:#a855f7; font-size:12px; font-weight:bold;">{pm.iconType}</span>
+                      <input type="text" class="cms-input" bind:value={pm.label} style="width: 120px; padding: 4px;" />
+                    </div>
+                  {/each}
+                {/if}
+              </div>
+            </div>
+
+            <div class="cms-card">
+              <h2 class="cms-card-title">Joc Responsabil & Legal</h2>
+              <div class="cms-field">
+                <span class="cms-label" style="display:block; margin-bottom:8px; font-weight:700;">Text Joc Responsabil</span>
+                {#if footerConfig.responsibleGaming}
+                  <textarea class="cms-input" bind:value={footerConfig.responsibleGaming.text} style="width: 100%; height: 80px;"></textarea>
+                {/if}
+              </div>
+              
+              <div class="cms-field" style="margin-top: 16px;">
+                <span class="cms-label" style="display:block; margin-bottom:8px; font-weight:700;">Logo-uri Joc Responsabil (link-uri imagini)</span>
+                {#if footerConfig.responsibleGaming?.logos}
+                  {#each footerConfig.responsibleGaming.logos as logo, i}
+                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                      <input type="text" class="cms-input" bind:value={logo.url} placeholder="URL Imagine Logo" style="flex: 1;" />
+                      <button class="cms-btn" style="background: var(--danger-color); padding: 0 12px;" on:click={() => {
+                        footerConfig.responsibleGaming.logos.splice(i, 1);
+                        footerConfig.responsibleGaming.logos = footerConfig.responsibleGaming.logos;
+                      }}>Șterge</button>
+                    </div>
+                  {/each}
+                {/if}
+                <button class="cms-btn secondary" style="margin-top: 8px;" on:click={() => {
+                  if (!footerConfig.responsibleGaming) footerConfig.responsibleGaming = { logos: [] };
+                  if (!footerConfig.responsibleGaming.logos) footerConfig.responsibleGaming.logos = [];
+                  footerConfig.responsibleGaming.logos.push({ url: "" });
+                  footerConfig.responsibleGaming.logos = footerConfig.responsibleGaming.logos;
+                }}>+ Adaugă Logo Nou</button>
+              </div>
+              <div class="cms-field">
+                <span class="cms-label" style="display:block; margin-bottom:8px; font-weight:700;">Text Legal (Cui aparține site-ul, licența)</span>
+                <textarea class="cms-input" bind:value={footerConfig.legalText} style="width: 100%; height: 80px;"></textarea>
+              </div>
+            </div>
+            
+            <div style="height: 100px;"></div>
           </div>
         {/if}
 

@@ -139,6 +139,56 @@ function getCMSDefaults() {
         { id: 7, name: "RECHINUL SUPREM", rank: "Nivel 7 • Mascota ta oficială", img: "/shark_vip_v2.png", bgColor: "linear-gradient(135deg, #2e1065, #1e1b4b)" }
       ]
     },
+    footerConfig: {
+      aboutLinks: [
+        { label: "Despre noi", url: "/despre-noi" },
+        { label: "Joc Responsabil", url: "/joc-responsabil" },
+        { label: "Politica de confidențialitate", url: "/confidentialitate" },
+        { label: "Politica de cookie-uri", url: "/cookie-uri" },
+        { label: "Regulamente de joc", url: "/regulamente" },
+        { label: "Termene și condiții", url: "/termeni" },
+        { label: "Licență", url: "/licenta" },
+        { label: "Decizie autorizare", url: "/decizie" }
+      ],
+      offerLinks: [
+        { label: "Oferta zilnică", url: "/oferta-zilnica" },
+        { label: "Oferta săptămânală", url: "/oferta-saptamanala" },
+        { label: "Oferta Cronologică", url: "/oferta-cronologica" }
+      ],
+      helpLinks: [
+        { label: "Întrebări frecvente", url: "/faq" },
+        { label: "Live Chat", url: "/chat" }
+      ],
+      apps: [
+        { label: "Google Play", iconType: "google" },
+        { label: "App Store", iconType: "apple" },
+        { label: "AppGallery", iconType: "huawei" }
+      ],
+      paymentMethods: [
+        { label: "Cash", iconType: "cash" },
+        { label: "Transfer bancar", iconType: "bank" },
+        { label: "VISA", iconType: "visa" },
+        { label: "Mastercard", iconType: "mastercard" },
+        { label: "paysafecard", iconType: "paysafe" },
+        { label: "Revolut", iconType: "revolut" },
+        { label: "Apple Pay", iconType: "applepay" }
+      ],
+      sponsors: [
+        { image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/SuperLiga_Romania.svg/1200px-SuperLiga_Romania.svg.png" }
+      ],
+      responsibleGaming: {
+        text: "Accesul persoanelor sub 18 ani este strict interzis. Este responsabilitatea fiecărui jucător să acționeze în conformitate cu reglementările în vigoare precum și cu termeni și condițiile noastre. Jocurile de noroc implică risc financiar, jucați cu grijă.",
+        logos: [
+          { url: "https://registru.onjn.gov.ro/logo.png" }
+        ]
+      },
+      legalText: "Cashpot.ro este deținut și operat de către Crowd Entertainment Limited, o societate înmatriculată în Malta (cu sediul social în 2 Spinola Road, St. Julians STJ 3014). Platforma face parte din Winvia Entertainment Group și funcționează în România în baza licenței nr. L1213823W001269, emisă de Comitetul de Supraveghere din cadrul O.N.J.N., valabilă până la data de 28.02.2031.",
+      social: [
+        { iconType: "facebook", url: "https://facebook.com/cashpot.ro" },
+        { iconType: "instagram", url: "https://instagram.com/cashpot.ro" },
+        { iconType: "youtube", url: "https://youtube.com/cashpot.ro" }
+      ]
+    },
     updatedAt: null
   };
 }
@@ -409,6 +459,84 @@ setInterval(() => {
 // ─── Start ───────────────────────────────────────────────
 if (!fs.existsSync(DB_FILE)) saveDB(getCMSDefaults());
 if (!fs.existsSync(GAME_FILE)) saveGame(getGameDefaults());
+
+// ─── AI Element Generator ─────────────────────────────────
+// POST /api/generate-element
+// Body: { prompt: "golden clover 3D", gameTheme: "hot casino" }
+// Returns: { ok: true, imageUrl: "/ai_generations/gen_<id>.png" }
+app.post('/api/generate-element', async (req, res) => {
+  const { prompt = 'golden glowing casino symbol', gameTheme = '' } = req.body;
+  
+  // Build a strong image generation prompt
+  const fullPrompt = `Highly detailed cinematic 3D render of ${prompt}, casino style, dramatic lighting, volumetric glow, floating isolated object, pure solid black background #000000, centered perfectly, no background, no other objects, masterpiece quality`;
+  
+  try {
+    // Try Stability AI first (free tier available)
+    const STABILITY_KEY = process.env.STABILITY_API_KEY;
+    
+    if (STABILITY_KEY) {
+      const response = await fetch('https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${STABILITY_KEY}`,
+        },
+        body: JSON.stringify({
+          text_prompts: [
+            { text: fullPrompt, weight: 1 },
+            { text: 'blurry, ugly, deformed, low quality, watermark, text, background, border', weight: -1 }
+          ],
+          cfg_scale: 8,
+          height: 1024,
+          width: 1024,
+          steps: 30,
+          samples: 1,
+        }),
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        const b64 = data.artifacts[0].base64;
+        const buffer = Buffer.from(b64, 'base64');
+        
+        // Save to public folder
+        const genDir = path.join(__dirname, '../app/public/ai_generations');
+        if (!fs.existsSync(genDir)) fs.mkdirSync(genDir, { recursive: true });
+        
+        const filename = `gen_${Date.now()}.png`;
+        fs.writeFileSync(path.join(genDir, filename), buffer);
+        
+        return res.json({ ok: true, imageUrl: `/ai_generations/${filename}` });
+      }
+    }
+    
+    // Fallback: use pre-generated library based on keyword matching
+    const library = {
+      'clover|trifoi|luck|shamrock': '/ai_generations/clover_element.png',
+      'crown|coroana|regal|royal|king': '/ai_generations/crown_element.png',
+      'scarab|egypt|ra|horus|ankh': '/ai_generations/scarab_element.png',
+      '7|seven|saptar|lucky number': '/ai_generations/seven_element.png',
+      'fire|flame|foc|burning|hot': '/ai_generations/flame_element.png',
+      'star|stea|zodiac|magic': '/ai_generations/star_element.png',
+      'gator|crocodil|aligator': '/ai_generations/gator_element.png',
+    };
+    
+    const p = (prompt + ' ' + gameTheme).toLowerCase();
+    for (const [keys, asset] of Object.entries(library)) {
+      if (keys.split('|').some(k => p.includes(k))) {
+        return res.json({ ok: true, imageUrl: asset, fallback: true });
+      }
+    }
+    
+    // Default
+    return res.json({ ok: true, imageUrl: '/ai_generations/clover_element.png', fallback: true });
+    
+  } catch (e) {
+    console.error('Generate element error:', e.message);
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
 
 // ─── Winners API ───────────────────────────────────────────
 const apiWinners = [

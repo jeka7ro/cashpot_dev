@@ -164,12 +164,14 @@
     cmsDraftHeaderConfig,
     loadFromServer,
     defaultSidebarWidgets,
+    cmsFooterConfig
   } from "./store.js";
   import AdminCMS from "./AdminCMS.svelte";
   import Gamification from "./Gamification.svelte";
   import Fever2Widget from "./Fever2Widget.svelte";
   import ToolbarWidget from "./ToolbarWidget.svelte";
   import PlayArena from "./PlayArena.svelte";
+  import Footer from "./Footer.svelte";
   import PaymentCardStack from "./PaymentCardStack.svelte";
   import DepositModal from "./DepositModal.svelte";
 
@@ -5190,6 +5192,8 @@
           </div><!-- /jackpotFever -->
           </div><!-- /page-content-order-container -->
         {/if}
+
+        <Footer config={$cmsFooterConfig} />
       </main>
 
       {#if showDepositModal}

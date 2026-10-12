@@ -368,6 +368,60 @@ const defaultVipConfig = {
     ]
 };
 
+export const defaultFooterConfig = {
+  aboutLinks: [
+    { label: "Despre noi", url: "/despre-noi" },
+    { label: "Agenții", url: "/agentii" },
+    { label: "Ajutor", url: "/ajutor" },
+    { label: "Protecția datelor", url: "/protectia-datelor" },
+    { label: "Politica de utilizare a cookie-urilor", url: "/cookie" },
+    { label: "Joc responsabil", url: "/joc-responsabil" },
+    { label: "Politica împotriva spălării banilor", url: "/aml" },
+    { label: "Regulamente de joc", url: "/regulamente" },
+    { label: "Termene și condiții", url: "/termeni" },
+    { label: "Licență", url: "/licenta" },
+    { label: "Decizie autorizare", url: "/decizie" }
+  ],
+  offerLinks: [
+    { label: "Oferta zilnică", url: "/oferta-zilnica" },
+    { label: "Oferta săptămânală", url: "/oferta-saptamanala" },
+    { label: "Oferta Cronologică", url: "/oferta-cronologica" }
+  ],
+  helpLinks: [
+    { label: "Întrebări frecvente", url: "/faq" },
+    { label: "Live Chat", url: "/chat" }
+  ],
+  apps: [
+    { label: "Google Play", iconType: "google" },
+    { label: "App Store", iconType: "apple" },
+    { label: "AppGallery", iconType: "huawei" }
+  ],
+  paymentMethods: [
+    { label: "Cash", iconType: "cash" },
+    { label: "Transfer bancar", iconType: "bank" },
+    { label: "VISA", iconType: "visa" },
+    { label: "Mastercard", iconType: "mastercard" },
+    { label: "paysafecard", iconType: "paysafe" },
+    { label: "Revolut", iconType: "revolut" },
+    { label: "Apple Pay", iconType: "applepay" }
+  ],
+  sponsors: [
+    { image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/SuperLiga_Romania.svg/1200px-SuperLiga_Romania.svg.png" }
+  ],
+  responsibleGaming: {
+    text: "Accesul persoanelor sub 18 ani este strict interzis. Este responsabilitatea fiecărui jucător să acționeze în conformitate cu reglementările în vigoare precum și cu termeni și condițiile noastre. Jocurile de noroc implică risc financiar, jucați cu grijă.",
+    logos: [
+      { url: "https://registru.onjn.gov.ro/logo.png" }
+    ]
+  },
+  legalText: "Cashpot.ro este deținut și operat de către Crowd Entertainment Limited, o societate înmatriculată în Malta (cu sediul social în 2 Spinola Road, St. Julians STJ 3014). Platforma face parte din Winvia Entertainment Group și funcționează în România în baza licenței nr. L1213823W001269, emisă de Comitetul de Supraveghere din cadrul O.N.J.N., valabilă până la data de 28.02.2031.",
+  social: [
+    { iconType: "facebook", url: "https://facebook.com/cashpot.ro" },
+    { iconType: "instagram", url: "https://instagram.com/cashpot.ro" },
+    { iconType: "youtube", url: "https://youtube.com/cashpot.ro" }
+  ]
+};
+
 // Helper to synchronously initialize state from localStorage to prevent layout flicker
 function getInitial(key, def) {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
@@ -384,6 +438,12 @@ function getInitial(key, def) {
                  ...lvl, 
                  benefits: (!lvl.benefits || lvl.benefits.length === 0) ? (def.levels[i] ? def.levels[i].benefits : []) : lvl.benefits
              }));
+           }
+           if (key === 'cashpot_cms_footer_config' && parsed.responsibleGaming) {
+             // Force cleanup of broken logos (rombet, old onjn, etc)
+             parsed.responsibleGaming.logos = [
+               { url: "https://registru.onjn.gov.ro/logo.png" }
+             ];
            }
            if (key === 'cashpot_cms_play_arena') {
              const iconMap = {
@@ -446,6 +506,8 @@ export const cmsPlayArenaConfig = writable(getInitial('cashpot_cms_play_arena', 
 export const cmsVipConfig = writable(getInitial('cashpot_cms_vip_v10', defaultVipConfig));
 export const cmsHeaderConfig = writable(getInitial('cashpot_cms_header_config', defaultHeaderConfig));
 export const cmsDraftHeaderConfig = writable(JSON.parse(JSON.stringify(defaultHeaderConfig)));
+export const cmsFooterConfig = writable(getInitial('cashpot_cms_footer_config', defaultFooterConfig));
+export const cmsDraftFooterConfig = writable(JSON.parse(JSON.stringify(defaultFooterConfig)));
 
 // Draft stores (for in-progress edits in admin)
 export const cmsDraftCategories = writable(JSON.parse(JSON.stringify(defaultCategories)));
@@ -562,6 +624,10 @@ function applyServerData(data) {
     cmsVipConfig.set(mergedVip); 
     cmsDraftVipConfig.set(JSON.parse(JSON.stringify(mergedVip))); 
   }
+  if (data.footerConfig) {
+    cmsFooterConfig.set(data.footerConfig);
+    cmsDraftFooterConfig.set(JSON.parse(JSON.stringify(data.footerConfig)));
+  }
   if (data.auditLog?.length) { cmsAuditLog.set(data.auditLog); }
 }
 
@@ -653,6 +719,8 @@ function _loadFromLocalStorage() {
     }
     const tg = localStorage.getItem('cashpot_cms_top_games');
     if (tg) { const v = JSON.parse(tg); cmsTopGamesConfig.set(v); cmsDraftTopGamesConfig.set(JSON.parse(tg)); }
+    const fc = localStorage.getItem('cashpot_cms_footer_config');
+    if (fc) { const v = JSON.parse(fc); cmsFooterConfig.set(v); cmsDraftFooterConfig.set(JSON.parse(JSON.stringify(v))); }
     const al = localStorage.getItem('cashpot_cms_audit');
     if (al) cmsAuditLog.set(JSON.parse(al));
   } catch (e) { console.error('localStorage fallback error:', e); }
@@ -704,6 +772,7 @@ function _saveToLocalStorage(payload) {
     if (payload.vipConfig) localStorage.setItem('cashpot_cms_vip_v9', JSON.stringify(payload.vipConfig));
     if (payload.sidebarWidgets) localStorage.setItem('cashpot_cms_sidebar_widgets', JSON.stringify(payload.sidebarWidgets));
     if (payload.topGamesConfig) localStorage.setItem('cashpot_cms_top_games', JSON.stringify(payload.topGamesConfig));
+    if (payload.footerConfig) localStorage.setItem('cashpot_cms_footer_config', JSON.stringify(payload.footerConfig));
     if (payload.auditLog) localStorage.setItem('cashpot_cms_audit', JSON.stringify(payload.auditLog.slice(0, 200)));
   } catch (e) { }
 }
