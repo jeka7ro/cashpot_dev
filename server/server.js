@@ -189,6 +189,20 @@ function getCMSDefaults() {
         { iconType: "youtube", url: "https://youtube.com/cashpot.ro" }
       ]
     },
+    seasonalConfig: {
+      halloween: {
+        enabled: true,
+        showFloatingParticles: true,
+        showFestiveLogo: true,
+        showHeroBanner: true,
+        showCategory: true,
+        accentGlow: true,
+        bannerTitle: "HALLOWEEN JACKPOT HUNT 🎃",
+        bannerSubtitle: "Până la 50.000 LEI + 666 Rotiri Bântuite!",
+        bannerButtonText: "RECLAMĂ ROTIRILE",
+        bannerImage: "/halloween_banner.jpg"
+      }
+    },
     updatedAt: null
   };
 }

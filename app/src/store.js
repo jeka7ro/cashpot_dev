@@ -34,7 +34,11 @@ export const GAMES = [
   { n: 'Versailles Gold', p: 'Amusnet', c: ['aur', 'clasic', 'jackpot'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/00000028-dc86-47af-8013-000000000078.png' },
   { n: '40 Burning Hot', p: 'Amusnet', c: ['fructe', 'septari', 'jackpot'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/482cf273-c979-4e45-8f01-4ada3e6e2cb5.png' },
   { n: 'Starlight Princess', p: 'Pragmatic Play', c: ['printese', 'speciala', 'cumpara speciala'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/b08555a4-cfe6-4037-a83f-da2f2be54b6f.png' },
-  { n: 'Big Bass Splash', p: 'Pragmatic Play', c: ['pesti', 'speciala', 'cumpara speciala'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/8c446b83-c622-4ae9-8e4e-bc4c5b32ec67.png' }
+  { n: 'Big Bass Splash', p: 'Pragmatic Play', c: ['pesti', 'speciala', 'cumpara speciala'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/8c446b83-c622-4ae9-8e4e-bc4c5b32ec67.png' },
+  { n: 'Halloween Fortune', p: 'Playtech', c: ['halloween', 'speciala', 'vrajitoare'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/00000021-dc86-47af-8013-c46b4c000051.png' },
+  { n: 'Blood Suckers', p: 'NetEnt', c: ['vampiri', 'halloween', 'horror'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/00000021-dc86-47af-8013-c46b4c000051.png' },
+  { n: 'Curse of the Werewolf', p: 'Pragmatic Play', c: ['halloween', 'megaways', 'speciala'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/00000011-0666-47af-8013-000000000002.png' },
+  { n: 'Mental', p: 'Nolimit City', c: ['horror', 'halloween', 'speciala'], img: 'https://cdn.cashpot.ro/cashpot/t1/thumbnail_games/d18bc6f2-fc01-4e23-a275-37c417a66df3.png' }
 ];
 
 // ─── Default Values ───────────────────────────────────────────────
@@ -153,6 +157,21 @@ export const defaultTopGamesConfig = {
     { name: "Zodiac Wheel", provider: "Amusnet" },
     { name: "Extra Crown Classic", provider: "Amusnet" }
   ]
+};
+
+export const defaultSeasonalConfig = {
+  halloween: {
+    enabled: true,
+    showFloatingParticles: true,
+    showFestiveLogo: true,
+    showHeroBanner: true,
+    showCategory: true,
+    accentGlow: true,
+    bannerTitle: "HALLOWEEN JACKPOT HUNT 🎃",
+    bannerSubtitle: "Până la 50.000 LEI + 666 Rotiri Bântuite!",
+    bannerButtonText: "RECLAMĂ ROTIRILE",
+    bannerImage: "/halloween_banner.jpg"
+  }
 };
 
 export const defaultThemeColors = {
@@ -478,7 +497,7 @@ function getInitial(key, def) {
            }
            return parsed;
         }
-        return parsed;
+        return JSON.parse(JSON.stringify(def));
       }
     } catch (e) {}
   }
@@ -508,6 +527,8 @@ export const cmsHeaderConfig = writable(getInitial('cashpot_cms_header_config', 
 export const cmsDraftHeaderConfig = writable(JSON.parse(JSON.stringify(defaultHeaderConfig)));
 export const cmsFooterConfig = writable(getInitial('cashpot_cms_footer_config', defaultFooterConfig));
 export const cmsDraftFooterConfig = writable(JSON.parse(JSON.stringify(defaultFooterConfig)));
+export const cmsSeasonalConfig = writable(getInitial('cashpot_cms_seasonal', defaultSeasonalConfig));
+export const cmsDraftSeasonalConfig = writable(getInitial('cashpot_cms_seasonal', defaultSeasonalConfig));
 
 // Draft stores (for in-progress edits in admin)
 export const cmsDraftCategories = writable(JSON.parse(JSON.stringify(defaultCategories)));
@@ -628,6 +649,11 @@ function applyServerData(data) {
     cmsFooterConfig.set(data.footerConfig);
     cmsDraftFooterConfig.set(JSON.parse(JSON.stringify(data.footerConfig)));
   }
+  if (data.seasonalConfig) {
+    const merged = { ...defaultSeasonalConfig, ...data.seasonalConfig, halloween: { ...defaultSeasonalConfig.halloween, ...(data.seasonalConfig.halloween || {}) } };
+    cmsSeasonalConfig.set(merged);
+    cmsDraftSeasonalConfig.set(JSON.parse(JSON.stringify(merged)));
+  }
   if (data.auditLog?.length) { cmsAuditLog.set(data.auditLog); }
 }
 
@@ -678,6 +704,23 @@ function _loadFromLocalStorage() {
       const merged = { ...defaultGameEffects, ...JSON.parse(ge) };
       cmsGameEffects.set(merged);
       cmsDraftGameEffects.set(JSON.parse(JSON.stringify(merged)));
+    }
+    const sc = localStorage.getItem('cashpot_cms_seasonal');
+    if (sc) {
+      try {
+        const v = JSON.parse(sc);
+        if (v && typeof v === 'object' && !Array.isArray(v)) {
+          const merged = { ...defaultSeasonalConfig, ...v, halloween: { ...defaultSeasonalConfig.halloween, ...(v.halloween || {}) } };
+          cmsSeasonalConfig.set(merged);
+          cmsDraftSeasonalConfig.set(JSON.parse(JSON.stringify(merged)));
+        } else {
+          cmsSeasonalConfig.set(JSON.parse(JSON.stringify(defaultSeasonalConfig)));
+          cmsDraftSeasonalConfig.set(JSON.parse(JSON.stringify(defaultSeasonalConfig)));
+        }
+      } catch (e) {
+        cmsSeasonalConfig.set(JSON.parse(JSON.stringify(defaultSeasonalConfig)));
+        cmsDraftSeasonalConfig.set(JSON.parse(JSON.stringify(defaultSeasonalConfig)));
+      }
     }
     const win = localStorage.getItem('cashpot_cms_winners_config');
     if (win) { const v = JSON.parse(win); cmsWinnersConfig.set(v); cmsDraftWinnersConfig.set(JSON.parse(win)); }
@@ -773,6 +816,7 @@ function _saveToLocalStorage(payload) {
     if (payload.sidebarWidgets) localStorage.setItem('cashpot_cms_sidebar_widgets', JSON.stringify(payload.sidebarWidgets));
     if (payload.topGamesConfig) localStorage.setItem('cashpot_cms_top_games', JSON.stringify(payload.topGamesConfig));
     if (payload.footerConfig) localStorage.setItem('cashpot_cms_footer_config', JSON.stringify(payload.footerConfig));
+    if (payload.seasonalConfig) localStorage.setItem('cashpot_cms_seasonal', JSON.stringify(payload.seasonalConfig));
     if (payload.auditLog) localStorage.setItem('cashpot_cms_audit', JSON.stringify(payload.auditLog.slice(0, 200)));
   } catch (e) { }
 }

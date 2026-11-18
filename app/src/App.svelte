@@ -3,6 +3,8 @@
   import "./app.css";
   import ClubVip2 from "./ClubVip2.svelte";
   import ClubVip3 from "./ClubVip3.svelte";
+  import FigmaProposal from "./FigmaProposal.svelte";
+  import CashpotTestOriginal from "./CashpotTestOriginal.svelte";
 
   // ─── Lucky Wheel State ───
   let wheelRotation = 0;
@@ -55,6 +57,8 @@
   let activeView = "home";
   let activeWalletCard = 0;
   let isAdminRoute = false;
+  let isFigmaRoute = false;
+  let isCashpotTestRoute = false;
 
   if (typeof window !== "undefined") {
     const checkAdmin = () => {
@@ -62,9 +66,17 @@
       const path = window.location.pathname;
       isAdminRoute =
         hash === "#admin" || path.startsWith("/admin");
+      isFigmaRoute =
+        hash === "#figma" || hash.startsWith("#figma/") || path.startsWith("/figma");
+      isCashpotTestRoute =
+        hash === "#cashpot-test" ||
+        hash.startsWith("#cashpot-test/") ||
+        hash === "#figma-original" ||
+        hash.startsWith("#figma-original/") ||
+        path.startsWith("/cashpot-test");
       
       // Restore client activeView from hash if it's a valid SPA route, otherwise from localStorage
-      if (!isAdminRoute) {
+      if (!isAdminRoute && !isFigmaRoute && !isCashpotTestRoute) {
         if (hash && hash !== "#admin") {
           const view = hash.substring(1);
           if (["vip", "vip2", "vip3", "playarena", "home", "slots", "live", "sport", "promo", "loto", "rtp", "support"].includes(view)) {
@@ -91,9 +103,22 @@
   }
 
   // Synchronize activeView and searchQuery changes to window location hash & localStorage for deep-linking & page-refresh persistence
-  $: if (typeof window !== "undefined" && activeView && !isAdminRoute) {
+  $: if (
+    typeof window !== "undefined" &&
+    activeView &&
+    !isAdminRoute &&
+    !isFigmaRoute &&
+    !isCashpotTestRoute &&
+    !window.location.hash.startsWith("#figma") &&
+    !window.location.hash.startsWith("#cashpot-test")
+  ) {
     if (activeView === "home") {
-      if (window.location.hash && window.location.hash !== "#admin") {
+      if (
+        window.location.hash &&
+        window.location.hash !== "#admin" &&
+        !window.location.hash.startsWith("#figma") &&
+        !window.location.hash.startsWith("#cashpot-test")
+      ) {
         history.replaceState(null, "", window.location.pathname + window.location.search);
       }
     } else if (!activeView.startsWith("preview_")) {
@@ -164,7 +189,9 @@
     cmsDraftHeaderConfig,
     loadFromServer,
     defaultSidebarWidgets,
-    cmsFooterConfig
+    cmsFooterConfig,
+    cmsSeasonalConfig,
+    cmsDraftSeasonalConfig
   } from "./store.js";
   import AdminCMS from "./AdminCMS.svelte";
   import Gamification from "./Gamification.svelte";
@@ -174,6 +201,44 @@
   import Footer from "./Footer.svelte";
   import PaymentCardStack from "./PaymentCardStack.svelte";
   import DepositModal from "./DepositModal.svelte";
+
+  let isSearchExpanded = false;
+  let searchInputRef;
+  let isMacPlatform = typeof navigator !== "undefined" ? /Mac|iPod|iPhone|iPad/.test(navigator.platform || navigator.userAgent || "") : true;
+
+  function expandSearch() {
+    isSearchExpanded = true;
+    setTimeout(() => {
+      searchInputRef?.focus();
+    }, 40);
+  }
+
+  function collapseSearch() {
+    if (!searchQuery.trim()) {
+      isSearchExpanded = false;
+    }
+  }
+
+  function clearAndCollapseSearch() {
+    searchQuery = "";
+    isSearchExpanded = false;
+    searchInputRef?.blur();
+  }
+
+  function handleGlobalKeydown(e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      if (!isSearchExpanded) {
+        expandSearch();
+      } else {
+        searchInputRef?.focus();
+        searchInputRef?.select();
+      }
+    } else if (e.key === "Escape" && isSearchExpanded) {
+      e.preventDefault();
+      clearAndCollapseSearch();
+    }
+  }
 
   $: isDarkTheme = $siteTheme === "dark";
   let isNoCookie = false;
@@ -221,6 +286,9 @@
       searchQuery = "";
       activeView = "home";
     }, 10);
+    mobileBarsHidden = false;
+    lastMobileScrollTop = 0;
+    mobileScrollDeltaAcc = 0;
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -232,6 +300,9 @@
       }
       return;
     }
+    mobileBarsHidden = false;
+    lastMobileScrollTop = 0;
+    mobileScrollDeltaAcc = 0;
     activeView = view;
     searchQuery = query;
 
@@ -269,20 +340,8 @@
     ? $cmsDraftJackpotFever2
     : $cmsJackpotFever2;
   $: bannersSource = $isPreviewMode ? $cmsDraftBanners : $cmsBanners;
-  $: bannersConfig = (() => {
-    if (!bannersSource) return bannersSource;
-    let clean = JSON.parse(JSON.stringify(bannersSource));
-    if (clean.items) {
-      clean.items = clean.items.map((item) => ({
-        ...item,
-        title: item.title?.trim() ? item.title : "",
-        subtitle: item.subtitle?.trim() ? item.subtitle : "",
-        tag: item.tag?.trim() ? item.tag : "",
-        buttonText: item.buttonText?.trim() ? item.buttonText : ""
-      }));
-    }
-    return clean;
-  })();
+  $: seasonalSource = $isPreviewMode ? $cmsDraftSeasonalConfig : $cmsSeasonalConfig;
+  $: isHalloweenActive = (seasonalSource && typeof seasonalSource === 'object' && seasonalSource.halloween?.enabled !== false);
   $: promoSource = $isPreviewMode ? $cmsDraftPromoBanner : $cmsPromoBanner;
   $: gameEffectsSource = $isPreviewMode
     ? $cmsDraftGameEffects
@@ -421,7 +480,43 @@
 
   $: jackpotConfig = jackpotSource;
   $: jackpotFeverConfig = jackpotFeverSource;
-  $: bannersConfig = bannersSource;
+  $: bannersConfig = (() => {
+    let base = bannersSource;
+    if (!base || !base.items) return base;
+    let clean = JSON.parse(JSON.stringify(base));
+    if (clean.items) {
+      clean.items = clean.items.map((item) => ({
+        ...item,
+        title: item.title?.trim() ? item.title : "",
+        subtitle: item.subtitle?.trim() ? item.subtitle : "",
+        tag: item.tag?.trim() ? item.tag : "",
+        buttonText: item.buttonText?.trim() ? item.buttonText : ""
+      }));
+    }
+    if (isHalloweenActive && seasonalSource?.halloween?.showHeroBanner) {
+      const hCfg = seasonalSource.halloween;
+      const hBannerBig = {
+        id: 'halloween_hero_big',
+        position: 'big',
+        image: hCfg.bannerImage || '/halloween_banner.jpg',
+        tag: '🎃 EVENIMENT DE GROAZĂ',
+        title: hCfg.bannerTitle || 'HALLOWEEN JACKPOT HUNT 🎃',
+        subtitle: hCfg.bannerSubtitle || 'Până la 50.000 LEI + 666 Rotiri Bântuite!',
+        buttonText: hCfg.bannerButtonText || 'RECLAMĂ ROTIRILE',
+        showButton: true,
+        textColor: '#ffffff',
+        buttonColor: '#ff7700',
+        buttonTextColor: '#ffffff',
+        buttonBorderColor: '#9333ea',
+        buttonBorderWidth: 2,
+        isHalloween: true
+      };
+      const hBannerGen = { ...hBannerBig, id: 'halloween_hero_gen', position: 'general' };
+      const itemsWithoutH = clean.items.filter(i => !i.id?.startsWith('halloween_hero_'));
+      clean.items = [hBannerBig, hBannerGen, ...itemsWithoutH];
+    }
+    return clean;
+  })();
   $: promoConfig = promoSource;
   
   $: if (bannersConfig?.autoSlide) {
@@ -449,7 +544,26 @@
     return ef;
   }
 
-  $: allCategories = categoriesSource;
+  $: allCategories = (() => {
+    let cats = categoriesSource || [];
+    if (isHalloweenActive && seasonalSource?.halloween?.showCategory) {
+      const halloweenCategory = {
+        id: 'cat_halloween_spooky',
+        name: '🎃 Halloween Spooky',
+        icon: '🎃',
+        enabled: true,
+        showInSidebar: true,
+        showOnPage: true,
+        showWhenLoggedOut: true,
+        order: 1.5,
+        games: ["Vampire Night", "Halloween Fortune", "Blood Suckers", "Curse of the Werewolf", "Legacy of Dead", "Mental"],
+        thumbnailSize: "M",
+        isHalloween: true
+      };
+      return [halloweenCategory, ...cats.filter(c => c.id !== 'cat_halloween_spooky')];
+    }
+    return cats.filter(c => c.id !== 'cat_halloween_spooky');
+  })();
 
   let now = new Date();
 
@@ -881,6 +995,10 @@
 
   let contentArea;
   let scrollY = 0;
+  let mobileBarsHidden = false;
+  let lastMobileScrollTop = 0;
+  let mobileScrollDeltaAcc = 0;
+
   $: isHeaderSnapped =
     scrollY > 30 &&
     toolbarSource.enabled &&
@@ -888,28 +1006,84 @@
     toolbarSource.position !== "header" &&
     !!toolbarSource.snapToHeaderOnScroll;
 
+  function updateMobileBarsOnScroll(rawScrollTop, scrollHeight, clientHeight) {
+    const maxScroll = Math.max(0, (scrollHeight || 0) - (clientHeight || 0));
+    const clampedY = Math.max(0, maxScroll > 0 ? Math.min(rawScrollTop, maxScroll) : rawScrollTop);
+
+    if (clampedY <= 24 || isMobileMenuOpen || showMobileWallet || showUserPanel || isSearchExpanded) {
+      mobileBarsHidden = false;
+      lastMobileScrollTop = clampedY;
+      mobileScrollDeltaAcc = 0;
+      return;
+    }
+
+    const delta = clampedY - lastMobileScrollTop;
+    lastMobileScrollTop = clampedY;
+    if (Math.abs(delta) < 0.5) return;
+
+    if ((delta > 0 && mobileScrollDeltaAcc < 0) || (delta < 0 && mobileScrollDeltaAcc > 0)) {
+      mobileScrollDeltaAcc = 0;
+    }
+    mobileScrollDeltaAcc += delta;
+
+    if (mobileScrollDeltaAcc > 10 && clampedY > 52) {
+      mobileBarsHidden = true;
+      mobileScrollDeltaAcc = 0;
+    } else if (mobileScrollDeltaAcc < -6) {
+      mobileBarsHidden = false;
+      mobileScrollDeltaAcc = 0;
+    }
+  }
+
   function handleContentScroll(e) {
-    scrollY = e.currentTarget.scrollTop;
+    const el = e.currentTarget;
+    scrollY = el.scrollTop;
+    updateMobileBarsOnScroll(el.scrollTop, el.scrollHeight, el.clientHeight);
+  }
+
+  function handleWindowScroll() {
+    if (typeof window === "undefined") return;
+    const doc = document.documentElement;
+    if (doc && doc.scrollHeight > window.innerHeight + 4) {
+      updateMobileBarsOnScroll(window.scrollY, doc.scrollHeight, window.innerHeight);
+    }
+  }
+
+  $: if (isMobileMenuOpen || showMobileWallet || showUserPanel || isSearchExpanded) {
+    mobileBarsHidden = false;
   }
 </script>
 
 <svelte:head>
   <style>:root{--widget-border:{cssWidgetBorder};--widget-border-color:{cssWidgetBorderColor};--cat-active-color:{cssCatActiveColor};--cat-inactive-color:{cssCatInactiveColor};}</style>
 </svelte:head>
-<svelte:window />
-
-
+<svelte:window on:keydown={handleGlobalKeydown} on:scroll={handleWindowScroll} />
 
 <div
   class="layout"
   class:force-mobile={$isForcedMobile}
+  class:halloween-active={!isFigmaRoute && !isCashpotTestRoute && isHalloweenActive && seasonalSource?.halloween?.accentGlow}
   style="flex-direction: column; {isDarkTheme && themeColorsSource
     ? `--bg-dark: ${themeColorsSource.bgDark}; --bg-panel: ${themeColorsSource.bgPanel}; --bg-hover: ${themeColorsSource.bgHover};`
     : ''}"
 >
-  {#if !isAdminRoute && !activeView.startsWith("preview_")}
+  {#if !isFigmaRoute && !isCashpotTestRoute && isHalloweenActive && seasonalSource?.halloween?.showFloatingParticles}
+    <div class="halloween-ambient-layer" aria-hidden="true">
+      <div class="spooky-bat bat-1">🦇</div>
+      <div class="spooky-bat bat-2">🦇</div>
+      <div class="spooky-bat bat-3">🦇</div>
+      <div class="spooky-spark spark-1">🎃</div>
+      <div class="spooky-spark spark-2">✨</div>
+      <div class="spooky-spark spark-3">🎃</div>
+      <div class="spooky-spark spark-4">✨</div>
+      <div class="spooky-mist-bottom"></div>
+    </div>
+  {/if}
+
+  {#if !isAdminRoute && !isFigmaRoute && !isCashpotTestRoute && !activeView.startsWith("preview_")}
     <header
       class="topbar"
+      class:mobile-bars-hidden={mobileBarsHidden}
       style="background: {isDarkTheme ? (headerConfigSource.bgColor || '#130f1c') : 'var(--bg-panel)'}; border-bottom: 1px solid {headerConfigSource.borderColor ||
         'rgba(255, 255, 255, 0.08)'}; position: {headerConfigSource.sticky
         ? 'sticky'
@@ -917,7 +1091,7 @@
     >
       <div class="topbar-left">
         <!-- svelte-ignore a11y-invalid-attribute -->
-        <a href="/" class="logo" style="display: flex; align-items: center;" on:click|preventDefault={() => setView('home')}>
+        <a href="/" class="logo" style="display: flex; align-items: center; position: relative;" on:click|preventDefault={() => setView('home')}>
           <img
             src={headerConfigSource.logoUrl ||
               themeColorsSource?.logoUrl ||
@@ -952,33 +1126,88 @@
         {/if}
       </div>
 
-      <!-- Search bar — anchored at left edge of content area -->
-      <div class="topbar-search-wrapper">
-        <div class="topbar-search">
-          <svg viewBox="0 0 24 24"
-            ><path
-              d="M10 2a8 8 0 1 0 5.29 14.71l5 5a1 1 0 0 0 1.42-1.42l-5-5A8 8 0 0 0 10 2zm0 2a6 6 0 1 1 0 12A6 6 0 0 1 10 4z"
-            /></svg
-          >
+      <!-- Inline Expandable Search Bar (Compact by default, expands inline on click or Cmd+K) -->
+      <div
+        class="topbar-search-wrapper {isSearchExpanded || searchQuery.trim() ? 'expanded' : 'compact'}"
+      >
+        <div
+          class="topbar-search-bar"
+          on:click={() => { if (!isSearchExpanded) expandSearch(); }}
+        >
+          <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+
           <input
-            id="mobileSearchInput"
+            id="topbarSearchInput"
+            bind:this={searchInputRef}
             type="text"
             bind:value={searchQuery}
-            placeholder="Caută joc..."
-            style="width: 100%; padding-right: {searchQuery ? '65px' : '0px'};"
+            placeholder={isSearchExpanded ? "Caută sloturi, provideri..." : "Caută..."}
+            on:focus={expandSearch}
+            on:blur={() => {
+              setTimeout(() => {
+                if (!searchQuery.trim()) isSearchExpanded = false;
+              }, 250);
+            }}
+            on:keydown={(e) => {
+              if (e.key === "Escape") {
+                e.preventDefault();
+                clearAndCollapseSearch();
+              }
+            }}
           />
-          {#if searchQuery.length > 0}
-            <div class="search-bubble">{filteredGames.length}</div>
-          {/if}
-          <button
-            class="search-close-btn {searchQuery.length > 0 ? 'visible' : ''}"
-            on:click={() => { searchQuery = ""; document.getElementById("mobileSearchInput")?.blur(); }}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg
-            >
-          </button>
+
+          <div class="search-bar-tail">
+            {#if searchQuery}
+              <span class="search-count-pill">{filteredGames.length}</span>
+              <button
+                type="button"
+                class="btn-clear-inline"
+                on:click|stopPropagation={clearAndCollapseSearch}
+                title="Șterge căutarea"
+              >
+                ✕
+              </button>
+            {:else if !isSearchExpanded}
+              <kbd class="search-kbd" on:click|stopPropagation={expandSearch} title="Apasă {isMacPlatform ? '⌘K' : 'Ctrl+K'}">{isMacPlatform ? '⌘K' : 'Ctrl+K'}</kbd>
+            {/if}
+          </div>
         </div>
+
+        <!-- Inline Floating Dropdown right under the search bar -->
+        {#if (isSearchExpanded || searchQuery.trim()) && searchQuery.trim() !== ""}
+          <div class="search-dropdown-menu">
+            <div class="dropdown-header">
+              <span>Rezultate rapide ({filteredGames.length})</span>
+              <span class="dropdown-esc-hint">ESC închide</span>
+            </div>
+            <div class="dropdown-list">
+              {#each filteredGames.slice(0, 6) as game}
+                <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+                <div class="dropdown-item" on:click={() => { playGame(game); isSearchExpanded = false; }}>
+                  <img src={game.img} alt={game.n} class="dropdown-item-thumb" />
+                  <div class="dropdown-item-info">
+                    <div class="dropdown-item-title">{game.n}</div>
+                    <div class="dropdown-item-meta">{game.p} {#if game.c?.[0]}• {game.c[0]}{/if}</div>
+                  </div>
+                  <button class="btn-dropdown-play" on:click|stopPropagation={() => { playGame(game); isSearchExpanded = false; }}>
+                    JOACĂ
+                  </button>
+                </div>
+              {/each}
+              {#if filteredGames.length === 0}
+                <div class="dropdown-empty">Niciun joc găsit pentru „{searchQuery}”</div>
+              {/if}
+            </div>
+            {#if filteredGames.length > 6}
+              <div class="dropdown-footer">
+                <span>+ încă {filteredGames.length - 6} jocuri afișate în lobby</span>
+              </div>
+            {/if}
+          </div>
+        {/if}
       </div>
 
       <div class="topbar-right">
@@ -1518,6 +1747,14 @@
     {#if isAdminRoute}
       <div style="flex: 1; overflow-y: auto; background: var(--bg-dark);">
         <AdminCMS />
+      </div>
+    {:else if isFigmaRoute}
+      <div class="figma-scroll-container" style="flex: 1; overflow-y: auto; background: #0c0912;">
+        <FigmaProposal />
+      </div>
+    {:else if isCashpotTestRoute}
+      <div class="figma-scroll-container" style="flex: 1; overflow-y: auto; background: #0e0c10;">
+        <CashpotTestOriginal />
       </div>
     {:else}
       <!-- Mobile Sidebar Overlay -->
@@ -2832,8 +3069,11 @@
             <div class="games-slider search-grid size-s">
               {#each filteredGames as game}
                 {@const gEffect = getGameEffect(game.n, gameEffectsSource)}
-                <div class="game-card {gEffect ? 'effect-' + gEffect.effect : ''}" style={gEffect ? `--effect-interval: ${gEffect.effectInterval || 5}s;` : ""} on:click={() => playGame(game)}>
+                <div class="game-card {gEffect ? 'effect-' + gEffect.effect : ''} {gEffect?.variant ? 'variant-' + gEffect.variant : ''} {gEffect?.triggerMode ? 'trigger-' + gEffect.triggerMode : ''}" style={gEffect ? `--effect-interval: ${gEffect.effectInterval || 5}s;` : ""} on:click={() => playGame(game)}>
                   <div class="img-wrapper">
+                    {#if gEffect?.badgeText}
+                      <span class="game-effect-badge" style="background: {gEffect.badgeColor || 'linear-gradient(135deg, #ff7700, #ef4444)'};">{gEffect.badgeText}</span>
+                    {/if}
                     <img src={game.img} alt={game.n} loading="lazy" />
                     <div class="game-hover-overlay">
                       <div class="play-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg></div>
@@ -4264,12 +4504,15 @@
                         <div
                           class="game-card {gEffect
                             ? 'effect-' + gEffect.effect
-                            : ''}"
+                            : ''} {gEffect?.variant ? 'variant-' + gEffect.variant : ''} {gEffect?.triggerMode ? 'trigger-' + gEffect.triggerMode : ''}"
                           style={gEffect
                             ? `--effect-interval: ${gEffect.effectInterval || 5}s;`
                             : ""}
                         >
                           <div class="img-wrapper">
+                            {#if gEffect?.badgeText}
+                              <span class="game-effect-badge" style="background: {gEffect.badgeColor || 'linear-gradient(135deg, #ff7700, #ef4444)'};">{gEffect.badgeText}</span>
+                            {/if}
                             <img
                               src={game.img}
                               alt={game.n}
@@ -4740,6 +4983,9 @@
                       {/if}
                     {/if}
                     {cat.name}
+                    {#if cat.isHalloween}
+                      <span class="halloween-badge" style="margin-left: 10px;">🎃 EDIȚIE SPECIALĂ</span>
+                    {/if}
                   </h3>
 
                   <a href="#" class="view-all">Vezi toate</a>
@@ -4757,12 +5003,18 @@
                       <div
                         class="game-card {gEffect
                           ? 'effect-' + gEffect.effect
-                          : ''}"
+                          : ''} {gEffect?.variant ? 'variant-' + gEffect.variant : ''} {gEffect?.triggerMode ? 'trigger-' + gEffect.triggerMode : ''}"
                         style={gEffect
                           ? `--effect-interval: ${gEffect.effectInterval || 5}s;`
                           : ""}
                       >
                         <div class="img-wrapper">
+                          {#if cat.isHalloween}
+                            <span class="halloween-badge" style="position: absolute; top: 8px; left: 8px; z-index: 5; font-size: 9px; padding: 2px 5px;">🎃 SPOOKY</span>
+                          {/if}
+                          {#if gEffect?.badgeText && !cat.isHalloween}
+                            <span class="game-effect-badge" style="background: {gEffect.badgeColor || 'linear-gradient(135deg, #ff7700, #ef4444)'};">{gEffect.badgeText}</span>
+                          {/if}
                           <img
                             src={game.img}
                             alt={game.n}
@@ -4895,12 +5147,15 @@
                             <div
                               class="game-card {gEffect
                                 ? 'effect-' + gEffect.effect
-                                : ''}"
+                                : ''} {gEffect?.variant ? 'variant-' + gEffect.variant : ''} {gEffect?.triggerMode ? 'trigger-' + gEffect.triggerMode : ''}"
                               style={gEffect
                                 ? `--effect-interval: ${gEffect.effectInterval || 5}s;`
                                 : ""}
                             >
                               <div class="img-wrapper">
+                                {#if gEffect?.badgeText}
+                                  <span class="game-effect-badge" style="background: {gEffect.badgeColor || 'linear-gradient(135deg, #ff7700, #ef4444)'};">{gEffect.badgeText}</span>
+                                {/if}
                                 <img
                                   src={game.img}
                                   alt={game.n}
@@ -5254,7 +5509,7 @@
       {/if}
 
       {#if !activeView.startsWith("preview_")}
-        <nav class="mobile-bottom-nav">
+        <nav class="mobile-bottom-nav" class:mobile-bars-hidden={mobileBarsHidden}>
           <a
             href="#"
             class="nav-item {activeView === 'home' && !searchQuery

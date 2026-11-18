@@ -221,7 +221,7 @@
     }
   ],
   "banners": {
-    "layout": "1_big_2_small",
+    "layout": "4_small",
     "autoSlide": true,
     "slideInterval": 5,
     "items": [
@@ -344,11 +344,15 @@
   ],
   "gameEffects": {
     "100 Burning Hot": {
-      "effect": "none",
+      "effect": "fire",
+      "variant": 3,
+      "triggerMode": "always",
       "effectInterval": 5,
-      "isScheduled": false,
-      "timeStart": "",
-      "timeEnd": ""
+      "badgeText": "🔥 HOT",
+      "badgeColor": "#f97316",
+      "glowColor1": "#f97316",
+      "glowColor2": "#ef4444",
+      "updatedAt": 1791884214465
     },
     "40 Burning Hot": {
       "effect": "lightning",
@@ -395,6 +399,20 @@
     "showToolbarIcons": true
   },
   "auditLog": [
+    {
+      "id": 1794988997612,
+      "timestamp": "18.11.2026, 10:03:17",
+      "user": "admin",
+      "action": "SESIUNE START",
+      "details": "Utilizatorul \"admin\" a început o sesiune nouă de administrare."
+    },
+    {
+      "id": 1791792636707,
+      "timestamp": "12.10.2026, 11:10:36",
+      "user": "admin",
+      "action": "SESIUNE START",
+      "details": "Utilizatorul \"admin\" a început o sesiune nouă de administrare."
+    },
     {
       "id": 1779177147366,
       "timestamp": "19.05.2026, 10:52:27",
@@ -445,7 +463,7 @@
       "details": "S-a creat categoria \"Categorie Nouă\"."
     }
   ],
-  "updatedAt": "2026-05-20T08:35:10.026Z",
+  "updatedAt": "2026-11-18T10:30:10.230Z",
   "winnersConfig": {
     "enabled": true,
     "showImage": true,
@@ -607,6 +625,18 @@
         "enabled": true,
         "type": "nav",
         "shape": "default"
+      },
+      {
+        "id": "sn_vip2",
+        "label": "Club VIP 2",
+        "icon": "star",
+        "enabled": true
+      },
+      {
+        "id": "sn_vip3",
+        "label": "Slot Legends",
+        "icon": "star",
+        "enabled": true
       },
       {
         "id": "sn_slots",
@@ -1129,5 +1159,177 @@
     "showArena": false,
     "showWheel": false,
     "showCashback": false
+  },
+  "footerConfig": {
+    "aboutLinks": [
+      {
+        "label": "Despre noi",
+        "url": "/despre-noi"
+      },
+      {
+        "label": "Agenții",
+        "url": "/agentii"
+      },
+      {
+        "label": "Ajutor",
+        "url": "/ajutor"
+      },
+      {
+        "label": "Protecția datelor",
+        "url": "/protectia-datelor"
+      },
+      {
+        "label": "Politica de utilizare a cookie-urilor",
+        "url": "/cookie"
+      },
+      {
+        "label": "Joc responsabil",
+        "url": "/joc-responsabil"
+      },
+      {
+        "label": "Politica împotriva spălării banilor",
+        "url": "/aml"
+      },
+      {
+        "label": "Regulamente de joc",
+        "url": "/regulamente"
+      },
+      {
+        "label": "Termene și condiții",
+        "url": "/termeni"
+      },
+      {
+        "label": "Licență",
+        "url": "/licenta"
+      },
+      {
+        "label": "Decizie autorizare",
+        "url": "/decizie"
+      }
+    ],
+    "offerLinks": [
+      {
+        "label": "Oferta zilnică",
+        "url": "/oferta-zilnica"
+      },
+      {
+        "label": "Oferta săptămânală",
+        "url": "/oferta-saptamanala"
+      },
+      {
+        "label": "Oferta Cronologică",
+        "url": "/oferta-cronologica"
+      }
+    ],
+    "helpLinks": [
+      {
+        "label": "Întrebări frecvente",
+        "url": "/faq"
+      },
+      {
+        "label": "Live Chat",
+        "url": "/chat"
+      }
+    ],
+    "apps": [
+      {
+        "label": "Google Play",
+        "iconType": "google"
+      },
+      {
+        "label": "App Store",
+        "iconType": "apple"
+      },
+      {
+        "label": "AppGallery",
+        "iconType": "huawei"
+      }
+    ],
+    "paymentMethods": [
+      {
+        "label": "Cash",
+        "iconType": "cash"
+      },
+      {
+        "label": "Transfer bancar",
+        "iconType": "bank"
+      },
+      {
+        "label": "VISA",
+        "iconType": "visa"
+      },
+      {
+        "label": "Mastercard",
+        "iconType": "mastercard"
+      },
+      {
+        "label": "paysafecard",
+        "iconType": "paysafe"
+      },
+      {
+        "label": "Revolut",
+        "iconType": "revolut"
+      },
+      {
+        "label": "Apple Pay",
+        "iconType": "applepay"
+      }
+    ],
+    "sponsors": [
+      {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/SuperLiga_Romania.svg/1200px-SuperLiga_Romania.svg.png"
+      }
+    ],
+    "responsibleGaming": {
+      "text": "Accesul persoanelor sub 18 ani este strict interzis. Este responsabilitatea fiecărui jucător să acționeze în conformitate cu reglementările în vigoare precum și cu termeni și condițiile noastre. Jocurile de noroc implică risc financiar, jucați cu grijă.",
+      "logos": [
+        {
+          "url": "https://registru.onjn.gov.ro/logo.png"
+        }
+      ]
+    },
+    "legalText": "Cashpot.ro este deținut și operat de către Crowd Entertainment Limited, o societate înmatriculată în Malta (cu sediul social în 2 Spinola Road, St. Julians STJ 3014). Platforma face parte din Winvia Entertainment Group și funcționează în România în baza licenței nr. L1213823W001269, emisă de Comitetul de Supraveghere din cadrul O.N.J.N., valabilă până la data de 28.02.2031.",
+    "social": [
+      {
+        "iconType": "facebook",
+        "url": "https://facebook.com/cashpot.ro"
+      },
+      {
+        "iconType": "instagram",
+        "url": "https://instagram.com/cashpot.ro"
+      },
+      {
+        "iconType": "youtube",
+        "url": "https://youtube.com/cashpot.ro"
+      }
+    ]
+  },
+  "seasonalConfig": {
+    "halloween": {
+      "enabled": false,
+      "showFloatingParticles": true,
+      "showFestiveLogo": true,
+      "showHeroBanner": true,
+      "showCategory": true,
+      "accentGlow": true,
+      "bannerTitle": "HALLOWEEN JACKPOT HUNT 🎃",
+      "bannerSubtitle": "Până la 50.000 LEI + 666 Rotiri Bântuite!",
+      "bannerButtonText": "RECLAMĂ ROTIRILE",
+      "bannerImage": "/halloween_banner.jpg"
+    }
+  },
+  "figmaProposalConfig": {
+    "isLoggedIn": true,
+    "vipPlacement": "sidebar",
+    "headerVipMode": "merged-with-icons",
+    "vipRightOffset": 100,
+    "searchWidth": 800,
+    "vipShape": "pill",
+    "vipFillColor": "gold",
+    "catBarStyle": "pills",
+    "catBarWidthMode": "fit",
+    "catIconStyle": "svg",
+    "sidebarMode": "full",
+    "currentPage": "home"
   }
 }

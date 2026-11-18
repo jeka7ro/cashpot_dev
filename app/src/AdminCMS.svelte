@@ -44,6 +44,9 @@
     cmsDraftHeaderConfig,
     cmsFooterConfig,
     cmsDraftFooterConfig,
+    cmsSeasonalConfig,
+    cmsDraftSeasonalConfig,
+    defaultSeasonalConfig,
     saveToServer,
   } from "./store.js";
 
@@ -52,6 +55,7 @@
 
   const getTabTitle = (tab) => {
     const titles = {
+      halloween: "🎃 Mod Halloween (Sezon)",
       categories: "Categorii & Layout",
       banners: "Bannere",
       jackpot: "Jackpot Cards",
@@ -98,6 +102,7 @@
 
   // Map each CMS tab to the site view it affects
   const previewTabMap = {
+    halloween: { view: "home", label: "Mod Halloween", hash: "" },
     banners: { view: "preview_banners", label: "Hero Bannere", hash: "" },
     categories: {
       view: "preview_categories",
@@ -273,7 +278,7 @@
   $: if (jackpotFever2Config) cmsDraftJackpotFever2.set(jackpotFever2Config);
   $: if (bannersConfig) { cmsDraftBanners.set(bannersConfig); cmsBanners.set(bannersConfig); }
   $: if (promoConfig) cmsDraftPromoBanner.set(promoConfig);
-  $: if (gameEffects) cmsDraftGameEffects.set(gameEffects);
+  $: if (activeTab === 'thumbnails' && gameEffects) cmsDraftGameEffects.set(gameEffects);
   $: if (themeColors) cmsDraftThemeColors.set(themeColors);
   $: if (toolbarConfig) cmsDraftToolbarConfig.set(toolbarConfig);
   $: if (sidebarNavConfig) cmsDraftSidebarNavConfig.set(sidebarNavConfig);
@@ -476,6 +481,15 @@
       try { headerWidgetsConfig = JSON.parse(JSON.stringify(v)); } catch(e) { headerWidgetsConfig = v; }
     } else {
       headerWidgetsConfig = {};
+    }
+  });
+
+  let seasonalConfig = JSON.parse(JSON.stringify(defaultSeasonalConfig));
+  cmsDraftSeasonalConfig.subscribe((v) => {
+    if (v && typeof v === "object" && !Array.isArray(v) && v.halloween) {
+      try { seasonalConfig = JSON.parse(JSON.stringify(v)); } catch(e) { seasonalConfig = v; }
+    } else {
+      seasonalConfig = JSON.parse(JSON.stringify(defaultSeasonalConfig));
     }
   });
 
@@ -691,7 +705,7 @@
       jackpotFever2: JSON.parse(JSON.stringify(jackpotFever2Config)),
       banners: JSON.parse(JSON.stringify(bannersConfig)),
       promo: JSON.parse(JSON.stringify(promoConfig)),
-      gameEffects: JSON.parse(JSON.stringify(gameEffects)),
+      gameEffects: JSON.parse(JSON.stringify(get(cmsDraftGameEffects) || gameEffects)),
       themeColors: JSON.parse(JSON.stringify(themeColors)),
       winnersConfig: JSON.parse(JSON.stringify(winnersConfig)),
       topGamesConfig: JSON.parse(JSON.stringify(topGamesConfig)),
@@ -703,6 +717,7 @@
       headerWidgets: JSON.parse(JSON.stringify(headerWidgetsConfig)),
       headerConfig: JSON.parse(JSON.stringify(headerConfig)),
       footerConfig: JSON.parse(JSON.stringify(footerConfig)),
+      seasonalConfig: JSON.parse(JSON.stringify(seasonalConfig)),
       auditLog: get(cmsAuditLog),
     };
 
@@ -743,6 +758,7 @@
       cmsVipConfig.set(payload.vipConfig);
       cmsHeaderConfig.set(payload.headerConfig);
       cmsFooterConfig.set(payload.footerConfig);
+      cmsSeasonalConfig.set(payload.seasonalConfig);
       saveSuccess = true;
       const activeCats = categories.filter((c) => c.showOnPage).length;
       const scheduledCats = categories.filter(
@@ -776,6 +792,7 @@
     cmsDraftHeaderWidgets.set(JSON.parse(JSON.stringify(headerWidgetsConfig)));
     cmsDraftHeaderConfig.set(JSON.parse(JSON.stringify(headerConfig)));
     cmsDraftFooterConfig.set(JSON.parse(JSON.stringify(footerConfig)));
+    cmsDraftSeasonalConfig.set(JSON.parse(JSON.stringify(seasonalConfig)));
   }
 
   function startPreview() {
@@ -938,6 +955,14 @@
         <span>Smart CMS</span>
       </div>
       <nav class="cms-nav">
+        <button
+          class="cms-nav-item {activeTab === 'halloween' ? 'active' : ''}"
+          on:click={() => (activeTab = "halloween")}
+          style="background: {activeTab === 'halloween' ? 'rgba(255, 119, 0, 0.25)' : 'rgba(255, 119, 0, 0.08)'}; color: #ff7700; border-left: 3px solid #ff7700; font-weight: 700; margin-bottom: 4px;"
+        >
+          <span style="font-size: 16px; margin-right: 4px;">🎃</span>
+          Mod Halloween {seasonalConfig?.halloween?.enabled ? '●' : '○'}
+        </button>
         <button
           class="cms-nav-item {activeTab === 'banners' ? 'active' : ''}"
           on:click={() => (activeTab = "banners")}
@@ -1401,6 +1426,234 @@
       {/if}
 
       <div class="cms-content">
+        <!-- TAB: HALLOWEEN SEASONAL MODE -->
+        {#if activeTab === "halloween"}
+          <div class="cms-tab-content">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+              <div>
+                <h1 class="cms-page-title-main" style="margin: 0; color: #ff7700; display: flex; align-items: center; gap: 12px;">
+                  <span>🎃</span> Mod Halloween & Evenimente Sezoniere
+                </h1>
+                <p style="color: var(--text-muted); font-size: 14px; margin-top: 6px;">
+                  Activează atmosfera de Halloween pe site cu o singură apăsare de buton. Toate setările se aplică instant pe homepage.
+                </p>
+              </div>
+
+              <div style="display: flex; gap: 12px;">
+                <button
+                  class="cms-btn"
+                  style="{seasonalConfig?.halloween?.enabled ? 'background: #ef4444; color: #fff;' : 'background: #ff7700; color: #000; font-weight: 800;'}"
+                  on:click={() => {
+                    seasonalConfig.halloween.enabled = !seasonalConfig.halloween.enabled;
+                    seasonalConfig = { ...seasonalConfig };
+                    persistDrafts();
+                  }}
+                >
+                  {seasonalConfig?.halloween?.enabled ? '❌ Dezactivează Halloween' : '🎃 Activează Halloween Acum'}
+                </button>
+              </div>
+            </div>
+
+            <!-- Master Status Banner -->
+            <div
+              class="cms-glass-card"
+              style="padding: 24px; margin-bottom: 24px; border: 2px solid {seasonalConfig?.halloween?.enabled ? '#ff7700' : 'rgba(255,255,255,0.1)'}; background: {seasonalConfig?.halloween?.enabled ? 'linear-gradient(135deg, rgba(255, 119, 0, 0.12), rgba(147, 51, 234, 0.12))' : 'rgba(255,255,255,0.02)'};"
+            >
+              <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                  <div style="font-size: 42px; width: 64px; height: 64px; border-radius: 16px; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,119,0,0.3);">
+                    {seasonalConfig?.halloween?.enabled ? '🎃' : '🌙'}
+                  </div>
+                  <div>
+                    <h3 style="margin: 0; font-size: 18px; color: {seasonalConfig?.halloween?.enabled ? '#ff7700' : '#fff'};">
+                      Stare Eveniment: {seasonalConfig?.halloween?.enabled ? 'ACTIVAT PE HOMEPAGE' : 'DEZACTIVAT (MOD NORMAL)'}
+                    </h3>
+                    <p style="margin: 4px 0 0 0; font-size: 13px; color: var(--text-muted);">
+                      {seasonalConfig?.halloween?.enabled ? 'Vizitatorii văd bannerul special, particulele animate de lilieci și categoria de sloturi tematice.' : 'Platforma rulează în modul standard CashPot.'}
+                    </p>
+                  </div>
+                </div>
+
+                <label class="cms-toggle-label" style="font-size: 15px; font-weight: 700; cursor: pointer;">
+                  <input
+                    type="checkbox"
+                    bind:checked={seasonalConfig.halloween.enabled}
+                    on:change={persistDrafts}
+                    style="width: 22px; height: 22px; accent-color: #ff7700; cursor: pointer;"
+                  />
+                  <span>Activează Sezon</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px;">
+              <!-- 1. Ambient Effects -->
+              <div class="cms-glass-card" style="padding: 20px;">
+                <h4 style="margin: 0 0 16px 0; color: #ff7700; display: flex; align-items: center; gap: 8px;">
+                  <span>🦇</span> Efecte Vizuale & Ambientale
+                </h4>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                  <label class="cms-toggle-label" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                    <div>
+                      <div style="font-weight: 600;">Particule Ambientale (Lilieci & Dovleci)</div>
+                      <div style="font-size: 12px; color: var(--text-muted);">Lilieci plutitori și scântei magice pe fundal</div>
+                    </div>
+                    <input
+                      type="checkbox"
+                      bind:checked={seasonalConfig.halloween.showFloatingParticles}
+                      on:change={persistDrafts}
+                      style="width: 20px; height: 20px; accent-color: #ff7700;"
+                    />
+                  </label>
+
+
+                  <label class="cms-toggle-label" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                    <div>
+                      <div style="font-weight: 600;">Accente & Glow Neon Portocaliu</div>
+                      <div style="font-size: 12px; color: var(--text-muted);">Contur pulsatil pe căutare și butoane principale</div>
+                    </div>
+                    <input
+                      type="checkbox"
+                      bind:checked={seasonalConfig.halloween.accentGlow}
+                      on:change={persistDrafts}
+                      style="width: 20px; height: 20px; accent-color: #ff7700;"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <!-- 2. Homepage Content -->
+              <div class="cms-glass-card" style="padding: 20px;">
+                <h4 style="margin: 0 0 16px 0; color: #ff7700; display: flex; align-items: center; gap: 8px;">
+                  <span>🎰</span> Conținut & Jocuri Homepage
+                </h4>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                  <label class="cms-toggle-label" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                    <div>
+                      <div style="font-weight: 600;">Banner Hero Halloween</div>
+                      <div style="font-size: 12px; color: var(--text-muted);">Afișează bannerul pe prima poziție în carusel</div>
+                    </div>
+                    <input
+                      type="checkbox"
+                      bind:checked={seasonalConfig.halloween.showHeroBanner}
+                      on:change={persistDrafts}
+                      style="width: 20px; height: 20px; accent-color: #ff7700;"
+                    />
+                  </label>
+
+                  <label class="cms-toggle-label" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                    <div>
+                      <div style="font-weight: 600;">Categorie „🎃 Halloween Spooky”</div>
+                      <div style="font-size: 12px; color: var(--text-muted);">Afișează sloturile de groază prioritare pe homepage</div>
+                    </div>
+                    <input
+                      type="checkbox"
+                      bind:checked={seasonalConfig.halloween.showCategory}
+                      on:change={persistDrafts}
+                      style="width: 20px; height: 20px; accent-color: #ff7700;"
+                    />
+                  </label>
+
+                  <div style="padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                    <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 6px;">Jocuri incluse în categoria Halloween:</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                      <span class="halloween-badge">Vampire Night</span>
+                      <span class="halloween-badge">Halloween Fortune</span>
+                      <span class="halloween-badge">Blood Suckers</span>
+                      <span class="halloween-badge">Curse of Werewolf</span>
+                      <span class="halloween-badge">Legacy of Dead</span>
+                      <span class="halloween-badge">Mental</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Banner Customization Details -->
+            <div class="cms-glass-card" style="padding: 24px; margin-bottom: 24px;">
+              <h3 style="margin: 0 0 16px 0; color: #ff7700; display: flex; align-items: center; gap: 8px;">
+                <span>🎪</span> Personalizare Banner Hero Halloween
+              </h3>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                  <div>
+                    <label class="cms-label" style="display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase;">Titlu Banner</label>
+                    <input
+                      type="text"
+                      class="cms-input"
+                      style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);"
+                      bind:value={seasonalConfig.halloween.bannerTitle}
+                      on:input={persistDrafts}
+                    />
+                  </div>
+
+                  <div>
+                    <label class="cms-label" style="display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase;">Subtitlu / Ofertă</label>
+                    <input
+                      type="text"
+                      class="cms-input"
+                      style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);"
+                      bind:value={seasonalConfig.halloween.bannerSubtitle}
+                      on:input={persistDrafts}
+                    />
+                  </div>
+
+                  <div>
+                    <label class="cms-label" style="display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase;">Text Buton CTA</label>
+                    <input
+                      type="text"
+                      class="cms-input"
+                      style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color);"
+                      bind:value={seasonalConfig.halloween.bannerButtonText}
+                      on:input={persistDrafts}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="cms-label" style="display: block; margin-bottom: 6px; font-size: 12px; text-transform: uppercase;">Previzualizare Imagine Banner</label>
+                  <div style="position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,119,0,0.4); aspect-ratio: 16/9; max-height: 200px;">
+                    <img
+                      src={seasonalConfig.halloween.bannerImage || '/halloween_banner.jpg'}
+                      alt="Halloween Banner"
+                      style="width: 100%; height: 100%; object-fit: cover;"
+                    />
+                    <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 12px; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);">
+                      <div style="font-weight: 800; font-size: 14px; color: #ff7700;">{seasonalConfig.halloween.bannerTitle}</div>
+                      <div style="font-size: 11px; color: #fff; opacity: 0.9;">{seasonalConfig.halloween.bannerSubtitle}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Magic Studio Callout -->
+            <div
+              class="cms-glass-card"
+              style="padding: 20px; background: linear-gradient(135deg, rgba(147, 51, 234, 0.15), rgba(255, 119, 0, 0.15)); border: 1px solid rgba(147, 51, 234, 0.4); display: flex; align-items: center; justify-content: space-between;"
+            >
+              <div style="display: flex; align-items: center; gap: 16px;">
+                <span style="font-size: 32px;">✨</span>
+                <div>
+                  <h4 style="margin: 0; font-size: 16px; color: #fff;">Efect Vizual „🎃 Spooky Halloween” în Magic Studio</h4>
+                  <p style="margin: 4px 0 0 0; font-size: 13px; color: var(--text-muted);">
+                    Poți adăuga aura mistică violet & dovleac la orice joc din cazinou folosind Magic Studio.
+                  </p>
+                </div>
+              </div>
+              <button
+                class="cms-btn"
+                style="background: #9333ea; color: #fff; font-weight: 700; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer;"
+                on:click={() => (activeTab = "magicstudio")}
+              >
+                Deschide Magic Studio →
+              </button>
+            </div>
+          </div>
+        {/if}
+
         <!-- TAB: CATEGORIES -->
         {#if activeTab === "categories"}
           <div class="cms-tab-content">
